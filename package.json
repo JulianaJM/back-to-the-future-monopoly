@@ -1,0 +1,25 @@
+{
+  "name": "bttf-monopoly",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm dist/bundle.js",
+    "build-dev": "webpack -d --mode development && rm public/bundle.js && cp dist/bundle.js public/bundle.js",
+    "build-prod": "webpack -p --mode production && rm public/bundle.js && cp dist/bundle.js public/bundle.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JulianaJM/back-to-the-future-monopoly.git"
+  },
+  "author": "Juliana JM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JulianaJM/back-to-the-future-monopoly/issues"
+  },
+  "homepage": "https://github.com/JulianaJM/back-to-the-future-monopoly#readme",
+  "devDependencies": {
+    "webpack": "^4.23.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
