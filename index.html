@@ -5,11 +5,10 @@
   <meta charset="utf-8">
   <title>Titre de la page</title>
   <link rel="stylesheet" href="./public/style.css">
-  <script src="./public/bundle.js"></script>
 </head>
 
 <body>
-  <div class="monopoly-wrapper">
+  <div id="monopoly-board" class="monopoly-wrapper">
     <div class="board-top">
       <div id="21" class="square"></div>
       <div id="22" class="square"></div>
@@ -44,7 +43,10 @@
       <div id="38" class="square"></div>
       <div id="39" class="square"></div>
       <div id="40" class="square"></div>
-      <div id="middle" class="square"></div>
+      <div id="middle" class="square">
+        <button id="diceButton">roll</button>
+        <div id="dice-box"></div>
+      </div>
     </div>
     <div class="board-bottom">
       <div id="11" class="square"></div>
@@ -57,9 +59,15 @@
       <div id="4" class="square"></div>
       <div id="3" class="square"></div>
       <div id="2" class="square"></div>
-      <div id="1" class="square"></div>
+      <div id="1" class="square">
+        <img id="pionMarty" class="marty" src="./public/images/pionMarty.png" />
+        <img id="pionDoc" class="doc" src="./public/images/pionDoc.png" />
+        <img id="pionDoloreane" class="doloreane" src="./public/images/pionDoloreane.png" />
+      </div>
     </div>
   </div>
+
+  <script src="./public/bundle.js"></script>
 </body>
 
 </html>
