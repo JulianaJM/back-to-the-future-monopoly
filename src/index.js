@@ -26,6 +26,7 @@ function move(player, pos) {
   player.pawn = pawn;
   game.movePawn(pawn.currentCell);
   if (!boardArray[pos].playerOwner) {
+    //TODO achat
   }
 
   console.log("player ", player);
