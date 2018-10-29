@@ -3,26 +3,44 @@ var boardArray = require("./utils/board-game");
 var MonopolyView = require("./view/monopoly");
 
 function monopoly() {
+  debugger;
   var resDice = rollDice(game.diceDisplay);
   console.log("resDice ", resDice);
-  move(game.player, resDice);
+  var currentPlayer = game.players.find(function(player) {
+    return player.current;
+  });
+  debugger;
+  move(currentPlayer, resDice);
 }
 
 function move(player, resDice) {
-  var pawn = player.pawn;
-  var nextPos = pawn.currentCell + resDice;
+  var nextPos = player.pawn.currentCell + resDice;
   if (nextPos <= game.MAX_CELL - 1) {
-    pawn.currentCell = nextPos;
+    player.pawn.currentCell = nextPos;
   } else {
-    pawn.currentCell = nextPos - game.MAX_CELL;
+    player.pawn.currentCell = nextPos - game.MAX_CELL;
   }
-  player.pawn = pawn;
+
+  updatePlayers(player);
+
   //wait before move pawn
   setTimeout(function() {
-    game.movePawn(pawn.currentCell);
+    game.movePawn(player.pawn);
   }, 1500);
 
   console.log("player ", player);
+}
+
+function updatePlayers(player) {
+  debugger;
+  var newPlayers = game.players.map(function(p) {
+    if (p.id === player.id) {
+      p = player;
+    }
+    return p;
+  });
+
+  game.players = newPlayers;
 }
 
 function cellActionDispatcher() {
@@ -34,5 +52,8 @@ function cellActionDispatcher() {
 
 var game = new MonopolyView(monopoly);
 game.cellsEventListener(cellActionDispatcher);
-
+var start = function() {
+  game.startGame(game);
+};
+game.startGameBtn.addEventListener("click", start, false);
 module.exports = monopoly;

@@ -8,7 +8,27 @@
 </head>
 
 <body>
-  <div id="monopoly-board" class="monopoly-wrapper">
+
+  <form id="monopoly-start">
+    <fieldset>
+      <legend>Start game</legend> <!-- Titre du fieldset -->
+
+      <label for="nom">Pseudo : </label>
+      <input type="text" name="pseudo" id="pseudo" />
+
+      <input type="radio" name="pawn" value="pionMarty"> <img id="pionMarty" src="./public/images/pionMarty.png" />
+
+      <input type="radio" name="pawn" value="pionDoc"> <img id="pionDoc" src="./public/images/pionDoc.png" />
+
+      <input type="radio" name="pawn" value="pionDoloreane"> <img id="pionDoloreane" src="./public/images/pionDoloreane.png" />
+
+      <input type="radio" name="pawn" value="pionHoverboard"> <img id="pionHoverboard" src="./public/images/pionHoverboard.png" />
+
+      <button id="startGame" type="button">play</button>
+
+    </fieldset>
+  </form>
+  <div id="monopoly-board" class="monopoly-wrapper monopoly-wrapper--none">
     <div class="board-top">
       <div id="20" tabindex="-1" class="square"></div>
       <div id="21" tabindex="-1" class="square"></div>
@@ -59,11 +79,7 @@
       <div id="3" tabindex="-1" class="square"></div>
       <div id="2" tabindex="-1" class="square"></div>
       <div id="1" tabindex="-1" class="square"></div>
-      <div id="0" tabindex="-1" class="square">
-        <img id="pionMarty" class="marty" src="./public/images/pionMarty.png" />
-        <img id="pionDoc" class="doc" src="./public/images/pionDoc.png" />
-        <img id="pionDoloreane" class="doloreane" src="./public/images/pionDoloreane.png" />
-      </div>
+      <div id="0" tabindex="-1" class="square"></div>
     </div>
   </div>
 
