@@ -3,25 +3,36 @@ var Bank = require("../model/bank");
 var Pawn = require("../model/pawn");
 var Player = require("../model/player");
 
-function MonopolyView(callback) {
+function MonopolyView(gameRuleCallback) {
   this.diceButton = document
     .getElementById("diceButton")
-    .addEventListener("click", callback, false);
+    .addEventListener("click", gameRuleCallback, false);
   this.diceDisplay = document.getElementById("dice-box");
-
   this.bank = new Bank();
   this.player = new Player("joueur1");
   this.bank.capital -= this.player.capital;
   this.pawn1 = new Pawn("Marty");
   this.player.pawn = this.pawn1;
+  this.MAX_CELL = 40;
 
   this.movePawn = function(pos) {
-    // this.pion.style.display = "block";
     var pawn = document.getElementById("pionMarty");
+    pawn.style.display = "block";
+    var pawnParent = pawn.parentElement;
+    pawnParent.innerHTML = "";
     var newPos = document.getElementById(pos);
-    // var parent = newPos.parentElement;
-    var offset = _offset(newPos);
-    translateToAbsolute(pawn, offset.left, offset.top, "1s");
+    newPos.appendChild(pawn);
+    newPos.focus();
+    // var offset = _offset(newPos);
+    // translateToAbsolute(pawn, offset.left, offset.top, "1s");
+  };
+
+  this.cellsEventListener = function(gameLitenerCallback) {
+    for (var i = 0; i < this.MAX_CELL - 1; i++) {
+      document
+        .getElementById(i)
+        .addEventListener("focus", gameLitenerCallback, false);
+    }
   };
 }
 
