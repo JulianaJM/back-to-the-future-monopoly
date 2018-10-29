@@ -3,13 +3,11 @@ var boardArray = require("./utils/board-game");
 var MonopolyView = require("./view/monopoly");
 
 function monopoly() {
-  debugger;
   var resDice = rollDice(game.diceDisplay);
   console.log("resDice ", resDice);
   var currentPlayer = game.players.find(function(player) {
     return player.current;
   });
-  debugger;
   move(currentPlayer, resDice);
 }
 
@@ -20,6 +18,7 @@ function move(player, resDice) {
   } else {
     player.pawn.currentCell = nextPos - game.MAX_CELL;
   }
+  player.current = false;
 
   updatePlayers(player);
 
@@ -32,10 +31,11 @@ function move(player, resDice) {
 }
 
 function updatePlayers(player) {
-  debugger;
   var newPlayers = game.players.map(function(p) {
     if (p.id === player.id) {
       p = player;
+    } else {
+      p.current = true;
     }
     return p;
   });
@@ -44,9 +44,12 @@ function updatePlayers(player) {
 }
 
 function cellActionDispatcher() {
-  var pos = game.pawn1.currentCell;
+  var currentPlayer = game.players.find(function(player) {
+    return player.current;
+  });
+  var pos = currentPlayer.pawn.currentCell;
   if (!boardArray[pos].playerOwner) {
-    console.log("achat");
+    console.log("achat possible");
   }
 }
 
