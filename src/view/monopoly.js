@@ -42,25 +42,34 @@ function MonopolyView(gameRuleCallback) {
 
     var board = document.getElementById("monopoly-board");
     board.style.display = "block";
-    document.getElementById("monopoly-start").style.display = "none";
+    //document.getElementById("monopoly-start").style.display = "none";
 
     var initialPos = document.getElementById(pawn1.currentCell);
     var pawn1Display = document.getElementById(pawn1.name);
     var pawn2Display = document.getElementById(pawn2.name);
 
-    initialPos.appendChild(pawn1Display);
-    initialPos.appendChild(pawn2Display);
+    //initialPos.appendChild(pawn1Display);
+    //initialPos.appendChild(pawn2Display);
   };
 
   this.movePawn = function(pawn) {
     var pawnElement = document.getElementById(pawn.name);
     var pawnParent = pawnElement.parentElement;
-    pawnParent.removeChild(pawnElement);
+    // pawnParent.removeChild(pawnElement);
     var newPos = document.getElementById(pawn.currentCell);
-    newPos.appendChild(pawnElement);
+    // newPos.appendChild(pawnElement);
     newPos.focus();
-    // var offset = _offset(newPos);
-    // translateToAbsolute(pawn, offset.left, offset.top, "1s");
+
+    //var offset = _offset(newPos.firstElementChild);
+
+    debugger;
+
+    translateToAbsolute(
+      pawnElement,
+      newPos.firstElementChild.offsetLeft,
+      newPos.firstElementChild.offsetTop,
+      "1s"
+    );
   };
 
   this.cellsEventListener = function(gameLitenerCallback) {
@@ -70,12 +79,16 @@ function MonopolyView(gameRuleCallback) {
         .addEventListener("focus", gameLitenerCallback, false);
     }
   };
+
+  this.checkPlayerResponse = function() {
+    return true;
+  };
 }
 
 function translateToAbsolute(sel, x, y, dur) {
   var offset = _offset(sel);
-  var newX = -offset.left + x;
-  var newY = -offset.top + y;
+  var newX = x - sel.offsetLeft;
+  var newY = y - sel.offsetTop;
   sel.style.transition = "all " + dur + " ease";
   sel.style.transform = "translate(" + newX + "px," + newY + "px)";
 

@@ -4,9 +4,8 @@ TitleCell.prototype.constructor = TitleCell;
 function TitleCell(name, cellId) {
   Cell.call(this, name, cellId);
   this.playerOwner = null;
-  this.setPlayerOwner = function(owner) {
-    this.playerOwner = owner;
-    owner.titleList.push(this.title);
+  this.isSellable = function(cell) {
+    return cell.playerOwner ? true : false;
   };
 }
 

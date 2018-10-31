@@ -20,7 +20,7 @@
   align-content: center;
 }
 .monopoly-wrapper {
-  display: none;
+  /* display: none; */
   width: fit-content;
   margin: 60px auto auto auto;
   border: 4px solid;
@@ -78,6 +78,13 @@ button:focus {
 
 button:active {
   transform: scale(0.99);
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  background-color: hotpink;
 }
 
 .board-top .square:nth-child(1) {

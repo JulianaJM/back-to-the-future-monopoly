@@ -1,6 +1,7 @@
 var rollDice = require("./utils/roll-a-die");
 var boardArray = require("./utils/board-game");
 var MonopolyView = require("./view/monopoly");
+var TitleCell = require("./model/title-cell");
 
 function monopoly() {
   var resDice = rollDice(game.diceDisplay);
@@ -18,13 +19,11 @@ function move(player, resDice) {
   } else {
     player.pawn.currentCell = nextPos - game.MAX_CELL;
   }
-  player.current = false;
-
-  updatePlayers(player);
 
   //wait before move pawn
   setTimeout(function() {
     game.movePawn(player.pawn);
+    updatePlayers(player);
   }, 1500);
 
   console.log("player ", player);
@@ -43,14 +42,17 @@ function updatePlayers(player) {
   game.players = newPlayers;
 }
 
-function cellActionDispatcher() {
+function cellActionDispatcher(e) {
+  // var idPawn = e.currentTarget.id;
+  // debugger;
   var currentPlayer = game.players.find(function(player) {
     return player.current;
   });
   var pos = currentPlayer.pawn.currentCell;
-  if (!boardArray[pos].playerOwner) {
-    console.log("achat possible");
-  }
+  var currentCell = boardArray[pos];
+  currentCell.isSellable(currentCell);
+  currentPlayer.current = false;
+  updatePlayers(currentPlayer);
 }
 
 var game = new MonopolyView(monopoly);

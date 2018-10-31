@@ -1,4 +1,5 @@
 function _offset(elt) {
+  debugger;
   var rect = elt.getBoundingClientRect(),
     bodyElt = document.body;
   return {
