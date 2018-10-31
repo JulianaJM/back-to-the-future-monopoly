@@ -1,4 +1,3 @@
-var _offset = require("../utils/offset");
 var Bank = require("../model/bank");
 var Pawn = require("../model/pawn");
 var Player = require("../model/player");
@@ -12,8 +11,11 @@ function MonopolyView(gameRuleCallback) {
 
   this.startGame = function() {
     var pawnArray = ["pionMarty", "pionDoc", "pionDoloreane", "pionHoverboard"];
-    var selectedPawn = document.querySelector("input[name=pawn]:checked").value;
-    var playerName = document.getElementById("pseudo").value;
+    var selectedPawn =
+      (document.querySelector("input[name=pawn]:checked") &&
+        document.querySelector("input[name=pawn]:checked").value) ||
+      "pionMarty";
+    var playerName = document.getElementById("pseudo").value || "player1";
     this.diceDisplay = document.getElementById("dice-box");
 
     this.bank = new Bank();
@@ -42,27 +44,32 @@ function MonopolyView(gameRuleCallback) {
 
     var board = document.getElementById("monopoly-board");
     board.style.display = "block";
-    //document.getElementById("monopoly-start").style.display = "none";
+    document.getElementById("monopoly-start").innerHTML = "";
+    document.getElementById("tools").style.display = "block";
 
     var initialPos = document.getElementById(pawn1.currentCell);
     var pawn1Display = document.getElementById(pawn1.name);
     var pawn2Display = document.getElementById(pawn2.name);
 
-    //initialPos.appendChild(pawn1Display);
-    //initialPos.appendChild(pawn2Display);
+    translateToAbsolute(
+      pawn1Display,
+      initialPos.firstElementChild.offsetLeft,
+      initialPos.firstElementChild.offsetTop,
+      "1s"
+    );
+
+    translateToAbsolute(
+      pawn2Display,
+      initialPos.firstElementChild.offsetLeft,
+      initialPos.firstElementChild.offsetTop,
+      "1s"
+    );
   };
 
   this.movePawn = function(pawn) {
     var pawnElement = document.getElementById(pawn.name);
-    var pawnParent = pawnElement.parentElement;
-    // pawnParent.removeChild(pawnElement);
     var newPos = document.getElementById(pawn.currentCell);
-    // newPos.appendChild(pawnElement);
     newPos.focus();
-
-    //var offset = _offset(newPos.firstElementChild);
-
-    debugger;
 
     translateToAbsolute(
       pawnElement,
@@ -86,28 +93,10 @@ function MonopolyView(gameRuleCallback) {
 }
 
 function translateToAbsolute(sel, x, y, dur) {
-  var offset = _offset(sel);
   var newX = x - sel.offsetLeft;
   var newY = y - sel.offsetTop;
   sel.style.transition = "all " + dur + " ease";
   sel.style.transform = "translate(" + newX + "px," + newY + "px)";
-
-  /*var offset = _offset(sel);
-  var newX = 0;
-  var newY = 0;
-  if (parent.className === "board-bottom") {
-    newX = -offset.left + x;
-    newY = -offset.top + y;
-  } else if (parent.className === "board-left") {
-    newX = -x;
-    newY = -offset.top + y;
-  } else if (parent.className === "board-top") {
-    var offset2 = _offset(parent);
-    newX = offset.left - x;
-    newY = -(offset.top + y + offset2.top);
-  }
-  sel.style.transition = "all " + dur + " ease";
-  sel.style.transform = "translate(" + newX + "px," + newY + "px)";*/
 }
 
 module.exports = MonopolyView;
