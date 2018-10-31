@@ -89,6 +89,10 @@ input {
 #startGame {
   margin-top: 20px;
 }
+#dice-box {
+  transform: scale(1.5);
+  margin: 85px;
+}
 
 button {
   display: block;

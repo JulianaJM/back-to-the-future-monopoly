@@ -23,7 +23,7 @@ function move(player, resDice) {
   setTimeout(function() {
     game.movePawn(player.pawn);
     updatePlayers(player);
-  }, 1500);
+  }, 2000);
 
   console.log("player ", player);
 }
@@ -42,8 +42,6 @@ function updatePlayers(player) {
 }
 
 function cellActionDispatcher(e) {
-  // var idPawn = e.currentTarget.id;
-  // debugger;
   var currentPlayer = game.players.find(function(player) {
     return player.current;
   });

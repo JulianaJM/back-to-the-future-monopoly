@@ -82,7 +82,7 @@ function MonopolyView(gameRuleCallback) {
 
     setTimeout(function() {
       newPos.blur();
-    }, 1800);
+    }, 2000);
   };
 
   this.cellsEventListener = function(gameLitenerCallback) {
