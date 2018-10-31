@@ -42,41 +42,47 @@ function MonopolyView(gameRuleCallback) {
       .getElementById("diceButton")
       .addEventListener("click", gameRuleCallback, false);
 
-    var board = document.getElementById("monopoly-board");
-    board.style.display = "block";
-    document.getElementById("monopoly-start").innerHTML = "";
-    document.getElementById("tools").style.display = "block";
-
     var initialPos = document.getElementById(pawn1.currentCell);
     var pawn1Display = document.getElementById(pawn1.name);
     var pawn2Display = document.getElementById(pawn2.name);
+    document.getElementById("tools").appendChild(pawn1Display);
+    document.getElementById("tools").appendChild(pawn2Display);
+    document.getElementById("tools").style.display = "block";
+
+    document.getElementById("monopoly-start").innerHTML = "";
+    var board = document.getElementById("monopoly-board");
+
+    board.style.display = "block";
 
     translateToAbsolute(
       pawn1Display,
       initialPos.firstElementChild.offsetLeft,
       initialPos.firstElementChild.offsetTop,
-      "1s"
+      "2s"
     );
 
     translateToAbsolute(
       pawn2Display,
       initialPos.firstElementChild.offsetLeft,
       initialPos.firstElementChild.offsetTop,
-      "1s"
+      "2s"
     );
   };
 
   this.movePawn = function(pawn) {
     var pawnElement = document.getElementById(pawn.name);
     var newPos = document.getElementById(pawn.currentCell);
-    newPos.focus();
-
     translateToAbsolute(
       pawnElement,
       newPos.firstElementChild.offsetLeft,
       newPos.firstElementChild.offsetTop,
-      "1s"
+      "2s"
     );
+    newPos.focus();
+
+    setTimeout(function() {
+      newPos.blur();
+    }, 1800);
   };
 
   this.cellsEventListener = function(gameLitenerCallback) {

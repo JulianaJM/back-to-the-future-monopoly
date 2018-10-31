@@ -37,6 +37,7 @@
   /* align-items: center; */
   /* justify-content: center; */
   border: 1px solid black;
+  transition: transform 0.2s;
 }
 
 .circle {
@@ -49,13 +50,51 @@
 #tools {
   display: none;
 }
+#tools img {
+  position: absolute;
+  z-index: 1;
+}
+label {
+  margin-right: 9px;
+}
+
+.form-pawn {
+  display: inline-flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+.form-name {
+  display: flex;
+}
+
+input {
+  display: block;
+}
+
+.square:focus {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transform: scale(1.5);
+}
+
+.form-container {
+  width: 500px;
+  margin: 0 auto;
+}
+.form-content {
+  width: 250px;
+  margin: 0 auto;
+}
+
+#startGame {
+  margin-top: 20px;
+}
 
 button {
-  display: inline-block;
+  display: block;
   border: none;
   padding: 1rem 2rem;
   margin: 0;
-  width: 30%
   text-decoration: none;
   background: #0069ed;
   color: #ffffff;

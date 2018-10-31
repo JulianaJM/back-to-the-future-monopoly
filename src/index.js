@@ -1,7 +1,6 @@
 var rollDice = require("./utils/roll-a-die");
 var boardArray = require("./utils/board-game");
 var MonopolyView = require("./view/monopoly");
-var TitleCell = require("./model/title-cell");
 
 function monopoly() {
   var resDice = rollDice(game.diceDisplay);

@@ -10,34 +10,40 @@
 <body>
 
   <form id="monopoly-start">
-    <fieldset>
-      <legend>Start game</legend> <!-- Titre du fieldset -->
+    <div class="form-container">
+      <fieldset>
+        <legend>Start game</legend> <!-- Titre du fieldset -->
+        <div class="form-content">
+          <div class="form-name"><label for="nom">Pseudo </label>
+            <input type="text" name="pseudo" id="pseudo" /></div>
 
-      <label for="nom">Pseudo : </label>
-      <input type="text" name="pseudo" id="pseudo" />
+          <div class="form-pawn">
+            <input type="radio" name="pawn" value="pionMarty">
+            <img id="pionMarty" src="./public/images/pionMarty.png" />
+          </div>
 
-      <input type="radio" name="pawn" value="pionMarty"> <img id="pionMarty" src="./public/images/pionMarty.png" />
+          <div class="form-pawn"><input type="radio" name="pawn" value="pionDoc"> <img id="pionDoc" src="./public/images/pionDoc.png" /></div>
 
-      <input type="radio" name="pawn" value="pionDoc"> <img id="pionDoc" src="./public/images/pionDoc.png" />
+          <div class="form-pawn"><input type="radio" name="pawn" value="pionDoloreane">
+            <img id="pionDoloreane" src="./public/images/pionDoloreane.png" />
+          </div>
 
-      <input type="radio" name="pawn" value="pionDoloreane"> <img id="pionDoloreane" src="./public/images/pionDoloreane.png" />
+          <div class="form-pawn"><input type="radio" name="pawn" value="pionHoverboard">
+            <img id="pionHoverboard" src="./public/images/pionHoverboard.png" />
+          </div>
 
-      <input type="radio" name="pawn" value="pionHoverboard"> <img id="pionHoverboard" src="./public/images/pionHoverboard.png" />
+          <button id="startGame" type="button">play</button>
+        </div>
 
-      <button id="startGame" type="button">play</button>
 
-    </fieldset>
+      </fieldset>
+    </div>
+
   </form>
 
   <div id="tools">
-    <img id="pionMarty" src="./public/images/pionMarty.png" />
-    <img id="pionDoc" src="./public/images/pionDoc.png" />
-    <img id="pionDoloreane" src="./public/images/pionDoloreane.png" />
-    <img id="pionHoverboard" src="./public/images/pionHoverboard.png" />
     <button id="diceButton">roll</button>
   </div>
-
-
 
   <div id="monopoly-board" class="monopoly-wrapper">
     <div class="board-top">
