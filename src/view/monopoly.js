@@ -1,3 +1,5 @@
+"use strict";
+
 var Bank = require("../model/bank");
 var Pawn = require("../model/pawn");
 var Player = require("../model/player");
@@ -42,7 +44,7 @@ function MonopolyView(gameRuleCallback) {
       .getElementById("diceButton")
       .addEventListener("click", gameRuleCallback, false);
 
-    var initialPos = document.getElementById(pawn1.currentCell);
+    var initialPos = document.getElementById(pawn1.currentCellId);
     var pawn1Display = document.getElementById(pawn1.name);
     var pawn2Display = document.getElementById(pawn2.name);
     document.getElementById("tools").appendChild(pawn1Display);
@@ -58,20 +60,20 @@ function MonopolyView(gameRuleCallback) {
       pawn1Display,
       initialPos.firstElementChild.offsetLeft,
       initialPos.firstElementChild.offsetTop,
-      "2s"
+      "1s"
     );
 
     translateToAbsolute(
       pawn2Display,
       initialPos.firstElementChild.offsetLeft,
       initialPos.firstElementChild.offsetTop,
-      "2s"
+      "1s"
     );
   };
 
   this.movePawn = function(pawn) {
     var pawnElement = document.getElementById(pawn.name);
-    var newPos = document.getElementById(pawn.currentCell);
+    var newPos = document.getElementById(pawn.currentCellId);
     translateToAbsolute(
       pawnElement,
       newPos.firstElementChild.offsetLeft,
@@ -86,7 +88,7 @@ function MonopolyView(gameRuleCallback) {
   };
 
   this.cellsEventListener = function(gameLitenerCallback) {
-    for (var i = 0; i < this.MAX_CELL - 1; i++) {
+    for (var i = 0; i < this.MAX_CELL; i++) {
       document
         .getElementById(i)
         .addEventListener("focus", gameLitenerCallback, false);

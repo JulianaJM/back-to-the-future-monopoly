@@ -6,4 +6,11 @@ module.exports = function Player(name, id) {
   this.pawn = null;
   this.current = false;
   this.virtual = false;
+
+  this.payRent = function(playerToPay, amount) {
+    this.capital -= amount;
+    playerToPay.capital += amount;
+
+    return playerToPay;
+  };
 };
