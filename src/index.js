@@ -51,26 +51,27 @@ function cellActionDispatcher(e) {
   var titleToBuy = game.bank.titleList.find(function(title) {
     return title.cellId === currentCell.cellId;
   });
-  var responsePlayer = false;
+
   if (isFreeToBuy) {
-    responsePlayer = game.checkPlayerResponse(titleToBuy);
-  }
-  if (responsePlayer) {
-    currentPlayer = game.bank.sellTitle(currentPlayer, titleToBuy);
-    if (
-      currentPlayer.titleList.find(function(title) {
-        title.id === titleToBuy.id;
-      }) !== null
-    ) {
-      currentCell.setPlayerOwner(currentPlayer);
-      console.log(currentPlayer.name, "achete ", titleToBuy.name);
-    } else {
-      console.log(
-        currentPlayer.name,
-        " n'a pas assez de capital pour ",
-        currentCell.name
-      );
-    }
+    game.checkPlayerResponse(titleToBuy).then(function(responsePlayer) {
+      if (responsePlayer) {
+        currentPlayer = game.bank.sellTitle(currentPlayer, titleToBuy);
+        if (
+          currentPlayer.titleList.find(function(title) {
+            title.id === titleToBuy.id;
+          }) !== null
+        ) {
+          currentCell.setPlayerOwner(currentPlayer);
+          console.log(currentPlayer.name, "achete ", titleToBuy.name);
+        } else {
+          console.log(
+            currentPlayer.name,
+            " n'a pas assez de capital pour ",
+            currentCell.name
+          );
+        }
+      }
+    });
   } else {
     if (currentCell.playerOwner) {
       if (currentCell.playerOwner.id === currentPlayer.id) {

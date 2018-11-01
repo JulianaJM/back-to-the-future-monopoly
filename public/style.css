@@ -138,6 +138,7 @@ button:active {
   transition: opacity 500ms;
   visibility: hidden;
   opacity: 0;
+  z-index: 2;
 }
 
 .popup {
@@ -148,12 +149,18 @@ button:active {
   width: 30%;
   position: relative;
   transition: all 5s ease-in-out;
+  z-index: 2;
 }
 
 .popup h2 {
   margin-top: 0;
   color: #333;
   font-family: Tahoma, Arial, sans-serif;
+}
+
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
 }
 .popup .close {
   position: absolute;
@@ -168,9 +175,12 @@ button:active {
 .popup .close:hover {
   color: #06d85f;
 }
-.popup .content {
-  max-height: 30%;
-  overflow: auto;
+
+.decision {
+  display: flex;
+}
+.decision button {
+  margin: 0.1rem;
 }
 
 @media screen and (max-width: 700px) {

@@ -95,9 +95,38 @@ function MonopolyView(gameRuleCallback) {
     }
   };
 
-  this.checkPlayerResponse = function() {
-    return true;
+  this.checkPlayerResponse = function(title) {
+    return new Promise((resolve, reject) => {
+      setTimeout(function() {
+        var titleDisplay = document.getElementById("title" + title.cellId);
+        var newTitleDisplay = titleDisplay.cloneNode();
+        newTitleDisplay.id = newTitleDisplay.id + "buy?";
+        var cardDisplay = document.getElementById("acquisition");
+        if (cardDisplay.firstChild) {
+          cardDisplay.removeChild(cardDisplay.firstChild);
+        }
+        cardDisplay.appendChild(newTitleDisplay);
+        newTitleDisplay.classList.remove("cards");
+        document.getElementById("popup1").style.visibility = "visible";
+        document.getElementById("popup1").style.opacity = "1";
+        document
+          .getElementById("buyTitle")
+          .addEventListener("focus", function() {
+            resolve(sendResponse(true));
+          });
+
+        document.getElementById("cancel").addEventListener("focus", function() {
+          resolve(sendResponse(false));
+        });
+      }, 2100);
+    });
   };
+}
+
+function sendResponse(response) {
+  document.getElementById("popup1").style.visibility = "hidden";
+  document.getElementById("popup1").style.opacity = "0";
+  return response;
 }
 
 function translateToAbsolute(sel, x, y, dur) {
