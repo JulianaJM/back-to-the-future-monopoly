@@ -51,7 +51,11 @@ function cellActionDispatcher(e) {
   var titleToBuy = game.bank.titleList.find(function(title) {
     return title.cellId === currentCell.cellId;
   });
+  var responsePlayer = false;
   if (isFreeToBuy) {
+    responsePlayer = game.checkPlayerResponse(titleToBuy);
+  }
+  if (responsePlayer) {
     currentPlayer = game.bank.sellTitle(currentPlayer, titleToBuy);
     if (
       currentPlayer.titleList.find(function(title) {
