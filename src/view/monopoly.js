@@ -52,6 +52,18 @@ function MonopolyView(gameRuleCallback) {
     document.getElementById("tools").style.display = "block";
 
     document.getElementById("monopoly-start").innerHTML = "";
+
+    var playerInfoDisplay = document.getElementById("player-board");
+    document.getElementById("player1").innerHTML = player.name;
+    document.getElementById("player2").innerHTML = virtualPlayer.name;
+    playerInfoDisplay.style.display = "block";
+    // this.players.forEach(player => {
+    //   var newDiv = document.createElement("div");
+    //   var newContent = document.createTextNode(player.name);
+    //   newDiv.appendChild(newContent);
+    //   playerInfoDisplay.appendChild(newDiv);
+    // });
+
     var board = document.getElementById("monopoly-board");
 
     board.style.display = "block";
@@ -95,9 +107,10 @@ function MonopolyView(gameRuleCallback) {
     }
   };
 
-  this.checkPlayerResponse = function(title) {
+  this.checkPlayerResponse = function(title, player) {
     return new Promise((resolve, reject) => {
       setTimeout(function() {
+        // FIXME title display not good
         var titleDisplay = document.getElementById("title" + title.cellId);
         var newTitleDisplay = titleDisplay.cloneNode();
         newTitleDisplay.id = newTitleDisplay.id + "buy?";
@@ -111,19 +124,26 @@ function MonopolyView(gameRuleCallback) {
         document.getElementById("popup1").style.opacity = "1";
         document
           .getElementById("buyTitle")
-          .addEventListener("focus", function() {
-            resolve(sendResponse(true));
+          .addEventListener("click", function() {
+            // FIXME duplicate display
+            var playerBoard = document.getElementById("player" + player.id);
+            var newDiv = document.createElement("div");
+            var newContent = document.createTextNode(title.name);
+            newDiv.appendChild(newContent);
+            playerBoard.appendChild(newDiv);
+
+            resolve(sendResponse(true, player, title));
           });
 
-        document.getElementById("cancel").addEventListener("focus", function() {
-          resolve(sendResponse(false));
+        document.getElementById("cancel").addEventListener("click", function() {
+          resolve(sendResponse(false, player, title));
         });
       }, 2100);
     });
   };
 }
 
-function sendResponse(response) {
+function sendResponse(response, player, title) {
   document.getElementById("popup1").style.visibility = "hidden";
   document.getElementById("popup1").style.opacity = "0";
   return response;
