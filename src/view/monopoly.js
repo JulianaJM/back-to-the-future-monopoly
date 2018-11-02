@@ -119,7 +119,7 @@ function MonopolyView(gameRuleCallback) {
     }
   };
 
-  this.checkPlayerResponse = function(title, player1) {
+  this.checkPlayerResponse = function(title, player) {
     return new Promise((resolve, reject) => {
       setTimeout(function() {
         var titleDisplay = document.getElementById("title" + title.cellId);
@@ -136,19 +136,19 @@ function MonopolyView(gameRuleCallback) {
         document
           .getElementById("buyTitle")
           .addEventListener("click", function() {
-            // FIXME duplicate display
-            // var playerBoard = document.getElementById("player" + player1.id);
+            // console.log("je suis passé par la !!!!!!!");
+            // var playerBoard = document.getElementById("player" + player.id);
             // var newDiv = document.createElement("div");
             // var newContent = document.createTextNode(title.name);
             // newDiv.innerHTML = "";
             // newDiv.appendChild(newContent);
             // playerBoard.appendChild(newDiv);
 
-            resolve(sendResponse(true, player1, title));
+            resolve(sendResponse(true, player, title));
           });
 
         document.getElementById("cancel").addEventListener("click", function() {
-          resolve(sendResponse(false, player1, title));
+          resolve(sendResponse(false, player, title));
         });
       }, 2100);
     });
