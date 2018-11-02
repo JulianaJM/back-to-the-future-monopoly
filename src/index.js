@@ -58,6 +58,7 @@ function cellActionDispatcher(e) {
       .then(function(responsePlayer) {
         if (responsePlayer) {
           doBuy(currentPlayer, currentCell, titleToBuy);
+          game.updatePlayerBoard(currentPlayer, titleToBuy);
         }
       });
     updatePlayers(currentPlayer);

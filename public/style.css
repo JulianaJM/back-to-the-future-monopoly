@@ -199,6 +199,14 @@ button:active {
   border: 1px solid black;
   position: absolute;
   top: 129px;
+  margin-bottom: 5px;
+}
+#player1 div {
+  margin: 10px;
+}
+
+#player2 div {
+  margin: 10px;
 }
 
 #player2 {
@@ -206,6 +214,7 @@ button:active {
   position: absolute;
   right: 129px;
   top: 129px;
+  margin-bottom: 5px;
 }
 
 .board-top .square:nth-child(1) {

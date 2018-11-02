@@ -66,16 +66,26 @@ function MonopolyView(gameRuleCallback) {
     document.getElementById("monopoly-start").innerHTML = "";
 
     var playerInfoDisplay = document.getElementById("player-board");
-    document.getElementById("player1").innerHTML = player1.name;
-    document.getElementById("player2").innerHTML = player2.name;
-    playerInfoDisplay.style.display = "block";
+    var p1Display = document.getElementById("player1");
+    var p2Display = document.getElementById("player2");
 
-    // this.players.forEach(player1 => {
-    //   var newDiv = document.createElement("div");
-    //   var newContent = document.createTextNode(player1.name);
-    //   newDiv.appendChild(newContent);
-    //   playerInfoDisplay.appendChild(newDiv);
-    // });
+    var newP = document.createElement("p");
+    var newContent = document.createTextNode(player1.name);
+    newP.appendChild(newContent);
+    p1Display.appendChild(newP);
+
+    var newP1 = document.createElement("p");
+    var newContent1 = document.createTextNode(player2.name);
+    newP1.appendChild(newContent1);
+    p2Display.appendChild(newP1);
+
+    var player1Capital = document.getElementById("player1Capital");
+    var player2Capital = document.getElementById("player2Capital");
+
+    player1Capital.innerHTML = "Capital restant : " + player1.capital;
+    player2Capital.innerHTML = "Capital restant : " + player2.capital;
+
+    playerInfoDisplay.style.display = "block";
 
     var board = document.getElementById("monopoly-board");
 
@@ -123,6 +133,13 @@ function MonopolyView(gameRuleCallback) {
   this.checkPlayerResponse = function(title, player) {
     return new Promise((resolve, reject) => {
       setTimeout(function() {
+        var popupTitle = document.getElementById("popupTitle");
+        popupTitle.innerHTML = player.name + " Souhaitez vous acquerir ? ";
+
+        var playerCaptitalDisplay = document.getElementById("capital");
+        playerCaptitalDisplay.innerHTML =
+          "Votre capital : " + player.capital + "$";
+
         var titleDisplay = document.getElementById("title" + title.cellId);
         var newTitleDisplay = titleDisplay.cloneNode();
         newTitleDisplay.id = newTitleDisplay.id + "buy?";
@@ -137,14 +154,6 @@ function MonopolyView(gameRuleCallback) {
         document
           .getElementById("buyTitle")
           .addEventListener("click", function() {
-            // console.log("je suis passé par la !!!!!!!");
-            // var playerBoard = document.getElementById("player" + player.id);
-            // var newDiv = document.createElement("div");
-            // var newContent = document.createTextNode(title.name);
-            // newDiv.innerHTML = "";
-            // newDiv.appendChild(newContent);
-            // playerBoard.appendChild(newDiv);
-
             resolve(sendResponse(true, player, title));
           });
 
@@ -154,9 +163,23 @@ function MonopolyView(gameRuleCallback) {
       }, 2100);
     });
   };
+
+  this.updatePlayerBoard = function(player, title) {
+    var playerBoard = document.getElementById("player" + player.id);
+    var playerCapital = document.getElementById(
+      "player" + player.id + "Capital"
+    );
+
+    playerCapital.innerHTML = "Capital restant : " + player.capital;
+
+    var newDiv = document.createElement("div");
+    var newContent = document.createTextNode(title.name);
+    newDiv.appendChild(newContent);
+    playerBoard.appendChild(newDiv);
+  };
 }
 
-function sendResponse(response, player1, title) {
+function sendResponse(response, player, title) {
   document.getElementById("popup1").style.visibility = "hidden";
   document.getElementById("popup1").style.opacity = "0";
   return response;
