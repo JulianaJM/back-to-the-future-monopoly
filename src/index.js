@@ -47,6 +47,10 @@ function cellActionDispatcher(e) {
   var currentPlayer = game.players.find(function(player) {
     return player.current;
   });
+
+  if (parseInt(e.target.id) !== currentPlayer.pawn.currentCellId) {
+    return;
+  }
   console.log("joueur courant =  ", currentPlayer.name);
 
   var pos = currentPlayer.pawn.currentCellId;
