@@ -126,11 +126,12 @@ function MonopolyView(gameRuleCallback) {
           .getElementById("buyTitle")
           .addEventListener("click", function() {
             // FIXME duplicate display
-            var playerBoard = document.getElementById("player" + player.id);
-            var newDiv = document.createElement("div");
-            var newContent = document.createTextNode(title.name);
-            newDiv.appendChild(newContent);
-            playerBoard.appendChild(newDiv);
+            // var playerBoard = document.getElementById("player" + player.id);
+            // var newDiv = document.createElement("div");
+            // var newContent = document.createTextNode(title.name);
+            // newDiv.innerHTML = "";
+            // newDiv.appendChild(newContent);
+            // playerBoard.appendChild(newDiv);
 
             resolve(sendResponse(true, player, title));
           });

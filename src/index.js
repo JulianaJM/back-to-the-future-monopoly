@@ -22,8 +22,9 @@ function move(player, resDice) {
   //wait before move pawn
   setTimeout(function() {
     game.movePawn(player.pawn);
-    updatePlayers(player);
   }, 2000);
+  console.log("**********************");
+
   console.log("c'est au tour de ", player.name, " de jouer");
   console.log(player.name, "lance les dés et obtient ", resDice);
 }
@@ -31,6 +32,7 @@ function move(player, resDice) {
 function updatePlayers(player) {
   var newPlayers = game.players.map(function(p) {
     if (p.id === player.id) {
+      player.current = false;
       p = player;
     } else {
       p.current = true;
@@ -45,6 +47,8 @@ function cellActionDispatcher(e) {
   var currentPlayer = game.players.find(function(player) {
     return player.current;
   });
+  console.log("joueur courant =  ", currentPlayer.name);
+
   var pos = currentPlayer.pawn.currentCellId;
   var currentCell = boardArray[pos];
   var isFreeToBuy = currentCell.isSellable();
@@ -74,6 +78,7 @@ function cellActionDispatcher(e) {
           }
         }
       });
+    updatePlayers(currentPlayer);
   } else {
     if (currentCell.playerOwner) {
       if (currentCell.playerOwner.id === currentPlayer.id) {
@@ -90,13 +95,11 @@ function cellActionDispatcher(e) {
         " à ",
         playerToPay.name
       );
-
-      updatePlayers(currentPlayer.payRent(playerToPay, titleToBuy.rent));
+      currentPlayer.payRent(playerToPay, titleToBuy.rent);
     }
-  }
-  currentPlayer.current = false;
 
-  updatePlayers(currentPlayer);
+    updatePlayers(currentPlayer);
+  }
 }
 
 var game = new MonopolyView(monopoly);
