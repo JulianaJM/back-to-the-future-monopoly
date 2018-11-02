@@ -2,6 +2,7 @@
 
 var rollDice = require("./utils/roll-a-die");
 var boardArray = require("./utils/board-game");
+var chanceArray = require("./utils/chance-cards");
 var MonopolyView = require("./view/monopoly");
 
 var game = new MonopolyView(monopoly);
@@ -65,6 +66,26 @@ function cellActionDispatcher(e) {
   } else {
     if (currentCell.playerOwner) {
       doPay(currentPlayer, currentCell, titleToBuy);
+    } else if (currentCell.name === "chance") {
+      var chanceCardsKeys = Object.keys(chanceArray);
+
+      var randomChanceCard =
+        chanceArray[Math.floor(Math.random() * chanceCardsKeys.length)];
+
+      console.log("case chance ", randomChanceCard);
+
+      game.displayChanceCard(randomChanceCard);
+
+      var actions = randomChanceCard.actions;
+      if (actions.includes("RECEIVE")) {
+        //TODO verif passage case depart
+        game.bank.addMoney(currentPlayer, randomChanceCard.amount);
+      } else if (actions.includes("PAY")) {
+        game.bank.removeMoney(currentPlayer, randomChanceCard.amount);
+      } else if (actions.includes("MOVE")) {
+        currentPlayer.pawn.currentCellId = 0;
+        move(currentPlayer, randomChanceCard.moveTo);
+      }
     }
     updatePlayers(currentPlayer);
   }

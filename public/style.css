@@ -35,6 +35,10 @@
   display: none;
 }
 
+.chance {
+  display: none;
+}
+
 .square {
   display: flex;
   /* align-items: center; */
