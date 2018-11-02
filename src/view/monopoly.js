@@ -13,32 +13,44 @@ function MonopolyView(gameRuleCallback) {
 
   this.startGame = function() {
     var pawnArray = ["pionMarty", "pionDoc", "pionDoloreane", "pionHoverboard"];
-    var selectedPawn =
+    var selectedPawnPlayer1 =
       (document.querySelector("input[name=pawn]:checked") &&
         document.querySelector("input[name=pawn]:checked").value) ||
       "pionMarty";
-    var playerName = document.getElementById("pseudo").value || "player1";
+
+    var selectedPawnPlayer2 =
+      (document.querySelector("input[name=pawn1]:checked") &&
+        document.querySelector("input[name=pawn1]:checked").value) ||
+      "pionDoc";
+    var playerName1 = document.getElementById("pseudo1").value || "player1";
+    var playerName2 = document.getElementById("pseudo2").value || "player2";
+
     this.diceDisplay = document.getElementById("dice-box");
 
     this.bank = new Bank();
-    var player = new Player(playerName, 1);
-    player.current = true;
-    this.bank.capital -= player.capital;
-    var pawn1 = new Pawn(selectedPawn);
-    player.pawn = pawn1;
+    var player1 = new Player(playerName1, 1);
+    player1.current = true;
+    this.bank.capital -= player1.capital;
+    var pawn1 = new Pawn(selectedPawnPlayer1);
+    player1.pawn = pawn1;
 
-    var virtualPlayer = new Player("MrRobot1337", 2);
-    this.bank.capital -= virtualPlayer.capital;
-    var index = pawnArray.indexOf(selectedPawn);
-    if (index !== -1) {
-      pawnArray.splice(index, 1);
+    var player2 = new Player(playerName2, 2);
+    this.bank.capital -= player2.capital;
+    var pawn2 = null;
+    //can't have same pawn pick a random
+    if (selectedPawnPlayer2 === selectedPawnPlayer1) {
+      var index = pawnArray.indexOf(selectedPawnPlayer1);
+      if (index !== -1) {
+        pawnArray.splice(index, 1);
+      }
+      var randomPawn = pawnArray[Math.floor(Math.random() * pawnArray.length)];
+      pawn2 = new Pawn(randomPawn);
+    } else {
+      pawn2 = new Pawn(selectedPawnPlayer2);
+      player2.pawn = pawn2;
     }
-    var randomPawn = pawnArray[Math.floor(Math.random() * pawnArray.length)];
-    var pawn2 = new Pawn(randomPawn);
-    virtualPlayer.pawn = pawn2;
-    virtualPlayer.virtual = true;
 
-    this.players = [player, virtualPlayer];
+    this.players = [player1, player2];
 
     document
       .getElementById("diceButton")
@@ -54,12 +66,12 @@ function MonopolyView(gameRuleCallback) {
     document.getElementById("monopoly-start").innerHTML = "";
 
     var playerInfoDisplay = document.getElementById("player-board");
-    document.getElementById("player1").innerHTML = player.name;
-    document.getElementById("player2").innerHTML = virtualPlayer.name;
+    document.getElementById("player1").innerHTML = player1.name;
+    document.getElementById("player2").innerHTML = player2.name;
     playerInfoDisplay.style.display = "block";
-    // this.players.forEach(player => {
+    // this.players.forEach(player1 => {
     //   var newDiv = document.createElement("div");
-    //   var newContent = document.createTextNode(player.name);
+    //   var newContent = document.createTextNode(player1.name);
     //   newDiv.appendChild(newContent);
     //   playerInfoDisplay.appendChild(newDiv);
     // });
@@ -107,10 +119,9 @@ function MonopolyView(gameRuleCallback) {
     }
   };
 
-  this.checkPlayerResponse = function(title, player) {
+  this.checkPlayerResponse = function(title, player1) {
     return new Promise((resolve, reject) => {
       setTimeout(function() {
-        // FIXME title display not good
         var titleDisplay = document.getElementById("title" + title.cellId);
         var newTitleDisplay = titleDisplay.cloneNode();
         newTitleDisplay.id = newTitleDisplay.id + "buy?";
@@ -126,25 +137,25 @@ function MonopolyView(gameRuleCallback) {
           .getElementById("buyTitle")
           .addEventListener("click", function() {
             // FIXME duplicate display
-            // var playerBoard = document.getElementById("player" + player.id);
+            // var playerBoard = document.getElementById("player" + player1.id);
             // var newDiv = document.createElement("div");
             // var newContent = document.createTextNode(title.name);
             // newDiv.innerHTML = "";
             // newDiv.appendChild(newContent);
             // playerBoard.appendChild(newDiv);
 
-            resolve(sendResponse(true, player, title));
+            resolve(sendResponse(true, player1, title));
           });
 
         document.getElementById("cancel").addEventListener("click", function() {
-          resolve(sendResponse(false, player, title));
+          resolve(sendResponse(false, player1, title));
         });
       }, 2100);
     });
   };
 }
 
-function sendResponse(response, player, title) {
+function sendResponse(response, player1, title) {
   document.getElementById("popup1").style.visibility = "hidden";
   document.getElementById("popup1").style.opacity = "0";
   return response;

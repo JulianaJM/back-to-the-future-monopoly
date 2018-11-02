@@ -14,8 +14,8 @@
       <fieldset>
         <legend>Start game</legend> <!-- Titre du fieldset -->
         <div class="form-content">
-          <div class="form-name"><label for="nom">Pseudo </label>
-            <input type="text" name="pseudo" id="pseudo" /></div>
+          <div class="form-name"><label for="nom">Joueur 1 : </label>
+            <input type="text" name="pseudo1" id="pseudo1" /></div>
 
           <div class="form-pawn">
             <input type="radio" name="pawn" value="pionMarty">
@@ -30,6 +30,24 @@
 
           <div class="form-pawn"><input type="radio" name="pawn" value="pionHoverboard">
             <img id="pionHoverboard" src="./public/images/pionHoverboard.png" />
+          </div>
+
+          <div class="form-name"><label for="nom">Joueur 2 : </label>
+            <input type="text" name="pseudo2" id="pseudo2" /></div>
+
+          <div class="form-pawn">
+            <input type="radio" name="pawn1" value="pionMarty">
+            <img id="pionMarty1" src="./public/images/pionMarty.png" />
+          </div>
+
+          <div class="form-pawn"><input type="radio" name="pawn1" value="pionDoc"> <img id="pionDoc1" src="./public/images/pionDoc.png" /></div>
+
+          <div class="form-pawn"><input type="radio" name="pawn1" value="pionDoloreane">
+            <img id="pionDoloreane1" src="./public/images/pionDoloreane.png" />
+          </div>
+
+          <div class="form-pawn"><input type="radio" name="pawn1" value="pionHoverboard">
+            <img id="pionHoverboard1" src="./public/images/pionHoverboard.png" />
           </div>
 
           <button id="startGame" type="button">play</button>
