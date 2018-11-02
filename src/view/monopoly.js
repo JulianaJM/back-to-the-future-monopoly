@@ -69,6 +69,7 @@ function MonopolyView(gameRuleCallback) {
     document.getElementById("player1").innerHTML = player1.name;
     document.getElementById("player2").innerHTML = player2.name;
     playerInfoDisplay.style.display = "block";
+
     // this.players.forEach(player1 => {
     //   var newDiv = document.createElement("div");
     //   var newContent = document.createTextNode(player1.name);
