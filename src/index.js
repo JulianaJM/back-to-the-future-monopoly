@@ -111,7 +111,6 @@ function cellActionDispatcher(e) {
           );
         }
         if (actions.includes("MOVE")) {
-          debugger;
           console.log(
             currentPlayer.name,
             " se déplace vers case numéro ",
@@ -163,6 +162,7 @@ function doBuy(currentPlayer, currentCell, titleToBuy) {
   ) {
     currentCell.setPlayerOwner(currentPlayer);
     console.log(currentPlayer.name, "achete ", titleToBuy.name);
+    console.log("capital restant est maintenant de ", currentPlayer.capital);
   } else {
     console.log(
       currentPlayer.name,
