@@ -64,8 +64,10 @@ function cellActionDispatcher(e) {
       .then(function(responsePlayer) {
         if (responsePlayer) {
           /* handle buy title */
-          doBuy(currentPlayer, currentCell, titleToBuy);
-          game.updatePlayerBoard(currentPlayer, titleToBuy);
+          var isBuy = canBuy(currentPlayer, currentCell, titleToBuy);
+          if (isBuy) {
+            game.updatePlayerBoard(currentPlayer, titleToBuy);
+          }
 
           updatePlayers(currentPlayer);
         }
@@ -116,7 +118,7 @@ function cellActionDispatcher(e) {
             " se déplace vers case numéro ",
             randomChanceCard.moveTo
           );
-          if (randomChanceCard.moveTo > 0) {
+          if (randomChanceCard.moveTo >= 0) {
             currentPlayer.pawn.currentCellId = 0;
           }
 
@@ -153,22 +155,24 @@ function updatePlayers(player) {
   game.players = newPlayers;
 }
 
-function doBuy(currentPlayer, currentCell, titleToBuy) {
+function canBuy(currentPlayer, currentCell, titleToBuy) {
   currentPlayer = game.bank.sellTitle(currentPlayer, titleToBuy);
-  if (
-    currentPlayer.titleList.find(function(title) {
-      title.id === titleToBuy.id;
-    }) !== null
-  ) {
+  var titleFound = currentPlayer.titleList.find(function(title) {
+    return title.cellId === titleToBuy.cellId;
+  });
+  if (titleFound) {
     currentCell.setPlayerOwner(currentPlayer);
     console.log(currentPlayer.name, "achete ", titleToBuy.name);
     console.log("capital restant est maintenant de ", currentPlayer.capital);
+    return true;
   } else {
     console.log(
       currentPlayer.name,
       " n'a pas assez de capital pour ",
       currentCell.name
     );
+
+    return false;
   }
 }
 

@@ -221,6 +221,9 @@ function openPopup() {
 }
 
 function closePopup() {
+  document
+    .getElementById("popup1")
+    .removeEventListener("click", closePopup, true);
   document.getElementById("popup1").style.visibility = "hidden";
   document.getElementById("popup1").style.opacity = "0";
 }

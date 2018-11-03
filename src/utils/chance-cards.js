@@ -3,11 +3,11 @@ var chanceCards = [
   {
     id: 2,
     name: "plein chez texaco",
-    actions: ["PAY", "MOVE"],
+    actions: ["RECEIVE", "MOVE"],
     amount: 20000,
     moveTo: 24
   },
-  { id: 3, name: "allez en retenue", actions: ["MOVE", "RECEIVE"], moveTo: 10 },
+  { id: 3, name: "allez en retenue", actions: ["MOVE"], moveTo: 10 },
   {
     id: 4,
     name: "avancez case depart",
