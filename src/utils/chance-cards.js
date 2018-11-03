@@ -31,7 +31,7 @@ var chanceCards = [
   { id: 7, name: "banque verse 5000", actions: ["RECEIVE"], amount: 5000 },
   { id: 8, name: "gain courses", actions: ["RECEIVE"], amount: 10000 },
   { id: 9, name: "rdv cafe 80", actions: ["MOVE"], moveTo: 39 },
-  { id: 10, name: "reculez 3 cases", actions: ["MOVE_BACK"], moveTo: -3 },
+  { id: 10, name: "reculez 3 cases", actions: ["MOVE"], moveTo: -3 },
   {
     id: 11,
     name: "amende skate voie publique",

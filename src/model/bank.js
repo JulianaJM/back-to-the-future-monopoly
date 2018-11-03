@@ -14,8 +14,8 @@ module.exports = function Bank() {
     if (player.capital > 0 && player.capital >= title.rent) {
       this.removeMoney(player, title.rent);
       player.titleList.push(title);
-      return player;
     }
+    return player;
   };
   this.taxeCollection = function(player, amount) {
     this.removeMoney(player, amount);

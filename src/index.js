@@ -41,11 +41,16 @@ function cellActionDispatcher(e) {
   var currentPlayer = game.players.find(function(player) {
     return player.current;
   });
-  //on focus other cells without roll dice do nothing
+  //on focus other cells, without roll dice do nothing
   if (parseInt(e.target.id) !== currentPlayer.pawn.currentCellId) {
     return;
   }
-  console.log("joueur courant =  ", currentPlayer.name);
+  console.log(
+    "joueur courant =  ",
+    currentPlayer.name,
+    " capital restant = ",
+    currentPlayer.capital
+  );
   var pos = currentPlayer.pawn.currentCellId;
   var currentCell = boardArray[pos];
   var isFreeToBuy = currentCell.isSellable();
@@ -58,37 +63,73 @@ function cellActionDispatcher(e) {
       .checkPlayerResponse(titleToBuy, currentPlayer)
       .then(function(responsePlayer) {
         if (responsePlayer) {
+          /* handle buy title */
           doBuy(currentPlayer, currentCell, titleToBuy);
           game.updatePlayerBoard(currentPlayer, titleToBuy);
+
+          updatePlayers(currentPlayer);
         }
       });
-    updatePlayers(currentPlayer);
   } else {
+    /* handle rent title */
     if (currentCell.playerOwner) {
       doPay(currentPlayer, currentCell, titleToBuy);
+      updatePlayers(currentPlayer);
+
+      /* handle chance */
     } else if (currentCell.name === "chance") {
       var chanceCardsKeys = Object.keys(chanceArray);
 
       var randomChanceCard =
         chanceArray[Math.floor(Math.random() * chanceCardsKeys.length)];
-
       console.log("case chance ", randomChanceCard);
 
-      game.displayChanceCard(randomChanceCard, currentPlayer);
+      game.displayChanceCard(randomChanceCard, currentPlayer).then(function() {
+        var actions = randomChanceCard.actions;
+        if (actions.includes("RECEIVE")) {
+          //TODO verif passage case depart
+          game.bank.addMoney(currentPlayer, randomChanceCard.amount);
+          console.log(
+            currentPlayer.name,
+            " reçoit la somme de ",
+            randomChanceCard.amount,
+            "$"
+          );
+        }
+        if (actions.includes("PAY")) {
+          game.bank.removeMoney(currentPlayer, randomChanceCard.amount);
+          console.log(
+            currentPlayer.name,
+            " paye a la banque ",
+            randomChanceCard.amount,
+            "$"
+          );
 
-      var actions = randomChanceCard.actions;
-      if (actions.includes("RECEIVE")) {
-        //TODO verif passage case depart
-        game.bank.addMoney(currentPlayer, randomChanceCard.amount);
-      } else if (actions.includes("PAY")) {
-        game.bank.removeMoney(currentPlayer, randomChanceCard.amount);
-      } else if (actions.includes("MOVE")) {
-        debugger;
-        currentPlayer.pawn.currentCellId = 0;
-        move(currentPlayer, randomChanceCard.moveTo);
-      }
+          console.log(
+            "capital restant est maintenant de ",
+            currentPlayer.capital
+          );
+        }
+        if (actions.includes("MOVE")) {
+          debugger;
+          console.log(
+            currentPlayer.name,
+            " se déplace vers case numéro ",
+            randomChanceCard.moveTo
+          );
+          if (randomChanceCard.moveTo > 0) {
+            currentPlayer.pawn.currentCellId = 0;
+          }
+
+          move(currentPlayer, randomChanceCard.moveTo);
+        }
+
+        // update player board
+        game.updatePlayerBoard(currentPlayer);
+
+        updatePlayers(currentPlayer);
+      });
     }
-    updatePlayers(currentPlayer);
   }
 }
 

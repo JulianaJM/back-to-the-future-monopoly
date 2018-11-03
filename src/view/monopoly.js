@@ -123,28 +123,34 @@ function MonopolyView(gameRuleCallback) {
   };
 
   this.displayChanceCard = function(chance, player) {
-    var popupTitle = document.getElementById("popupTitle");
-    popupTitle.innerHTML = player.name + " vous tirez une carte chance";
+    return new Promise((resolve, reject) => {
+      //wait move pawn
+      setTimeout(function() {
+        var popupTitle = document.getElementById("popupTitle");
+        popupTitle.innerHTML = player.name + " vous tirez une carte chance";
 
-    var chance = document.getElementById("chance" + chance.id);
-    var newChance = chance.cloneNode();
-    newChance.id = newChance.id + "chance";
-    var cardChanceDisplay = document.getElementById("acquisition");
-    if (cardChanceDisplay.firstChild) {
-      cardChanceDisplay.removeChild(cardChanceDisplay.firstChild);
-    }
-    newChance.classList.remove("chance");
-    newChance.classList.add("chanceRotate");
+        var chanceDom = document.getElementById("chance" + chance.id);
+        var newChance = chanceDom.cloneNode();
+        newChance.id = newChance.id + "chance";
+        var cardChanceDisplay = document.getElementById("acquisition");
+        if (cardChanceDisplay.firstChild) {
+          cardChanceDisplay.removeChild(cardChanceDisplay.firstChild);
+        }
+        newChance.classList.remove("chance");
+        newChance.classList.add("chanceRotate");
 
-    cardChanceDisplay.appendChild(newChance);
+        cardChanceDisplay.appendChild(newChance);
 
-    openPopup();
+        openPopup();
 
-    document.getElementById("buyTitle").style.display = "none";
-    document.getElementById("cancel").style.display = "none";
+        document.getElementById("buyTitle").style.display = "none";
+        document.getElementById("cancel").style.display = "none";
 
-    document.getElementById("popup1").addEventListener("click", function() {
-      closePopup();
+        document.getElementById("popup1").addEventListener("click", function() {
+          closePopup();
+          resolve(true);
+        });
+      }, 2100);
     });
   };
 
@@ -158,9 +164,10 @@ function MonopolyView(gameRuleCallback) {
 
   this.checkPlayerResponse = function(title, player) {
     return new Promise((resolve, reject) => {
+      //wait move pawn
       setTimeout(function() {
         var popupTitle = document.getElementById("popupTitle");
-        popupTitle.innerHTML = player.name + " Souhaitez vous acquerir ? ";
+        popupTitle.innerHTML = player.name + ", souhaitez vous acquerir ? ";
 
         var playerCaptitalDisplay = document.getElementById("capital");
         playerCaptitalDisplay.innerHTML =
@@ -199,10 +206,12 @@ function MonopolyView(gameRuleCallback) {
 
     playerCapital.innerHTML = "Capital restant : " + player.capital;
 
-    var newDiv = document.createElement("div");
-    var newContent = document.createTextNode(title.name);
-    newDiv.appendChild(newContent);
-    playerBoard.appendChild(newDiv);
+    if (title) {
+      var newDiv = document.createElement("div");
+      var newContent = document.createTextNode(title.name);
+      newDiv.appendChild(newContent);
+      playerBoard.appendChild(newDiv);
+    }
   };
 }
 
