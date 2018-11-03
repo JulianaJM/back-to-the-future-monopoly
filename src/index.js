@@ -25,6 +25,7 @@ function monopoly() {
 
 function move(player, resDice) {
   var nextPos = player.pawn.currentCellId + resDice;
+  player.pawn.resDice = resDice;
   if (nextPos <= game.MAX_CELL - 1) {
     player.pawn.currentCellId = nextPos;
   } else {
@@ -75,7 +76,19 @@ function cellActionDispatcher(e) {
   } else {
     /* handle rent title */
     if (currentCell.playerOwner) {
-      var playerToPay = doPay(currentPlayer, currentCell, titleToBuy);
+      var amountToPay = titleToBuy.rent;
+      if (currentCell.cellId === 12 || currentCell.cellId === 28) {
+        /* fusion indus ou plutonium indus */
+
+        amountToPay = titleToBuy.rent * currentPlayer.pawn.resDice;
+        console.log(
+          "vous payer ",
+          currentPlayer.pawn.resDice,
+          " x 400 soit : ",
+          amountToPay
+        );
+      }
+      var playerToPay = doPay(currentPlayer, currentCell, amountToPay);
       updatePlayers(currentPlayer);
       game.updatePlayerBoard(playerToPay);
 
@@ -190,7 +203,7 @@ function canBuy(currentPlayer, currentCell, titleToBuy) {
   }
 }
 
-function doPay(currentPlayer, currentCell, titleToBuy) {
+function doPay(currentPlayer, currentCell, amount) {
   //at home do nothing
   if (currentCell.playerOwner.id === currentPlayer.id) {
     console.log(currentPlayer.name, " est chez lui");
@@ -200,14 +213,8 @@ function doPay(currentPlayer, currentCell, titleToBuy) {
   var playerToPay = game.players.find(function(player) {
     return player.current === false;
   });
-  console.log(
-    currentPlayer.name,
-    "paye ",
-    titleToBuy.rent,
-    " à ",
-    playerToPay.name
-  );
-  currentPlayer.payRent(playerToPay, titleToBuy.rent);
+  console.log(currentPlayer.name, "paye ", amount, " à ", playerToPay.name);
+  currentPlayer.payRent(playerToPay, amount);
 
   return playerToPay;
 }
