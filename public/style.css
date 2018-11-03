@@ -26,6 +26,10 @@
   border: 4px solid;
   border-radius: 3px;
 }
+#acquisition {
+  margin: 0 auto;
+  width: 250px;
+}
 
 /* Demo Specific Style */
 .board {
@@ -37,6 +41,10 @@
 
 .chance {
   display: none;
+}
+
+.chanceRotate {
+  transform: rotate(270deg);
 }
 
 .square {

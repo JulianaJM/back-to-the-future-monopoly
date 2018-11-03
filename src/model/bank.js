@@ -11,10 +11,11 @@ module.exports = function Bank() {
     player.capital -= amount;
   };
   this.sellTitle = function(player, title) {
-    if (player.capital > 0 && player.capital >= title.rent)
+    if (player.capital > 0 && player.capital >= title.rent) {
       this.removeMoney(player, title.rent);
-    player.titleList.push(title);
-    return player;
+      player.titleList.push(title);
+      return player;
+    }
   };
   this.taxeCollection = function(player, amount) {
     this.removeMoney(player, amount);

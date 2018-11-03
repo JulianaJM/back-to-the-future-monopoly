@@ -122,6 +122,32 @@ function MonopolyView(gameRuleCallback) {
     }, 2000);
   };
 
+  this.displayChanceCard = function(chance, player) {
+    var popupTitle = document.getElementById("popupTitle");
+    popupTitle.innerHTML = player.name + " vous tirez une carte chance";
+
+    var chance = document.getElementById("chance" + chance.id);
+    var newChance = chance.cloneNode();
+    newChance.id = newChance.id + "chance";
+    var cardChanceDisplay = document.getElementById("acquisition");
+    if (cardChanceDisplay.firstChild) {
+      cardChanceDisplay.removeChild(cardChanceDisplay.firstChild);
+    }
+    newChance.classList.remove("chance");
+    newChance.classList.add("chanceRotate");
+
+    cardChanceDisplay.appendChild(newChance);
+
+    openPopup();
+
+    document.getElementById("buyTitle").style.display = "none";
+    document.getElementById("cancel").style.display = "none";
+
+    document.getElementById("popup1").addEventListener("click", function() {
+      closePopup();
+    });
+  };
+
   this.cellsEventListener = function(gameLitenerCallback) {
     for (var i = 0; i < this.MAX_CELL; i++) {
       document
@@ -149,8 +175,9 @@ function MonopolyView(gameRuleCallback) {
         }
         cardDisplay.appendChild(newTitleDisplay);
         newTitleDisplay.classList.remove("cards");
-        document.getElementById("popup1").style.visibility = "visible";
-        document.getElementById("popup1").style.opacity = "1";
+        openPopup();
+        document.getElementById("buyTitle").style.display = "block";
+        document.getElementById("cancel").style.display = "block";
         document
           .getElementById("buyTitle")
           .addEventListener("click", function() {
@@ -179,9 +206,18 @@ function MonopolyView(gameRuleCallback) {
   };
 }
 
-function sendResponse(response, player, title) {
+function openPopup() {
+  document.getElementById("popup1").style.visibility = "visible";
+  document.getElementById("popup1").style.opacity = "1";
+}
+
+function closePopup() {
   document.getElementById("popup1").style.visibility = "hidden";
   document.getElementById("popup1").style.opacity = "0";
+}
+
+function sendResponse(response) {
+  closePopup();
   return response;
 }
 

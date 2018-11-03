@@ -74,7 +74,7 @@ function cellActionDispatcher(e) {
 
       console.log("case chance ", randomChanceCard);
 
-      game.displayChanceCard(randomChanceCard);
+      game.displayChanceCard(randomChanceCard, currentPlayer);
 
       var actions = randomChanceCard.actions;
       if (actions.includes("RECEIVE")) {
@@ -83,6 +83,7 @@ function cellActionDispatcher(e) {
       } else if (actions.includes("PAY")) {
         game.bank.removeMoney(currentPlayer, randomChanceCard.amount);
       } else if (actions.includes("MOVE")) {
+        debugger;
         currentPlayer.pawn.currentCellId = 0;
         move(currentPlayer, randomChanceCard.moveTo);
       }
