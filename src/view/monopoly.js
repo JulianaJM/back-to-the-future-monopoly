@@ -162,12 +162,17 @@ function MonopolyView(gameRuleCallback) {
     }
   };
 
-  this.checkPlayerResponse = function(title, player) {
+  this.checkPlayerResponse = function(title, player, cell) {
     return new Promise((resolve, reject) => {
       //wait move pawn
       setTimeout(function() {
         var popupTitle = document.getElementById("popupTitle");
-        popupTitle.innerHTML = player.name + ", souhaitez vous acquerir ? ";
+        popupTitle.innerHTML =
+          player.name +
+          ", souhaitez vous acquerir " +
+          "pour " +
+          cell.price +
+          " $ :";
 
         var playerCaptitalDisplay = document.getElementById("capital");
         playerCaptitalDisplay.innerHTML =

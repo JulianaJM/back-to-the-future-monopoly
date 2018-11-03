@@ -60,7 +60,7 @@ function cellActionDispatcher(e) {
 
   if (isFreeToBuy) {
     game
-      .checkPlayerResponse(titleToBuy, currentPlayer)
+      .checkPlayerResponse(titleToBuy, currentPlayer, currentCell)
       .then(function(responsePlayer) {
         if (responsePlayer) {
           /* handle buy title */
@@ -75,8 +75,9 @@ function cellActionDispatcher(e) {
   } else {
     /* handle rent title */
     if (currentCell.playerOwner) {
-      doPay(currentPlayer, currentCell, titleToBuy);
+      var playerToPay = doPay(currentPlayer, currentCell, titleToBuy);
       updatePlayers(currentPlayer);
+      game.updatePlayerBoard(playerToPay);
 
       /* handle chance */
     } else if (currentCell.name === "chance") {
@@ -130,6 +131,9 @@ function cellActionDispatcher(e) {
 
         updatePlayers(currentPlayer);
       });
+    } else {
+      //TODO other cells
+      updatePlayers(currentPlayer);
     }
   }
 }
@@ -156,13 +160,23 @@ function updatePlayers(player) {
 }
 
 function canBuy(currentPlayer, currentCell, titleToBuy) {
-  currentPlayer = game.bank.sellTitle(currentPlayer, titleToBuy);
+  currentPlayer = game.bank.sellTitle(
+    currentPlayer,
+    titleToBuy,
+    currentCell.price
+  );
   var titleFound = currentPlayer.titleList.find(function(title) {
     return title.cellId === titleToBuy.cellId;
   });
   if (titleFound) {
     currentCell.setPlayerOwner(currentPlayer);
-    console.log(currentPlayer.name, "achete ", titleToBuy.name);
+    console.log(
+      currentPlayer.name,
+      "achete ",
+      titleToBuy.name,
+      " pour ",
+      currentCell.price
+    );
     console.log("capital restant est maintenant de ", currentPlayer.capital);
     return true;
   } else {
@@ -194,6 +208,8 @@ function doPay(currentPlayer, currentCell, titleToBuy) {
     playerToPay.name
   );
   currentPlayer.payRent(playerToPay, titleToBuy.rent);
+
+  return playerToPay;
 }
 
 module.exports = monopoly;

@@ -10,9 +10,9 @@ module.exports = function Bank() {
     this.capital -= amount;
     player.capital -= amount;
   };
-  this.sellTitle = function(player, title) {
-    if (player.capital > 0 && player.capital >= title.rent) {
-      this.removeMoney(player, title.rent);
+  this.sellTitle = function(player, title, cellPrice) {
+    if (player.capital > 0 && player.capital >= cellPrice) {
+      this.removeMoney(player, cellPrice);
       player.titleList.push(title);
     }
     return player;
