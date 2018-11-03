@@ -77,7 +77,7 @@ function cellActionDispatcher(e) {
     /* handle rent title */
     if (currentCell.playerOwner) {
       var amountToPay = titleToBuy.rent;
-      if (currentCell.cellId === 12 || currentCell.cellId === 28) {
+      if (currentCell.cellId === 13 || currentCell.cellId === 28) {
         /* fusion indus ou plutonium indus */
 
         amountToPay = titleToBuy.rent * currentPlayer.pawn.resDice;
