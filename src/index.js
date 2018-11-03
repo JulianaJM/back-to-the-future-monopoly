@@ -89,8 +89,17 @@ function cellActionDispatcher(e) {
         );
       }
       var playerToPay = doPay(currentPlayer, currentCell, amountToPay);
-      updatePlayers(currentPlayer);
-      game.updatePlayerBoard(playerToPay);
+
+      if (currentPlayer.capital < 0) {
+        game.gameOver(currentPlayer, playerToPay);
+      } else {
+        updatePlayers(currentPlayer);
+        if (playerToPay) {
+          // player is not on his title
+          game.updatePlayerBoard(playerToPay);
+        }
+        game.updatePlayerBoard(currentPlayer);
+      }
 
       /* handle chance */
     } else if (currentCell.name === "chance") {
@@ -207,7 +216,7 @@ function doPay(currentPlayer, currentCell, amount) {
   //at home do nothing
   if (currentCell.playerOwner.id === currentPlayer.id) {
     console.log(currentPlayer.name, " est chez lui");
-    return;
+    return null;
   }
 
   var playerToPay = game.players.find(function(player) {

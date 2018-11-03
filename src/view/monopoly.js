@@ -218,6 +218,25 @@ function MonopolyView(gameRuleCallback) {
       playerBoard.appendChild(newDiv);
     }
   };
+
+  this.gameOver = function(loser, winner) {
+    document.getElementById("diceButton").disabled = true;
+    var popupTitle = document.getElementById("popupTitle");
+    popupTitle.innerHTML = "Game over ...";
+    var dialogDisplay = document.getElementById("acquisition");
+    if (dialogDisplay.firstChild) {
+      dialogDisplay.removeChild(dialogDisplay.firstChild);
+    }
+    document.getElementById("capital").innerHTML = "";
+    document.getElementById("decision").innerHTML = "";
+
+    dialogDisplay.innerHTML =
+      loser.name +
+      " a fait faillite ! " +
+      winner.name +
+      " remporte la partie !";
+    openPopup();
+  };
 }
 
 function openPopup() {
