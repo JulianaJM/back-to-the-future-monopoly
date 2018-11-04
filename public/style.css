@@ -51,16 +51,6 @@
   transition: transform 0.2s;
 }
 
-.middle {
-  width: 90px;
-  /* position: absolute; */
-  /* top: 50%; */
-  /* left: 50%; */
-  /* transform: translate(-50%, -50%); */
-  margin-top: 8.5rem;
-  margin-left: 1.5rem;
-}
-
 .circle {
   width: 1px;
   height: 1px;
@@ -117,10 +107,10 @@ input {
 
 .dice-btn:before {
   content: url("./images/dice-solid.svg");
-  width: 20px;
+  width: 50px;
   float: left;
-  margin-right: 5px;
   margin-top: -2px;
+  margin: -15px;
 }
 
 .dice-btn {
@@ -221,6 +211,18 @@ button[disabled] {
 }
 .popup .close:hover {
   color: #06d85f;
+}
+
+#player-turn {
+  display: none;
+}
+
+.turn-player1 {
+  float: left;
+}
+
+.turn-player2 {
+  float: right;
 }
 
 .decision {

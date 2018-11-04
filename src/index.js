@@ -192,12 +192,14 @@ function updateDisplayWithMove(player) {
 
 function updatePlayers(player) {
   game.disableDice(false);
+
   var newPlayers = game.players.map(function(p) {
     if (p.id === player.id) {
       player.current = false;
       p = player;
     } else {
       p.current = true;
+      game.displayPlayerTurn(p);
     }
     return p;
   });

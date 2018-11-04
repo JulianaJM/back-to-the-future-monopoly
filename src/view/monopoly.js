@@ -66,18 +66,15 @@ function MonopolyView(gameRuleCallback) {
     document.getElementById("tools").appendChild(pawn1Display);
     document.getElementById("tools").appendChild(pawn2Display);
     document.getElementById("tools").style.display = "block";
-
     document.getElementById("monopoly-start").innerHTML = "";
 
-    var playerInfoDisplay = document.getElementById("player-board");
     var p1Display = document.getElementById("player1");
-    var p2Display = document.getElementById("player2");
-
     var newP = document.createElement("p");
     var newContent = document.createTextNode(player1.name);
     newP.appendChild(newContent);
     p1Display.appendChild(newP);
 
+    var p2Display = document.getElementById("player2");
     var newP1 = document.createElement("p");
     var newContent1 = document.createTextNode(player2.name);
     newP1.appendChild(newContent1);
@@ -88,12 +85,11 @@ function MonopolyView(gameRuleCallback) {
 
     player1Capital.innerHTML = "Capital restant : " + player1.capital;
     player2Capital.innerHTML = "Capital restant : " + player2.capital;
+    this.displayPlayerTurn(player1);
 
-    playerInfoDisplay.style.display = "block";
-
-    var board = document.getElementById("monopoly-board");
-
-    board.style.display = "block";
+    document.getElementById("player-board").style.display = "block";
+    document.getElementById("player-turn").style.display = "block";
+    document.getElementById("monopoly-board").style.display = "block";
 
     translateToAbsolute(
       pawn1Display,
@@ -143,6 +139,14 @@ function MonopolyView(gameRuleCallback) {
   this.sendResponse = function(response) {
     this.closePopup();
     return response;
+  };
+
+  this.displayPlayerTurn = function(player) {
+    var playerTurnDiv = document.getElementById("player-turn");
+    playerTurnDiv.removeAttribute("class");
+    playerTurnDiv.classList.add("turn-player" + player.id);
+    document.getElementById("playerCurrent").innerHTML =
+      player.name + " a vous de lancer les dés";
   };
 
   this.displaySpecialCard = function(chance, player, type) {
