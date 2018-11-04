@@ -3,23 +3,23 @@ var chanceCards = [
   {
     id: 2,
     name: "plein chez texaco",
-    actions: ["RECEIVE", "MOVE"],
-    amount: 20000,
+    actions: ["RECEIVE" /*, "MOVE"*/],
+    //amount: 20000,
     moveTo: 24
   },
   { id: 3, name: "allez en retenue", actions: ["MOVE"], moveTo: 10 },
   {
     id: 4,
     name: "avancez case depart",
-    actions: ["MOVE", "RECEIVE"],
-    amount: 20000,
+    actions: ["MOVE" /*, "RECEIVE"*/],
+    //amount: 20000,
     moveTo: 0
   },
   {
     id: 5,
     name: "allez a justice 1955",
-    actions: ["MOVE", "RECEIVE"],
-    amount: 20000,
+    actions: ["MOVE" /*, "RECEIVE"*/],
+    //amount: 20000,
     moveTo: 15
   },
   {
