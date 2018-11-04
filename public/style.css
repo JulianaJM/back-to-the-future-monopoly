@@ -199,6 +199,7 @@ button[disabled] {
   margin-top: 0;
   color: #333;
   font-family: Tahoma, Arial, sans-serif;
+  text-align: center;
 }
 
 .popup .content {

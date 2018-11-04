@@ -3,6 +3,7 @@
 var rollDice = require("./utils/roll-a-die");
 var boardArray = require("./utils/board-game");
 var chanceArray = require("./utils/chance-cards");
+var caisseCommunauteArray = require("./utils/cdc-cards");
 var MonopolyView = require("./view/monopoly");
 
 var game = new MonopolyView(monopoly);
@@ -24,7 +25,7 @@ function monopoly() {
   //uncomment for debug mode
   // resDice = prompt("Please enter your case:", "7");
   // move(currentPlayer, parseInt(resDice));
-  move(currentPlayer, resDice);
+  move(curredisplaySpecialCardntPlayer, resDice);
 }
 
 function move(player, resDice) {
@@ -101,64 +102,68 @@ function cellActionDispatcher(e) {
       /* handle chance */
     } else if (currentCell.name === "chance") {
       var chanceCardsKeys = Object.keys(chanceArray);
-
       var randomChanceCard =
         chanceArray[Math.floor(Math.random() * chanceCardsKeys.length)];
       console.log("case chance ", randomChanceCard);
 
-      game.displayChanceCard(randomChanceCard, currentPlayer).then(function() {
-        var actions = randomChanceCard.actions;
-        var isMoveAction = false;
-        if (actions.includes("RECEIVE")) {
-          //TODO verif passage case depart
-          game.bank.addMoney(currentPlayer, randomChanceCard.amount);
-          console.log(
-            currentPlayer.name,
-            " reçoit la somme de ",
-            randomChanceCard.amount,
-            "$"
-          );
-        }
-        if (actions.includes("PAY")) {
-          game.bank.removeMoney(currentPlayer, randomChanceCard.amount);
-          console.log(
-            currentPlayer.name,
-            " paye a la banque ",
-            randomChanceCard.amount,
-            "$"
-          );
+      handleSpecialCard(currentPlayer, randomChanceCard, "chance");
+    } else if (currentCell.name === "caisse de communauté") {
+      var cdcCardsKeys = Object.keys(caisseCommunauteArray);
+      var randomCdcCard =
+        caisseCommunauteArray[Math.floor(Math.random() * cdcCardsKeys.length)];
+      console.log("case caisse de communauté ", randomCdcCard);
 
-          console.log(
-            "capital restant est maintenant de ",
-            currentPlayer.capital
-          );
-        }
-        if (actions.includes("MOVE")) {
-          console.log(
-            currentPlayer.name,
-            " se déplace vers case numéro ",
-            randomChanceCard.moveTo
-          );
-          isMoveAction = true;
-          if (randomChanceCard.moveTo >= 0) {
-            currentPlayer.pawn.currentCellId = 0;
-          }
-
-          move(currentPlayer, randomChanceCard.moveTo);
-        }
-
-        // update player board
-        game.updatePlayerBoard(currentPlayer);
-        if (!isMoveAction) {
-          //don't update wait for focus on cell handle this
-          updatePlayers(currentPlayer);
-        }
-      });
+      handleSpecialCard(currentPlayer, randomCdcCard, "cdc");
     } else {
       //TODO other cells
       updatePlayers(currentPlayer);
     }
   }
+}
+
+function handleSpecialCard(currentPlayer, randomCard, type) {
+  game.displaySpecialCard(randomCard, currentPlayer, type).then(function() {
+    var actions = randomCard.actions;
+    var isMoveAction = false;
+    if (actions.includes("RECEIVE")) {
+      //TODO verif passage case depart
+      game.bank.addMoney(currentPlayer, randomCard.amount);
+      console.log(
+        currentPlayer.name,
+        " reçoit la somme de ",
+        randomCard.amount,
+        "$"
+      );
+    }
+    if (actions.includes("PAY")) {
+      game.bank.removeMoney(currentPlayer, randomCard.amount);
+      console.log(
+        currentPlayer.name,
+        " paye a la banque ",
+        randomCard.amount,
+        "$"
+      );
+      console.log("capital restant est maintenant de ", currentPlayer.capital);
+    }
+    if (actions.includes("MOVE")) {
+      console.log(
+        currentPlayer.name,
+        " se déplace vers case numéro ",
+        randomCard.moveTo
+      );
+      isMoveAction = true;
+      if (randomCard.moveTo >= 0) {
+        currentPlayer.pawn.currentCellId = 0;
+      }
+      move(currentPlayer, randomCard.moveTo);
+    }
+    // update player board
+    game.updatePlayerBoard(currentPlayer);
+    if (!isMoveAction) {
+      //don't update wait for focus on cell handle this
+      updatePlayers(currentPlayer);
+    }
+  });
 }
 
 function getRentAmount(currentCell, titleToBuy) {

@@ -12,7 +12,7 @@ var caisseCommunauteCards = [
     actions: ["RECEIVE"],
     amount: 1000
   },
-  { id: 4, name: "fiancailles", actions: ["RECEIVE_P"] },
+  // { id: 4, name: "fiancailles", actions: ["RECEIVE_P"] },
   {
     id: 5,
     name: "Erreur de la banque",
@@ -44,8 +44,8 @@ var caisseCommunauteCards = [
   { id: 12, name: "retour gare hill valley", actions: ["MOVE"], moveTo: 1 },
   { id: 13, name: "cure jeunesse", actions: ["PAY"], amount: 5000 },
   // { id: 14, name: "libere prison", actions: ["KEEP"] },
-  { id: 14, name: "aller en prison", actions: ["MOVE"], moveTo: 10 },
-  { id: 15, name: "biff", actions: ["CHANCE"], amount: 1000 }
+  { id: 14, name: "aller en prison", actions: ["MOVE"], moveTo: 10 }
+  // { id: 15, name: "biff", actions: ["CHANCE"], amount: 1000 }
 ];
 
 module.exports = caisseCommunauteCards;

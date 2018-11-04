@@ -145,15 +145,17 @@ function MonopolyView(gameRuleCallback) {
     return response;
   };
 
-  this.displayChanceCard = function(chance, player) {
+  this.displaySpecialCard = function(chance, player, type) {
     return new Promise((resolve, reject) => {
       //wait move pawn
       setTimeout(
         function() {
           var popupTitle = document.getElementById("popupTitle");
-          popupTitle.innerHTML = player.name + " vous tirez une carte chance";
+          var typeName = type === "cdc" ? "caisse de communauté" : type;
+          popupTitle.innerHTML =
+            player.name + ", vous tirez une carte " + typeName;
 
-          var chanceDom = document.getElementById("chance" + chance.id);
+          var chanceDom = document.getElementById(type + chance.id);
           var newChance = chanceDom.cloneNode();
           newChance.id = newChance.id + "chance";
           var cardChanceDisplay = document.getElementById("acquisition");
