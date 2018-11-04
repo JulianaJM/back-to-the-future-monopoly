@@ -194,6 +194,7 @@ function updatePlayers(player) {
     } else {
       p.current = true;
     }
+    game.displayCurrent(p);
     return p;
   });
 

@@ -108,6 +108,8 @@ function MonopolyView(gameRuleCallback) {
       initialPos.firstElementChild.offsetTop,
       "1s"
     );
+
+    this.displayCurrent(player1);
   };
 
   this.movePawn = function(pawn) {
@@ -278,6 +280,12 @@ function MonopolyView(gameRuleCallback) {
   };
   this.alertPayement = function(giver, receiver, amount) {
     alert(giver.name + " verse la somme de " + amount + "$ à " + receiver.name);
+  };
+
+  this.displayCurrent = function(player) {
+    var currentDisplay = document.getElementById("playerCurrent");
+    currentDisplay.innerHTML = player.name + " c'est à vous de lancer les dés";
+    currentDisplay.style.visibility = "visible";
   };
 }
 

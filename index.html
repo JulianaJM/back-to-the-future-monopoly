@@ -57,7 +57,6 @@
   </form>
 
   <div id="tools">
-    <button id="diceButton">roll</button>
   </div>
   <div id="cards">
     <img id="title1" class="cards" src="./public/images/gareHillValleyTitle.png" />
@@ -113,6 +112,24 @@
       <p id="player2Capital"></p>
     </div>
   </div>
+  <div id="popup1" class="overlay">
+    <div class="popup">
+      <h2 id="popupTitle"></h2>
+      <!-- <a class="close" href="#">&times;</a> -->
+      <div class="content">
+        <div id="acquisition"></div>
+        <div id="capital"></div>
+        <div id="decision" class="decision">
+          <button id="buyTitle" type="button">Acepter</button>
+          <button id="cancel" type="button">Refuser</button>
+          <button id="ok" type="button">Ok</button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div id="playerCurrent" class="playerCurrent"></div>
   <div id="monopoly-board" class="monopoly-wrapper">
     <div class="board-top">
       <div id="20" tabindex="-1" class="square">
@@ -207,24 +224,9 @@
         <div class="circle"></div>
       </div>
       <div id="middle" class="square">
-        <div id="dice-box"></div>
-
-        <div id="popup1" class="overlay">
-          <div class="popup">
-            <h2 id="popupTitle"></h2>
-            <!-- <a class="close" href="#">&times;</a> -->
-            <div class="content">
-              <div id="acquisition"></div>
-              <div id="capital"></div>
-              <div id="decision" class="decision">
-                <button id="buyTitle" type="button">Acepter</button>
-                <button id="cancel" type="button">Refuser</button>
-                <button id="ok" type="button">Ok</button>
-
-              </div>
-
-            </div>
-          </div>
+        <div class="middle">
+          <button id="diceButton" class="dice-btn">roll</button>
+          <div id="dice-box"></div>
         </div>
 
       </div>
