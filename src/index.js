@@ -20,7 +20,9 @@ function monopoly() {
   var currentPlayer = game.players.find(function(player) {
     return player.current;
   });
-  //uncomment for debug mode resDice = prompt("Please enter your case:", "7");
+  //uncomment for debug mode
+  // resDice = prompt("Please enter your case:", "7");
+  // move(currentPlayer, parseInt(resDice));
   move(currentPlayer, resDice);
 }
 
@@ -111,6 +113,7 @@ function cellActionDispatcher(e) {
 
       game.displayChanceCard(randomChanceCard, currentPlayer).then(function() {
         var actions = randomChanceCard.actions;
+        var isMoveAction = false;
         if (actions.includes("RECEIVE")) {
           //TODO verif passage case depart
           game.bank.addMoney(currentPlayer, randomChanceCard.amount);
@@ -141,6 +144,7 @@ function cellActionDispatcher(e) {
             " se déplace vers case numéro ",
             randomChanceCard.moveTo
           );
+          isMoveAction = true;
           if (randomChanceCard.moveTo >= 0) {
             currentPlayer.pawn.currentCellId = 0;
           }
@@ -150,8 +154,10 @@ function cellActionDispatcher(e) {
 
         // update player board
         game.updatePlayerBoard(currentPlayer);
-
-        updatePlayers(currentPlayer);
+        if (!isMoveAction) {
+          //don't update wait for focus on cell handle this
+          updatePlayers(currentPlayer);
+        }
       });
     } else {
       //TODO other cells
