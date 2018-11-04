@@ -66,10 +66,10 @@
 }
 
 .circle {
-  width: 10px;
-  height: 10px;
-  border-radius: 10px;
-  background-color: hotpink;
+  width: 1px;
+  height: 1px;
+  border-radius: 1px;
+  /* background-color: hotpink; */
 }
 .playerCurrent {
   display: flex;
