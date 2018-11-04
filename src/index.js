@@ -20,7 +20,8 @@ function monopoly() {
   var currentPlayer = game.players.find(function(player) {
     return player.current;
   });
-  move(currentPlayer, resDice);
+  //uncomment for debug mode resDice = prompt("Please enter your case:", "7");
+  move(currentPlayer, parseInt(resDice));
 }
 
 function move(player, resDice) {
@@ -69,9 +70,8 @@ function cellActionDispatcher(e) {
           if (isBuy) {
             game.updatePlayerBoard(currentPlayer, titleToBuy);
           }
-
-          updatePlayers(currentPlayer);
         }
+        updatePlayers(currentPlayer);
       });
   } else {
     /* handle rent title */

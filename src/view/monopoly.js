@@ -10,6 +10,10 @@ function MonopolyView(gameRuleCallback) {
   this.bank = null;
   this.diceDisplay = null;
   this.startGameBtn = document.getElementById("startGame");
+  this.popup = document.getElementById("popup1");
+  this.buyBtn = document.getElementById("buyTitle");
+  this.cancelBtn = document.getElementById("cancel");
+  this.okBtn = document.getElementById("ok");
 
   this.startGame = function() {
     var pawnArray = ["pionMarty", "pionDoc", "pionDoloreane", "pionHoverboard"];
@@ -122,35 +126,58 @@ function MonopolyView(gameRuleCallback) {
     }, 2000);
   };
 
+  this.openPopup = function() {
+    this.popup.style.visibility = "visible";
+    this.popup.style.opacity = "1";
+  };
+
+  this.closePopup = function() {
+    this.popup.style.visibility = "hidden";
+    this.popup.style.opacity = "0";
+  };
+
+  this.sendResponse = function(response) {
+    this.closePopup();
+    return response;
+  };
+
   this.displayChanceCard = function(chance, player) {
     return new Promise((resolve, reject) => {
       //wait move pawn
-      setTimeout(function() {
-        var popupTitle = document.getElementById("popupTitle");
-        popupTitle.innerHTML = player.name + " vous tirez une carte chance";
+      setTimeout(
+        function() {
+          var popupTitle = document.getElementById("popupTitle");
+          popupTitle.innerHTML = player.name + " vous tirez une carte chance";
 
-        var chanceDom = document.getElementById("chance" + chance.id);
-        var newChance = chanceDom.cloneNode();
-        newChance.id = newChance.id + "chance";
-        var cardChanceDisplay = document.getElementById("acquisition");
-        if (cardChanceDisplay.firstChild) {
-          cardChanceDisplay.removeChild(cardChanceDisplay.firstChild);
-        }
-        newChance.classList.remove("chance");
-        newChance.classList.add("chanceRotate");
+          var chanceDom = document.getElementById("chance" + chance.id);
+          var newChance = chanceDom.cloneNode();
+          newChance.id = newChance.id + "chance";
+          var cardChanceDisplay = document.getElementById("acquisition");
+          if (cardChanceDisplay.firstChild) {
+            cardChanceDisplay.removeChild(cardChanceDisplay.firstChild);
+          }
+          newChance.classList.remove("chance");
+          newChance.classList.add("chanceRotate");
 
-        cardChanceDisplay.appendChild(newChance);
+          cardChanceDisplay.appendChild(newChance);
 
-        openPopup();
+          this.openPopup();
 
-        document.getElementById("buyTitle").style.display = "none";
-        document.getElementById("cancel").style.display = "none";
+          this.buyBtn.style.display = "none";
+          this.cancelBtn.style.display = "none";
+          this.okBtn.style.display = "block";
 
-        document.getElementById("popup1").addEventListener("click", function() {
-          closePopup();
-          resolve(true);
-        });
-      }, 2100);
+          this.okBtn.addEventListener(
+            "click",
+            function() {
+              this.closePopup();
+              resolve(true);
+            }.bind(this),
+            true
+          );
+        }.bind(this),
+        2100
+      );
     });
   };
 
@@ -165,41 +192,49 @@ function MonopolyView(gameRuleCallback) {
   this.checkPlayerResponse = function(title, player, cell) {
     return new Promise((resolve, reject) => {
       //wait move pawn
-      setTimeout(function() {
-        var popupTitle = document.getElementById("popupTitle");
-        popupTitle.innerHTML =
-          player.name +
-          ", souhaitez vous acquerir " +
-          "pour " +
-          cell.price +
-          " $ :";
+      setTimeout(
+        function() {
+          var popupTitle = document.getElementById("popupTitle");
+          popupTitle.innerHTML =
+            player.name +
+            ", souhaitez vous acquerir " +
+            "pour " +
+            cell.price +
+            " $ :";
 
-        var playerCaptitalDisplay = document.getElementById("capital");
-        playerCaptitalDisplay.innerHTML =
-          "Votre capital : " + player.capital + "$";
+          var playerCaptitalDisplay = document.getElementById("capital");
+          playerCaptitalDisplay.innerHTML =
+            "Votre capital : " + player.capital + "$";
 
-        var titleDisplay = document.getElementById("title" + title.cellId);
-        var newTitleDisplay = titleDisplay.cloneNode();
-        newTitleDisplay.id = newTitleDisplay.id + "buy?";
-        var cardDisplay = document.getElementById("acquisition");
-        if (cardDisplay.firstChild) {
-          cardDisplay.removeChild(cardDisplay.firstChild);
-        }
-        cardDisplay.appendChild(newTitleDisplay);
-        newTitleDisplay.classList.remove("cards");
-        openPopup();
-        document.getElementById("buyTitle").style.display = "block";
-        document.getElementById("cancel").style.display = "block";
-        document
-          .getElementById("buyTitle")
-          .addEventListener("click", function() {
-            resolve(sendResponse(true, player, title));
-          });
+          var titleDisplay = document.getElementById("title" + title.cellId);
+          var newTitleDisplay = titleDisplay.cloneNode();
+          newTitleDisplay.id = newTitleDisplay.id + "buy?";
+          var cardDisplay = document.getElementById("acquisition");
+          if (cardDisplay.firstChild) {
+            cardDisplay.removeChild(cardDisplay.firstChild);
+          }
+          cardDisplay.appendChild(newTitleDisplay);
+          newTitleDisplay.classList.remove("cards");
+          this.openPopup();
+          this.buyBtn.style.display = "block";
+          this.cancelBtn.style.display = "block";
+          this.okBtn.style.display = "none";
+          this.buyBtn.addEventListener(
+            "click",
+            function() {
+              resolve(this.sendResponse(true, player, title));
+            }.bind(this)
+          );
 
-        document.getElementById("cancel").addEventListener("click", function() {
-          resolve(sendResponse(false, player, title));
-        });
-      }, 2100);
+          this.cancelBtn.addEventListener(
+            "click",
+            function() {
+              resolve(this.sendResponse(false, player, title));
+            }.bind(this)
+          );
+        }.bind(this),
+        2100
+      );
     });
   };
 
@@ -235,26 +270,8 @@ function MonopolyView(gameRuleCallback) {
       " a fait faillite ! " +
       winner.name +
       " remporte la partie !";
-    openPopup();
+    this.openPopup();
   };
-}
-
-function openPopup() {
-  document.getElementById("popup1").style.visibility = "visible";
-  document.getElementById("popup1").style.opacity = "1";
-}
-
-function closePopup() {
-  document
-    .getElementById("popup1")
-    .removeEventListener("click", closePopup, true);
-  document.getElementById("popup1").style.visibility = "hidden";
-  document.getElementById("popup1").style.opacity = "0";
-}
-
-function sendResponse(response) {
-  closePopup();
-  return response;
 }
 
 function translateToAbsolute(sel, x, y, dur) {
