@@ -92,7 +92,7 @@ function cellActionDispatcher(e) {
           setTimeout(function() {
             //wait move pawn before alert
             game.alertPayement(currentPlayer, playerToPay, amountToPay);
-          }, 2100);
+          }, 2000);
         }
         //update board current
         game.updatePlayerBoard(currentPlayer);
@@ -194,7 +194,6 @@ function updatePlayers(player) {
     } else {
       p.current = true;
     }
-    game.displayCurrent(p);
     return p;
   });
 
