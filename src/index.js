@@ -25,7 +25,7 @@ function monopoly() {
   //uncomment for debug mode
   // resDice = prompt("Please enter your case:", "7");
   // move(currentPlayer, parseInt(resDice));
-  move(curredisplaySpecialCardntPlayer, resDice);
+  move(currentPlayer, resDice);
 }
 
 function move(player, resDice) {
