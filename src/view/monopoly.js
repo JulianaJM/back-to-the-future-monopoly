@@ -260,6 +260,7 @@ function MonopolyView(gameRuleCallback) {
       var newDiv = document.createElement("div");
       var newContent = document.createTextNode(title.name);
       newDiv.appendChild(newContent);
+      newDiv.classList.add(title.color);
       playerBoard.appendChild(newDiv);
     }
   };

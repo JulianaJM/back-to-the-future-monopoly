@@ -71,6 +71,34 @@ label {
   margin-right: 9px;
 }
 
+.green {
+  background-color: #00af22;
+}
+.darkblue {
+  background-color: #2f19fb;
+}
+.purple {
+  background-color: #9d2a96;
+}
+.blue {
+  background-color: #9bcefd;
+}
+.pink {
+  background-color: #ce0097;
+}
+.orange {
+  background-color: #ff9b24;
+}
+.red {
+  background-color: #ff0018;
+}
+.yellow {
+  background-color: #fdcf2d;
+}
+.white {
+  background-color: #fff;
+}
+
 .form-pawn {
   display: inline-flex;
   align-items: center;
