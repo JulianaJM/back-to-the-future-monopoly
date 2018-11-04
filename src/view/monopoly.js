@@ -126,6 +126,10 @@ function MonopolyView(gameRuleCallback) {
     }, 2000);
   };
 
+  this.disableDice = function(disable) {
+    document.getElementById("diceButton").disabled = disable;
+  };
+
   this.openPopup = function() {
     this.popup.style.visibility = "visible";
     this.popup.style.opacity = "1";
@@ -255,7 +259,7 @@ function MonopolyView(gameRuleCallback) {
   };
 
   this.gameOver = function(loser, winner) {
-    document.getElementById("diceButton").disabled = true;
+    this.disableDice(true);
     var popupTitle = document.getElementById("popupTitle");
     popupTitle.innerHTML = "Game over ...";
     var dialogDisplay = document.getElementById("acquisition");

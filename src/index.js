@@ -16,6 +16,7 @@ game.startGameBtn.addEventListener(
 );
 
 function monopoly() {
+  game.disableDice(true);
   var resDice = rollDice(game.diceDisplay);
   var currentPlayer = game.players.find(function(player) {
     return player.current;
@@ -174,6 +175,7 @@ function updateDisplayWithMove(player) {
 }
 
 function updatePlayers(player) {
+  game.disableDice(false);
   var newPlayers = game.players.map(function(p) {
     if (p.id === player.id) {
       player.current = false;
