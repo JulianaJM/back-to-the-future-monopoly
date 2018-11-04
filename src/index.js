@@ -79,18 +79,7 @@ function cellActionDispatcher(e) {
   } else {
     /* handle rent title */
     if (currentCell.playerOwner) {
-      var amountToPay = titleToBuy.rent;
-      if (currentCell.cellId === 13 || currentCell.cellId === 28) {
-        /* fusion indus ou plutonium indus */
-
-        amountToPay = titleToBuy.rent * currentPlayer.pawn.resDice;
-        console.log(
-          "vous payer ",
-          currentPlayer.pawn.resDice,
-          " x 400 soit : ",
-          amountToPay
-        );
-      }
+      var amountToPay = getRentAmount(currentCell, titleToBuy);
       var playerToPay = doPay(currentPlayer, currentCell, amountToPay);
 
       if (currentPlayer.capital < 0) {
@@ -98,9 +87,14 @@ function cellActionDispatcher(e) {
       } else {
         updatePlayers(currentPlayer);
         if (playerToPay) {
-          // player is not on his title
+          // update board adversaire
           game.updatePlayerBoard(playerToPay);
+          setTimeout(function() {
+            //wait move pawn before alert
+            game.alertPayement(currentPlayer, playerToPay, amountToPay);
+          }, 2100);
         }
+        //update board current
         game.updatePlayerBoard(currentPlayer);
       }
 
@@ -165,6 +159,23 @@ function cellActionDispatcher(e) {
       updatePlayers(currentPlayer);
     }
   }
+}
+
+function getRentAmount(currentCell, titleToBuy) {
+  var amountToPay = titleToBuy.rent;
+  if (currentCell.cellId === 13 || currentCell.cellId === 28) {
+    /* fusion indus ou plutonium indus */
+
+    amountToPay = titleToBuy.rent * currentPlayer.pawn.resDice;
+    console.log(
+      "vous payer ",
+      currentPlayer.pawn.resDice,
+      " x 400 soit : ",
+      amountToPay
+    );
+  }
+
+  return amountToPay;
 }
 
 function updateDisplayWithMove(player) {

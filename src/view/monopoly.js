@@ -276,6 +276,9 @@ function MonopolyView(gameRuleCallback) {
       " remporte la partie !";
     this.openPopup();
   };
+  this.alertPayement = function(giver, receiver, amount) {
+    alert(giver.name + " verse la somme de " + amount + "$ à " + receiver.name);
+  };
 }
 
 function translateToAbsolute(sel, x, y, dur) {
