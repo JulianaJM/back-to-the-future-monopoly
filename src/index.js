@@ -31,6 +31,7 @@ function monopoly() {
 function move(player, resDice) {
   var nextPos = player.pawn.currentCellId + resDice;
   player.pawn.resDice = resDice; //handle cies publiques
+  var isDepartPassed = false;
   if (nextPos <= game.MAX_CELL - 1) {
     player.pawn.currentCellId = nextPos;
   } else {
@@ -39,15 +40,14 @@ function move(player, resDice) {
     //case départ toucher 20000
     console.log(player.name, " passage par la case départ recevez 20000");
     game.bank.addMoney(player, 20000);
-
-    game.alertCaseDepart(player);
+    isDepartPassed = true;
     game.updatePlayerBoard(player);
   }
   console.log("**********************");
   console.log("c'est au tour de ", player.name, " de jouer");
   console.log(player.name, "lance les dés et obtient ", resDice);
 
-  updateDisplayWithMove(player);
+  updateDisplayWithMove(player, isDepartPassed);
 }
 
 function cellActionDispatcher(e) {
@@ -190,10 +190,10 @@ function getRentAmount(currentCell, titleToBuy) {
   return amountToPay;
 }
 
-function updateDisplayWithMove(player) {
+function updateDisplayWithMove(player, isDepartPassed) {
   //wait before move pawn
   setTimeout(function() {
-    game.movePawn(player.pawn);
+    game.movePawn(player.pawn, player.name, isDepartPassed);
   }, 2000);
 }
 

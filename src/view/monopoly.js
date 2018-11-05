@@ -106,7 +106,7 @@ function MonopolyView(gameRuleCallback) {
     );
   };
 
-  this.movePawn = function(pawn) {
+  this.movePawn = function(pawn, playerName, isDepartPassed) {
     var pawnElement = document.getElementById(pawn.name);
     var newPos = document.getElementById(pawn.currentCellId);
     translateToAbsolute(
@@ -116,6 +116,10 @@ function MonopolyView(gameRuleCallback) {
       "2s"
     );
     newPos.focus();
+
+    if (isDepartPassed) {
+      this.alertCaseDepart(playerName);
+    }
 
     setTimeout(function() {
       newPos.blur();
@@ -284,7 +288,18 @@ function MonopolyView(gameRuleCallback) {
     this.openPopup();
   };
   this.alertPayement = function(giver, receiver, amount) {
+    // prevent focus actions when process payment
+    document.getElementById(giver.pawn.currentCellId).blur();
+
     alert(giver.name + " verse la somme de " + amount + "$ à " + receiver.name);
+  };
+  this.alertCaseDepart = function(playerName) {
+    alert(
+      playerName + "s'apprête à passer par la case départ il reçoit 20000$"
+    );
+
+    // prevent focus actions
+    document.getElementById(0).blur();
   };
 }
 

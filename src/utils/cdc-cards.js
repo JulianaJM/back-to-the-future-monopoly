@@ -30,8 +30,7 @@ var caisseCommunauteCards = [
   {
     id: 9,
     name: "case depart",
-    actions: ["MOVE" /*, "RECEIVE"*/],
-    //amount: 20000,
+    actions: ["MOVE"],
     moveTo: 0
   },
   { id: 10, name: "aeroglisseur", actions: ["PAY"], amount: 10000 },
