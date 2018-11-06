@@ -133,9 +133,11 @@
   <div id="player-board" class="player-board">
     <div id="player1">
       <p id="player1Capital"></p>
+      <button type="button" id="switch1">Echanger</button>
     </div>
     <div id="player2">
       <p id="player2Capital"></p>
+      <button type="button" id="switch2">Echanger</button>
     </div>
   </div>
   <div class="clear"></div>
@@ -154,6 +156,23 @@
       </div>
     </div>
   </div>
+
+  <div id="popupswitch" class="overlay">
+    <div class="popup">
+      <h2 id="popupSwitchTitle"></h2>
+      <!-- <a class="close" href="#">&times;</a> -->
+      <div class="content">
+        <div id="current"></div>
+        <h3>contre</h3>
+        <div id="vs"></div>
+        <div id="action" class="decision">
+          <button id="ask" type="button">Echanger</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <div id="player-turn">
     <div id="playerCurrent" class="playerCurrent"></div>
     <button id="diceButton" class="dice-btn"></button>

@@ -104,6 +104,17 @@ function MonopolyView(gameRuleCallback) {
       initialPos.firstElementChild.offsetTop,
       "1s"
     );
+
+    //listener switch
+    document
+      .getElementById("switch1")
+      .addEventListener("click", this.switch.bind(this), false);
+
+    document
+      .getElementById("switch2")
+      .addEventListener("click", this.switch.bind(this), false);
+
+    document.getElementById("switch2").disabled = true;
   };
 
   this.movePawn = function(pawn, playerName, isDepartPassed) {
@@ -128,6 +139,19 @@ function MonopolyView(gameRuleCallback) {
 
   this.disableDice = function(disable) {
     document.getElementById("diceButton").disabled = disable;
+
+    //disable switch for other player
+    this.players.forEach(player => {
+      if (player.current) {
+        document.getElementById("switch" + player.id).disabled = !disable;
+      } else {
+        document.getElementById("switch" + player.id).disabled = disable;
+      }
+    });
+  };
+
+  this.disableSwitch = function(player) {
+    document.getElementById("switch" + player.id).disabled = true;
   };
 
   this.openPopup = function() {
@@ -323,6 +347,61 @@ function MonopolyView(gameRuleCallback) {
   //     document.getElementById(10).blur();
   //   });
   // };
+
+  this.switch = function() {
+    var currentPlayer = this.players.find(function(player) {
+      return player.current;
+    });
+
+    var vsPlayer = this.players.find(function(player) {
+      return !player.current;
+    });
+    var titlesCurrent = currentPlayer.titleList;
+    for (var i = 0; i < titlesCurrent.length; i++) {
+      var button = makeRadioButton(
+        "titleCurrent",
+        titlesCurrent[i].cellId,
+        titlesCurrent[i].name
+      );
+      document.getElementById("current").appendChild(button);
+    }
+
+    var titlesvs = vsPlayer.titleList;
+    for (var i = 0; i < titlesvs.length; i++) {
+      var button = makeRadioButton(
+        "titlevs",
+        titlesvs[i].cellId,
+        titlesvs[i].name
+      );
+      document.getElementById("vs").appendChild(button);
+    }
+
+    var popup = document.getElementById("popupswitch");
+    var popupTitle = document.getElementById("popupSwitchTitle");
+    popupTitle.innerHTML = "Echanger";
+
+    popup.style.visibility = "visible";
+    popup.style.opacity = "1";
+
+    document
+      .getElementById("ask")
+      .addEventListener("click", this.handleSwitch, false);
+  };
+
+  this.handleSwitch = function() {};
+}
+
+function makeRadioButton(name, value, text) {
+  var label = document.createElement("label");
+  var radio = document.createElement("input");
+  radio.type = "radio";
+  radio.name = name;
+  radio.value = value;
+
+  label.appendChild(radio);
+
+  label.appendChild(document.createTextNode(text));
+  return label;
 }
 
 function translateToAbsolute(sel, x, y, dur) {

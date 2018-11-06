@@ -126,8 +126,9 @@ function cellActionDispatcher(e) {
       //cells impots taxes
     } else if (currentCell.rent) {
       handleTaxCells(currentPlayer, currentCell);
-    } else if (currentCell.cellId === 30) {
+
       //aller en retenue
+    } else if (currentCell.cellId === 30) {
       setTimeout(function() {
         currentPlayer.pawn.currentCellId = 10;
         game.movePawn(currentPlayer.pawn);
@@ -241,6 +242,7 @@ function getRentAmount(currentCell, currentTitle) {
 }
 
 function updateDisplayWithMove(player, isDepartPassed) {
+  game.disableSwitch(player);
   //wait before move pawn
   setTimeout(function() {
     game.movePawn(player.pawn, player.name, isDepartPassed);
