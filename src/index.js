@@ -121,6 +121,22 @@ function cellActionDispatcher(e) {
       console.log("case caisse de communauté ", randomCdcCard);
 
       handleSpecialCard(currentPlayer, randomCdcCard, "cdc");
+
+      //cells impots taxes
+    } else if (currentCell.rent) {
+      game.bank.removeMoney(currentPlayer, currentCell.rent);
+
+      setTimeout(function() {
+        game.alertTaxCell(
+          currentPlayer.name,
+          currentCell.cellId,
+          currentCell.name,
+          currentCell.rent
+        );
+        // update player board
+        game.updatePlayerBoard(currentPlayer);
+        updatePlayers(currentPlayer);
+      }, 2000);
     } else {
       //TODO other cells
       updatePlayers(currentPlayer);

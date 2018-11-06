@@ -14,40 +14,52 @@
       <fieldset>
         <legend>Start game</legend> <!-- Titre du fieldset -->
         <div class="form-content">
-          <div class="form-name"><label for="nom">Joueur 1 : </label>
-            <input type="text" name="pseudo1" id="pseudo1" /></div>
+          <div>
+            <div class="form-name">
+              <label for="nom">Joueur 1 : </label>
+              <input type="text" name="pseudo1" id="pseudo1" />
+            </div>
 
-          <div class="form-pawn">
-            <input type="radio" name="pawn" value="pionMarty">
-            <img id="pionMarty" src="./public/images/pionMarty.png" />
+            <div class="form-pawn">
+              <div class="pawn-radio">
+                <input type="radio" name="pawn" value="pionMarty">
+                <img id="pionMarty" src="./public/images/pionMarty.png" />
+              </div>
+
+              <div class="pawn-radio"><input type="radio" name="pawn" value="pionDoc"> <img id="pionDoc" src="./public/images/pionDoc.png" /></div>
+
+              <div class="pawn-radio"><input type="radio" name="pawn" value="pionDoloreane">
+                <img id="pionDoloreane" src="./public/images/pionDoloreane.png" />
+              </div>
+
+              <div class="pawn-radio"><input type="radio" name="pawn" value="pionHoverboard">
+                <img id="pionHoverboard" src="./public/images/pionHoverboard.png" />
+              </div>
+            </div>
           </div>
 
-          <div class="form-pawn"><input type="radio" name="pawn" value="pionDoc"> <img id="pionDoc" src="./public/images/pionDoc.png" /></div>
+          <div>
+            <div class="form-name">
+              <label for="nom">Joueur 2 : </label>
+              <input type="text" name="pseudo2" id="pseudo2" />
+            </div>
 
-          <div class="form-pawn"><input type="radio" name="pawn" value="pionDoloreane">
-            <img id="pionDoloreane" src="./public/images/pionDoloreane.png" />
-          </div>
+            <div class="form-pawn">
+              <div class="pawn-radio">
+                <input type="radio" name="pawn1" value="pionMarty">
+                <img id="pionMarty1" src="./public/images/pionMarty.png" />
+              </div>
 
-          <div class="form-pawn"><input type="radio" name="pawn" value="pionHoverboard">
-            <img id="pionHoverboard" src="./public/images/pionHoverboard.png" />
-          </div>
+              <div class="pawn-radio"><input type="radio" name="pawn1" value="pionDoc"> <img id="pionDoc1" src="./public/images/pionDoc.png" /></div>
 
-          <div class="form-name"><label for="nom">Joueur 2 : </label>
-            <input type="text" name="pseudo2" id="pseudo2" /></div>
+              <div class="pawn-radio"><input type="radio" name="pawn1" value="pionDoloreane">
+                <img id="pionDoloreane1" src="./public/images/pionDoloreane.png" />
+              </div>
 
-          <div class="form-pawn">
-            <input type="radio" name="pawn1" value="pionMarty">
-            <img id="pionMarty1" src="./public/images/pionMarty.png" />
-          </div>
-
-          <div class="form-pawn"><input type="radio" name="pawn1" value="pionDoc"> <img id="pionDoc1" src="./public/images/pionDoc.png" /></div>
-
-          <div class="form-pawn"><input type="radio" name="pawn1" value="pionDoloreane">
-            <img id="pionDoloreane1" src="./public/images/pionDoloreane.png" />
-          </div>
-
-          <div class="form-pawn"><input type="radio" name="pawn1" value="pionHoverboard">
-            <img id="pionHoverboard1" src="./public/images/pionHoverboard.png" />
+              <div class="pawn-radio"><input type="radio" name="pawn1" value="pionHoverboard">
+                <img id="pionHoverboard1" src="./public/images/pionHoverboard.png" />
+              </div>
+            </div>
           </div>
 
           <button id="startGame" type="button">play</button>
@@ -126,6 +138,7 @@
       <p id="player2Capital"></p>
     </div>
   </div>
+  <div class="clear"></div>
   <div id="popup1" class="overlay">
     <div class="popup">
       <h2 id="popupTitle"></h2>
@@ -136,10 +149,8 @@
         <div id="decision" class="decision">
           <button id="buyTitle" type="button">Accepter</button>
           <button id="cancel" type="button">Refuser</button>
-          <button id="ok" type="button">Ok</button>
-
+          <button id="ok" type="button">OK</button>
         </div>
-
       </div>
     </div>
   </div>
@@ -147,6 +158,7 @@
     <div id="playerCurrent" class="playerCurrent"></div>
     <button id="diceButton" class="dice-btn"></button>
   </div>
+  <div class="clear"></div>
 
   <div id="monopoly-board" class="monopoly-wrapper">
     <div class="board-top">

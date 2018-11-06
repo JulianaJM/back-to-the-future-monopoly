@@ -301,6 +301,19 @@ function MonopolyView(gameRuleCallback) {
     // prevent focus actions
     document.getElementById(0).blur();
   };
+
+  this.alertTaxCell = function(playerName, cellId, cellName, amount) {
+    alert(
+      playerName +
+        "vous êtes sur la case " +
+        cellName +
+        " vous payez à la banque " +
+        amount
+    );
+
+    // prevent focus actions
+    document.getElementById(cellId).blur();
+  };
 }
 
 function translateToAbsolute(sel, x, y, dur) {

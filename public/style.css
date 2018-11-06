@@ -99,15 +99,34 @@ label {
   background-color: #fff;
 }
 
-.form-pawn {
-  display: inline-flex;
-  align-items: center;
-  flex-direction: row-reverse;
+.form-container {
+  width: 560px;
+  margin: 0 auto;
 }
-.form-name {
+.form-content {
+  width: 250px;
+  margin: 0 auto;
   display: flex;
+  flex-direction: column;
 }
 
+.form-name {
+  display: inline-flex;
+  align-items: center;
+}
+.form-pawn {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px;
+}
+.pawn-radio {
+  display: flex;
+  align-items: center;
+}
+
+.clear {
+  clear: both;
+}
 input {
   display: block;
 }
@@ -116,15 +135,6 @@ input {
   -ms-transform: scale(1.5); /* IE 9 */
   -webkit-transform: scale(1.5); /* Safari 3-8 */
   transform: scale(1.5);
-}
-
-.form-container {
-  width: 500px;
-  margin: 0 auto;
-}
-.form-content {
-  width: 250px;
-  margin: 0 auto;
 }
 
 #startGame {
@@ -262,15 +272,6 @@ button[disabled] {
   margin: 0.1rem;
 }
 
-@media screen and (max-width: 700px) {
-  .box {
-    width: 70%;
-  }
-  .popup {
-    width: 70%;
-  }
-}
-
 .player-board {
   display: none;
 }
@@ -278,6 +279,7 @@ button[disabled] {
   border: 1px solid black;
   position: absolute;
   top: 129px;
+  left: 6%;
   margin-bottom: 5px;
 }
 #player1 div {
@@ -291,11 +293,41 @@ button[disabled] {
 #player2 {
   border: 1px solid black;
   position: absolute;
-  right: 129px;
+  right: 6%;
   top: 129px;
   margin-bottom: 5px;
 }
 
+@media screen and (max-width: 700px) {
+  .box {
+    width: 70%;
+  }
+  .popup {
+    width: 70%;
+  }
+}
+
+/* @media screen and (min-width: 500px) and (max-width: 700px) {
+  #player1 {
+    top: 45%;
+  }
+
+  #player2 {
+    right: 55%;
+    top: 55%;
+  }
+}
+
+@media screen and (min-width: 200px) and (max-width: 500px) {
+  #player1 {
+    top: 30%;
+  }
+
+  #player2 {
+    right: 55%;
+    top: 40%;
+  }
+} */
 .board-top .square:nth-child(1) {
   grid-row: 1/3;
   grid-column: 1/3;
