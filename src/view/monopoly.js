@@ -305,7 +305,7 @@ function MonopolyView(gameRuleCallback) {
   this.alertTaxCell = function(playerName, cellId, cellName, amount) {
     alert(
       playerName +
-        "vous êtes sur la case " +
+        " vous êtes sur la case " +
         cellName +
         " vous payez à la banque " +
         amount
@@ -314,6 +314,15 @@ function MonopolyView(gameRuleCallback) {
     // prevent focus actions
     document.getElementById(cellId).blur();
   };
+
+  // this.alertPrison = function(playerName) {
+  //   return new Promise((resolve, reject) => {
+  //     alert(playerName + " vous allez en retenu ! ");
+
+  //     // prevent focus actions
+  //     document.getElementById(10).blur();
+  //   });
+  // };
 }
 
 function translateToAbsolute(sel, x, y, dur) {

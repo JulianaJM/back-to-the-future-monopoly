@@ -124,24 +124,41 @@ function cellActionDispatcher(e) {
 
       //cells impots taxes
     } else if (currentCell.rent) {
-      game.bank.removeMoney(currentPlayer, currentCell.rent);
-
+      handleTaxCells(currentPlayer, currentCell);
+    } else if (currentCell.cellId === 30) {
+      //aller en retenue
       setTimeout(function() {
-        game.alertTaxCell(
-          currentPlayer.name,
-          currentCell.cellId,
-          currentCell.name,
-          currentCell.rent
-        );
-        // update player board
-        game.updatePlayerBoard(currentPlayer);
-        updatePlayers(currentPlayer);
+        currentPlayer.pawn.currentCellId = 10;
+        game.movePawn(currentPlayer.pawn);
+        // game.alertPrison(currentPlayer.name);
       }, 2000);
     } else {
       //TODO other cells
       updatePlayers(currentPlayer);
     }
   }
+}
+
+function handleTaxCells(currentPlayer, currentCell) {
+  game.bank.removeMoney(currentPlayer, currentCell.rent);
+  console.log(
+    currentPlayer.name +
+      "vous êtes sur la case " +
+      currentCell.name +
+      " vous payez à la banque " +
+      currentCell.rent
+  );
+  setTimeout(function() {
+    game.alertTaxCell(
+      currentPlayer.name,
+      currentCell.cellId,
+      currentCell.name,
+      currentCell.rent
+    );
+    // update player board
+    game.updatePlayerBoard(currentPlayer);
+    updatePlayers(currentPlayer);
+  }, 2000);
 }
 
 function handleSpecialCard(currentPlayer, randomCard, type) {
