@@ -5,6 +5,7 @@ var boardArray = require("./utils/board-game");
 var chanceArray = require("./utils/chance-cards");
 var caisseCommunauteArray = require("./utils/cdc-cards");
 var MonopolyView = require("./view/monopoly");
+var colors = require("./utils/color-group");
 
 var game = new MonopolyView(monopoly);
 game.cellsEventListener(cellActionDispatcher);
@@ -206,18 +207,34 @@ function handleSpecialCard(currentPlayer, randomCard, type) {
   });
 }
 
-function getRentAmount(currentCell, titleToBuy) {
-  var amountToPay = titleToBuy.rent;
-  if (currentCell.cellId === 13 || currentCell.cellId === 28) {
-    /* fusion indus ou plutonium indus */
+function getRentAmount(currentCell, currentTitle) {
+  var amountToPay = currentTitle.rent;
 
-    amountToPay = titleToBuy.rent * currentPlayer.pawn.resDice;
+  /* check fusion indus ou plutonium indus */
+  if (currentCell.cellId === 13 || currentCell.cellId === 28) {
+    amountToPay = currentTitle.rent * currentPlayer.pawn.resDice;
     console.log(
       "vous payer ",
       currentPlayer.pawn.resDice,
       " x 400 soit : ",
       amountToPay
     );
+
+    /* check loyer compte double */
+  } else {
+    var filteredTitleByColors = currentCell.playerOwner.titleList.filter(
+      function(title) {
+        return title.color === currentTitle.color;
+      }
+    );
+
+    if (filteredTitleByColors.length === colors[currentTitle.color]) {
+      console.log(
+        currentCell.playerOwner.name,
+        " vous êtes payer le double du loyer car vous posseder toutes les proprétés du groupe"
+      );
+      amountToPay = currentTitle.rent * 2;
+    }
   }
 
   return amountToPay;
