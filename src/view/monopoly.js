@@ -150,14 +150,33 @@ function MonopolyView(gameRuleCallback) {
     this.players.forEach(player => {
       if (player.current) {
         document.getElementById("switch" + player.id).disabled = !disable;
+        player.titleList.forEach(title => {
+          if (document.getElementById("btnTitle" + title.cellId)) {
+            document.getElementById(
+              "btnTitle" + title.cellId
+            ).disabled = !disable;
+          }
+        });
       } else {
         document.getElementById("switch" + player.id).disabled = disable;
+        player.titleList.forEach(title => {
+          if (document.getElementById("btnTitle" + title.cellId)) {
+            document.getElementById(
+              "btnTitle" + title.cellId
+            ).disabled = disable;
+          }
+        });
       }
     });
   };
 
   this.disableSwitch = function(player) {
     document.getElementById("switch" + player.id).disabled = true;
+    player.titleList.forEach(title => {
+      if (document.getElementById("btnTitle" + title.cellId)) {
+        document.getElementById("btnTitle" + title.cellId).disabled = true;
+      }
+    });
   };
 
   this.openPopup = function() {
@@ -313,21 +332,29 @@ function MonopolyView(gameRuleCallback) {
           newDiv.appendChild(newContent);
           newDiv.classList.add(title.color);
           var button = document.createElement("button");
-          button.id == "btnTitle" + title.cellId;
+          button.id = "btnTitle" + title.cellId;
           button.style.padding = "0";
           button.innerHTML = "lever l'hypothèque";
           button.onclick = function(e) {
-            var id = e.target.id.match(/\d+/)[0];
+            var regex = /[+-]?\d+(?:\.\d+)?/g;
+            var id = e.target.id;
+            var match = regex.exec(id);
             var selectedTitle = player.titleList.find(function(t) {
-              t.cellId === id;
+              return t.cellId === parseInt(match[0]);
             });
 
             player = this.bank.removeHypothec(player, selectedTitle);
             var titleHypotec = player.titleList.find(function(t) {
-              t.cellId === id;
+              return t.cellId === parseInt(match[0]);
             });
-            if (!titleHypotec.isHypothec) {
-              document.getElementById("btnTitle" + id).remove();
+            if (!titleHypotec.ishypotheced) {
+              document.getElementById(id).remove();
+              alert(titleHypotec.name + " : hypothèque levée");
+              this.updatePlayerBoard(player);
+            } else {
+              alert(
+                titleHypotec.name + " : pas assez de fond pour lever hypothèque"
+              );
             }
           }.bind(this);
           newDiv.appendChild(button);
@@ -416,7 +443,7 @@ function MonopolyView(gameRuleCallback) {
 
     var titlesCurrent = currentPlayer.titleList;
     for (var i = 0; i < titlesCurrent.length; i++) {
-      if (!titlesCurrent[i].isHypothec) {
+      if (!titlesCurrent[i].ishypotheced) {
         var button = makeRadioButton(
           "titleCurrent",
           titlesCurrent[i].cellId,
@@ -430,7 +457,7 @@ function MonopolyView(gameRuleCallback) {
 
     var titlesvs = vsPlayer.titleList;
     for (var i = 0; i < titlesvs.length; i++) {
-      if (!titlesvs[i].isHypothec) {
+      if (!titlesvs[i].ishypotheced) {
         var button = makeRadioButton(
           "titlevs",
           titlesvs[i].cellId,
