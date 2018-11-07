@@ -313,12 +313,24 @@ function MonopolyView(gameRuleCallback) {
           newDiv.appendChild(newContent);
           newDiv.classList.add(title.color);
           var button = document.createElement("button");
+          button.id == "btnTitle" + title.cellId;
+          button.style.padding = "0";
           button.innerHTML = "lever l'hypothèque";
-          button.onclick = function() {
-            //TODO
+          button.onclick = function(e) {
+            var id = e.target.id.match(/\d+/)[0];
+            var selectedTitle = player.titleList.find(function(t) {
+              t.cellId === id;
+            });
+
+            player = this.bank.removeHypothec(player, selectedTitle);
+            var titleHypotec = player.titleList.find(function(t) {
+              t.cellId === id;
+            });
+            if (!titleHypotec.isHypothec) {
+              document.getElementById("btnTitle" + id).remove();
+            }
           }.bind(this);
           newDiv.appendChild(button);
-
           playerBoard.appendChild(newDiv);
         }
       });

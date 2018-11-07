@@ -21,4 +21,20 @@ module.exports = function Bank() {
     this.removeMoney(player, amount);
     this.capital += amount;
   };
+
+  this.removeHypothec = function(player, title) {
+    var amount = title.hypothecValue * 1.1;
+    if (player.capital >= amount) {
+      player.titleList.forEach(t => {
+        if (t.cellId === title.cellId) {
+          title.ishypotheced = false;
+          return;
+        }
+      });
+
+      this.removeMoney(player, amount);
+    }
+
+    return player;
+  };
 };

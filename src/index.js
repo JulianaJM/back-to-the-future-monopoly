@@ -119,14 +119,24 @@ function cellActionDispatcher(e) {
         chanceArray[Math.floor(Math.random() * chanceCardsKeys.length)];
       console.log("case chance ", randomChanceCard);
 
-      handleSpecialCard(currentPlayer, randomChanceCard, "chance");
+      handleSpecialCard(
+        currentPlayer,
+        randomChanceCard,
+        "chance",
+        currentCell.cellId
+      );
     } else if (currentCell.name === "caisse de communauté") {
       var cdcCardsKeys = Object.keys(caisseCommunauteArray);
       var randomCdcCard =
         caisseCommunauteArray[Math.floor(Math.random() * cdcCardsKeys.length)];
       console.log("case caisse de communauté ", randomCdcCard);
 
-      handleSpecialCard(currentPlayer, randomCdcCard, "cdc");
+      handleSpecialCard(
+        currentPlayer,
+        randomCdcCard,
+        "cdc",
+        currentCell.cellId
+      );
 
       //cells impots taxes
     } else if (currentCell.rent) {
@@ -159,6 +169,7 @@ function checkGameOver(currentPlayer) {
 }
 
 function handleTaxCells(currentPlayer, currentCell) {
+  currentPlayer = hasEnoughtMoney(currentPlayer, currentCell.rent);
   game.bank.removeMoney(currentPlayer, currentCell.rent);
   console.log(
     currentPlayer.name +
@@ -180,7 +191,7 @@ function handleTaxCells(currentPlayer, currentCell) {
   }, 2000);
 }
 
-function handleSpecialCard(currentPlayer, randomCard, type) {
+function handleSpecialCard(currentPlayer, randomCard, type, cellId) {
   game.displaySpecialCard(randomCard, currentPlayer, type).then(function() {
     var actions = randomCard.actions;
     var isMoveAction = false;
@@ -194,7 +205,7 @@ function handleSpecialCard(currentPlayer, randomCard, type) {
       );
     }
     if (actions.includes("PAY")) {
-      hasEnoughtMoney(currentPlayer, randomCard.amount);
+      currentPlayer = hasEnoughtMoney(currentPlayer, randomCard.amount);
       game.bank.removeMoney(currentPlayer, randomCard.amount);
 
       console.log(
@@ -217,7 +228,7 @@ function handleSpecialCard(currentPlayer, randomCard, type) {
         var nextPos =
           currentPlayer.pawn.currentCellId + currentPlayer.pawn.resDice;
         var isDepartPassed = false;
-        if (nextPos >= game.MAX_CELL - 1) {
+        if (randomCard.moveTo !== 10 && nextPos >= game.MAX_CELL - 1) {
           //passage case départ
           isDepartPassed = true;
         }
@@ -355,7 +366,7 @@ function doPay(currentPlayer, currentCell, amount) {
     return player.current === false;
   });
 
-  hasEnoughtMoney(currentPlayer, amount);
+  currentPlayer = hasEnoughtMoney(currentPlayer, amount);
   currentPlayer.payRent(playerToPay, amount);
 
   console.log(currentPlayer.name, "paye ", amount, " à ", playerToPay.name);
@@ -366,19 +377,26 @@ function doPay(currentPlayer, currentCell, amount) {
 function hasEnoughtMoney(currentPlayer, amount) {
   if (currentPlayer.capital < amount) {
     var amountHypotec = 0;
+    var isHypothec = false;
     currentPlayer.titleList.forEach(title => {
-      if (!title.ishypotheced) {
+      if (!isHypothec && !title.ishypotheced) {
         amountHypotec += title.hypothecValue;
         title.ishypotheced = true;
-        if (amountHypotec >= amount) {
+        if (currentPlayer.capital + amountHypotec >= amount) {
+          isHypothec = true;
+          console.log(
+            title.name,
+            " a été hypothéqué montant = ",
+            title.hypothecValue
+          );
           currentPlayer.capital += amountHypotec;
-          game.alertHypothec(currentPlayer.name);
-          game.updatePlayerBoard(currentPlayer, null, true);
-          return;
         }
       }
     });
   }
+  game.updatePlayerBoard(currentPlayer, null, isHypothec);
+
+  return currentPlayer;
 }
 
 module.exports = monopoly;
