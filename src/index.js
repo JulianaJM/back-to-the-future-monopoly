@@ -23,10 +23,13 @@ function monopoly() {
   var currentPlayer = game.players.find(function(player) {
     return player.current;
   });
-  //uncomment for debug mode
-  // resDice = prompt("Please enter your case:", "7");
-  // move(currentPlayer, parseInt(resDice));
-  move(currentPlayer, resDice);
+
+  if (game.isDebug) {
+    resDice = prompt("Please enter your case:", "7");
+    move(currentPlayer, parseInt(resDice));
+  } else {
+    move(currentPlayer, resDice);
+  }
 }
 
 function move(player, resDice) {
@@ -55,16 +58,14 @@ function cellActionDispatcher(e) {
   var currentPlayer = game.players.find(function(player) {
     return player.current;
   });
-  //on focus other cells, without roll dice do nothing
-  if (parseInt(e.target.id) !== currentPlayer.pawn.currentCellId) {
-    return;
-  }
+
   console.log(
     "joueur courant =  ",
     currentPlayer.name,
     " capital restant = ",
     currentPlayer.capital
   );
+
   var pos = currentPlayer.pawn.currentCellId;
   var currentCell = boardArray[pos];
   var isFreeToBuy = currentCell.isSellable();

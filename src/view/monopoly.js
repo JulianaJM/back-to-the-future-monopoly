@@ -14,8 +14,15 @@ function MonopolyView(gameRuleCallback) {
   this.buyBtn = document.getElementById("buyTitle");
   this.cancelBtn = document.getElementById("cancel");
   this.okBtn = document.getElementById("ok");
+  this.isDebug = false;
 
   this.startGame = function() {
+    this.isDebug =
+      document.querySelector("input[name=debug]:checked") &&
+      document.querySelector("input[name=debug]:checked").value === "on"
+        ? true
+        : false;
+
     var pawnArray = ["pionMarty", "pionDoc", "pionDoloreane", "pionHoverboard"];
     var selectedPawnPlayer1 =
       (document.querySelector("input[name=pawn]:checked") &&
@@ -120,6 +127,7 @@ function MonopolyView(gameRuleCallback) {
   this.movePawn = function(pawn, playerName, isDepartPassed) {
     var pawnElement = document.getElementById(pawn.name);
     var newPos = document.getElementById(pawn.currentCellId);
+    newPos.tabIndex = -1;
     translateToAbsolute(
       pawnElement,
       newPos.firstElementChild.offsetLeft,
@@ -134,6 +142,7 @@ function MonopolyView(gameRuleCallback) {
 
     setTimeout(function() {
       newPos.blur();
+      newPos.removeAttribute("tabindex");
     }, 2000);
   };
 
@@ -333,7 +342,8 @@ function MonopolyView(gameRuleCallback) {
         " vous êtes sur la case " +
         cellName +
         " vous payez à la banque " +
-        amount
+        amount +
+        "$"
     );
 
     // prevent focus actions
@@ -353,15 +363,17 @@ function MonopolyView(gameRuleCallback) {
     var currentPlayer = this.players.find(function(player) {
       return player.current;
     });
-    if (currentPlayer.titleList.length <= 0) {
+    var vsPlayer = this.players.find(function(player) {
+      return !player.current;
+    });
+
+    //nothing to switch
+    if (currentPlayer.titleList.length <= 0 || vsPlayer.titleList.length <= 0) {
       return;
     }
     document.getElementById("current").innerHTML = "";
     document.getElementById("vs").innerHTML = "";
 
-    var vsPlayer = this.players.find(function(player) {
-      return !player.current;
-    });
     var titlesCurrent = currentPlayer.titleList;
     for (var i = 0; i < titlesCurrent.length; i++) {
       var button = makeRadioButton(

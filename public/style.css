@@ -59,6 +59,10 @@
   /* background-color: hotpink; */
 }
 
+.debug {
+  display: none;
+}
+
 #tools {
   display: none;
 }
