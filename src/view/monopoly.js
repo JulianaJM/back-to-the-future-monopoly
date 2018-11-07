@@ -353,6 +353,11 @@ function MonopolyView(gameRuleCallback) {
     var currentPlayer = this.players.find(function(player) {
       return player.current;
     });
+    if (currentPlayer.titleList.length <= 0) {
+      return;
+    }
+    document.getElementById("current").innerHTML = "";
+    document.getElementById("vs").innerHTML = "";
 
     var vsPlayer = this.players.find(function(player) {
       return !player.current;
@@ -364,6 +369,8 @@ function MonopolyView(gameRuleCallback) {
         titlesCurrent[i].cellId,
         titlesCurrent[i].name
       );
+      button.classList.add(titlesCurrent[i].color);
+
       document.getElementById("current").appendChild(button);
     }
 
@@ -374,6 +381,8 @@ function MonopolyView(gameRuleCallback) {
         titlesvs[i].cellId,
         titlesvs[i].name
       );
+      button.classList.add(titlesvs[i].color);
+
       document.getElementById("vs").appendChild(button);
     }
 
@@ -381,12 +390,16 @@ function MonopolyView(gameRuleCallback) {
     var popupTitle = document.getElementById("popupSwitchTitle");
     popupTitle.innerHTML = "Echanger";
 
+    var button = document.createElement("button");
+    button.innerHTML = "Demander l'échange";
+    button.onclick = function() {
+      this.handleSwitch();
+    }.bind(this);
+
+    document.getElementById("action").appendChild(button);
+
     popup.style.visibility = "visible";
     popup.style.opacity = "1";
-
-    document
-      .getElementById("ask")
-      .addEventListener("click", this.handleSwitch.bind(this), false);
   };
 
   this.handleSwitch = function() {
@@ -428,18 +441,20 @@ function MonopolyView(gameRuleCallback) {
       var newTitleListCurrent = this.players[
         currentplayer.id - 1
       ].titleList.filter(element => {
-        element.cellId !== parseInt(selectedTitleCurrent);
+        return element.cellId !== parseInt(selectedTitleCurrent);
       });
       newTitleListCurrent.push(titlevs);
       this.players[currentplayer.id - 1].titleList = newTitleListCurrent;
 
       var newTitleListVs = this.players[playerToAsk.id - 1].titleList.filter(
         element => {
-          element.cellId !== parseInt(selectedTitlevs);
+          return element.cellId !== parseInt(selectedTitlevs);
         }
       );
       newTitleListVs.push(titleCurrent);
       this.players[playerToAsk.id - 1].titleList = newTitleListVs;
+
+      document.getElementById("action").innerHTML = "";
 
       this.updatePlayerBoard(playerToAsk, titleCurrent);
       this.updatePlayerBoard(currentplayer, titlevs);
@@ -449,6 +464,10 @@ function MonopolyView(gameRuleCallback) {
 
       // no  deal close popup
     } else {
+      document.getElementById("current").innerHTML = "";
+      document.getElementById("vs").innerHTML = "";
+      document.getElementById("action").innerHTML = "";
+
       popup.style.visibility = "hidden";
       popup.style.opacity = "0";
     }

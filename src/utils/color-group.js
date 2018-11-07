@@ -6,7 +6,8 @@ var colors = {
   red: 3,
   yellow: 3,
   green: 3,
-  darkblue: 2
+  darkblue: 2,
+  white: 4
 };
 
 module.exports = colors;
