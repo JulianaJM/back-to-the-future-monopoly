@@ -272,7 +272,7 @@ function updateDisplayWithMove(player, isDepartPassed) {
 
   //wait before move pawn
   setTimeout(function() {
-    game.movePawn(player.pawn, player.name);
+    game.movePawn(player.pawn);
   }, 2000);
 
   if (isDepartPassed) {

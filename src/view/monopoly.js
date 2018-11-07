@@ -125,7 +125,7 @@ function MonopolyView(gameRuleCallback) {
     document.getElementById("switch2").disabled = true;
   };
 
-  this.movePawn = function(pawn, playerName) {
+  this.movePawn = function(pawn) {
     var pawnElement = document.getElementById(pawn.name);
     var newPos = document.getElementById(pawn.currentCellId);
     newPos.tabIndex = -1;
