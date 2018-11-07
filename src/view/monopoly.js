@@ -287,6 +287,7 @@ function MonopolyView(gameRuleCallback) {
     if (title) {
       var newDiv = document.createElement("div");
       var newContent = document.createTextNode(title.name);
+      newDiv.id = "playerTitle" + title.cellId;
       newDiv.appendChild(newContent);
       newDiv.classList.add(title.color);
       playerBoard.appendChild(newDiv);
@@ -385,10 +386,73 @@ function MonopolyView(gameRuleCallback) {
 
     document
       .getElementById("ask")
-      .addEventListener("click", this.handleSwitch, false);
+      .addEventListener("click", this.handleSwitch.bind(this), false);
   };
 
-  this.handleSwitch = function() {};
+  this.handleSwitch = function() {
+    var popup = document.getElementById("popupswitch");
+    var playerToAsk = this.players.find(function(player) {
+      return !player.current;
+    });
+
+    var currentplayer = this.players.find(function(player) {
+      return player.current;
+    });
+
+    var response = confirm(playerToAsk.name + ", acceptez vous le deal ?");
+    if (response) {
+      var selectedTitleCurrent =
+        (document.querySelector("input[name=titleCurrent]:checked") &&
+          document.querySelector("input[name=titleCurrent]:checked").value) ||
+        null;
+
+      var selectedTitlevs =
+        (document.querySelector("input[name=titlevs]:checked") &&
+          document.querySelector("input[name=titlevs]:checked").value) ||
+        null;
+
+      var titleCurrent = this.players[currentplayer.id - 1].titleList.find(
+        function(title) {
+          return title.cellId === parseInt(selectedTitleCurrent);
+        }
+      );
+      var titlevs = this.players[playerToAsk.id - 1].titleList.find(function(
+        title
+      ) {
+        return title.cellId === parseInt(selectedTitlevs);
+      });
+
+      document.getElementById("playerTitle" + selectedTitleCurrent).remove();
+      document.getElementById("playerTitle" + selectedTitlevs).remove();
+
+      var newTitleListCurrent = this.players[
+        currentplayer.id - 1
+      ].titleList.filter(element => {
+        element.cellId !== parseInt(selectedTitleCurrent);
+      });
+      newTitleListCurrent.push(titlevs);
+      this.players[currentplayer.id - 1].titleList = newTitleListCurrent;
+
+      var newTitleListVs = this.players[playerToAsk.id - 1].titleList.filter(
+        element => {
+          element.cellId !== parseInt(selectedTitlevs);
+        }
+      );
+      newTitleListVs.push(titleCurrent);
+      this.players[playerToAsk.id - 1].titleList = newTitleListVs;
+
+      this.updatePlayerBoard(playerToAsk, titleCurrent);
+      this.updatePlayerBoard(currentplayer, titlevs);
+
+      popup.style.visibility = "hidden";
+      popup.style.opacity = "0";
+
+      // no  deal close popup
+    } else {
+      popup.style.visibility = "hidden";
+      popup.style.opacity = "0";
+    }
+  };
 }
 
 function makeRadioButton(name, value, text) {
