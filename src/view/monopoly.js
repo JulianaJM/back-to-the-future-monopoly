@@ -289,7 +289,7 @@ function MonopolyView(gameRuleCallback) {
     });
   };
 
-  this.updatePlayerBoard = function(player, title) {
+  this.updatePlayerBoard = function(player, title, isHypothec) {
     var playerBoard = document.getElementById("player" + player.id);
     var playerCapital = document.getElementById(
       "player" + player.id + "Capital"
@@ -304,6 +304,27 @@ function MonopolyView(gameRuleCallback) {
       newDiv.appendChild(newContent);
       newDiv.classList.add(title.color);
       playerBoard.appendChild(newDiv);
+    }
+
+    if (isHypothec) {
+      player.titleList.forEach(title => {
+        if (title.ishypotheced) {
+          document.getElementById("playerTitle" + title.cellId).remove();
+          var newDiv = document.createElement("div");
+          var newContent = document.createTextNode(title.name);
+          newDiv.id = "playerTitle" + title.cellId;
+          newDiv.appendChild(newContent);
+          newDiv.classList.add(title.color);
+          var button = document.createElement("button");
+          button.innerHTML = "lever l'hypothèque";
+          button.onclick = function() {
+            //TODO
+          }.bind(this);
+          newDiv.appendChild(button);
+
+          playerBoard.appendChild(newDiv);
+        }
+      });
     }
   };
 
@@ -364,6 +385,13 @@ function MonopolyView(gameRuleCallback) {
     document.getElementById(10).blur();
   };
 
+  this.alertHypothec = function(playerName) {
+    alert(
+      playerName +
+        " certains de vos titres ont été hypothéqués afin de payer vos dettes"
+    );
+  };
+
   this.switch = function() {
     var currentPlayer = this.players.find(function(player) {
       return player.current;
@@ -381,26 +409,30 @@ function MonopolyView(gameRuleCallback) {
 
     var titlesCurrent = currentPlayer.titleList;
     for (var i = 0; i < titlesCurrent.length; i++) {
-      var button = makeRadioButton(
-        "titleCurrent",
-        titlesCurrent[i].cellId,
-        titlesCurrent[i].name
-      );
-      button.classList.add(titlesCurrent[i].color);
+      if (!titlesCurrent[i].isHypothec) {
+        var button = makeRadioButton(
+          "titleCurrent",
+          titlesCurrent[i].cellId,
+          titlesCurrent[i].name
+        );
+        button.classList.add(titlesCurrent[i].color);
 
-      document.getElementById("current").appendChild(button);
+        document.getElementById("current").appendChild(button);
+      }
     }
 
     var titlesvs = vsPlayer.titleList;
     for (var i = 0; i < titlesvs.length; i++) {
-      var button = makeRadioButton(
-        "titlevs",
-        titlesvs[i].cellId,
-        titlesvs[i].name
-      );
-      button.classList.add(titlesvs[i].color);
+      if (!titlesvs[i].isHypothec) {
+        var button = makeRadioButton(
+          "titlevs",
+          titlesvs[i].cellId,
+          titlesvs[i].name
+        );
+        button.classList.add(titlesvs[i].color);
 
-      document.getElementById("vs").appendChild(button);
+        document.getElementById("vs").appendChild(button);
+      }
     }
 
     var popup = document.getElementById("popupswitch");

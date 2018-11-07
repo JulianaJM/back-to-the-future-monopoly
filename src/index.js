@@ -84,24 +84,23 @@ function cellActionDispatcher(e) {
             game.updatePlayerBoard(currentPlayer, titleToBuy);
           }
         }
-        updatePlayers(currentPlayer);
+        updatePlayers(currentPlayer, checkGameOver);
       });
   } else {
     /* handle rent title */
-    if (currentCell.playerOwner) {
+    if (currentCell.playerOwner && !titleToBuy.ishypotheced) {
       var amountToPay = getRentAmount(currentCell, titleToBuy);
       var playerToPay = doPay(currentPlayer, currentCell, amountToPay);
 
-      if (currentPlayer.capital < 0) {
+      if (checkGameOver(currentPlayer)) {
         game.gameOver(currentPlayer, playerToPay);
       } else {
-        updatePlayers(currentPlayer);
         if (playerToPay) {
-          // update board adversaire
-          game.updatePlayerBoard(playerToPay);
           setTimeout(function() {
-            //wait move pawn before alert
             game.alertPayement(currentPlayer, playerToPay, amountToPay);
+            updatePlayers(currentPlayer, checkGameOver);
+            // update board adversaire
+            game.updatePlayerBoard(playerToPay);
           }, 2000);
         }
         //update board current
@@ -141,10 +140,17 @@ function cellActionDispatcher(e) {
         game.updatePlayerBoard(currentPlayer);
       }, 2100);
     } else {
-      //TODO other cells
-      updatePlayers(currentPlayer);
+      //other cells
+      updatePlayers(currentPlayer, checkGameOver);
     }
   }
+}
+
+function checkGameOver(currentPlayer) {
+  if (currentPlayer.capital < 0) {
+    return true;
+  }
+  return false;
 }
 
 function handleTaxCells(currentPlayer, currentCell) {
@@ -165,7 +171,7 @@ function handleTaxCells(currentPlayer, currentCell) {
     );
     // update player board
     game.updatePlayerBoard(currentPlayer);
-    updatePlayers(currentPlayer);
+    updatePlayers(currentPlayer, checkGameOver);
   }, 2000);
 }
 
@@ -184,7 +190,9 @@ function handleSpecialCard(currentPlayer, randomCard, type) {
       );
     }
     if (actions.includes("PAY")) {
+      hasEnoughtMoney(currentPlayer, randomCard.amount);
       game.bank.removeMoney(currentPlayer, randomCard.amount);
+
       console.log(
         currentPlayer.name,
         " paye a la banque ",
@@ -209,7 +217,7 @@ function handleSpecialCard(currentPlayer, randomCard, type) {
     game.updatePlayerBoard(currentPlayer);
     if (!isMoveAction) {
       //don't update wait for focus on cell handle this
-      updatePlayers(currentPlayer);
+      updatePlayers(currentPlayer, checkGameOver);
     }
   });
 }
@@ -255,7 +263,14 @@ function updateDisplayWithMove(player, isDepartPassed) {
   }, 2000);
 }
 
-function updatePlayers(player) {
+function updatePlayers(player, checkGameOver) {
+  if (checkGameOver(player)) {
+    var winner = game.players.find(function(p) {
+      return p.id !== player.id;
+    });
+    game.gameOver(player, winner);
+    return;
+  }
   game.disableDice(false);
 
   var newPlayers = game.players.map(function(p) {
@@ -313,10 +328,31 @@ function doPay(currentPlayer, currentCell, amount) {
   var playerToPay = game.players.find(function(player) {
     return player.current === false;
   });
-  console.log(currentPlayer.name, "paye ", amount, " à ", playerToPay.name);
+
+  hasEnoughtMoney(currentPlayer, amount);
   currentPlayer.payRent(playerToPay, amount);
 
+  console.log(currentPlayer.name, "paye ", amount, " à ", playerToPay.name);
+
   return playerToPay;
+}
+
+function hasEnoughtMoney(currentPlayer, amount) {
+  if (currentPlayer.capital < amount) {
+    var amountHypotec = 0;
+    currentPlayer.titleList.forEach(title => {
+      if (!title.ishypotheced) {
+        amountHypotec += title.hypothecValue;
+        title.ishypotheced = true;
+        if (amountHypotec >= amount) {
+          currentPlayer.capital += amountHypotec;
+          game.alertHypothec(currentPlayer.name);
+          game.updatePlayerBoard(currentPlayer, null, true);
+          return;
+        }
+      }
+    });
+  }
 }
 
 module.exports = monopoly;
