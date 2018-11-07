@@ -3,6 +3,7 @@
 var Bank = require("../model/bank");
 var Pawn = require("../model/pawn");
 var Player = require("../model/player");
+var boardArray = require("../utils/board-game");
 
 function MonopolyView(gameRuleCallback) {
   this.MAX_CELL = 40;
@@ -124,7 +125,7 @@ function MonopolyView(gameRuleCallback) {
     document.getElementById("switch2").disabled = true;
   };
 
-  this.movePawn = function(pawn, playerName, isDepartPassed) {
+  this.movePawn = function(pawn, playerName) {
     var pawnElement = document.getElementById(pawn.name);
     var newPos = document.getElementById(pawn.currentCellId);
     newPos.tabIndex = -1;
@@ -135,10 +136,6 @@ function MonopolyView(gameRuleCallback) {
       "2s"
     );
     newPos.focus();
-
-    if (isDepartPassed) {
-      this.alertCaseDepart(playerName);
-    }
 
     setTimeout(function() {
       newPos.blur();
@@ -352,13 +349,11 @@ function MonopolyView(gameRuleCallback) {
 
     alert(giver.name + " verse la somme de " + amount + "$ à " + receiver.name);
   };
-  this.alertCaseDepart = function(playerName) {
-    alert(
-      playerName + "s'apprête à passer par la case départ il reçoit 20000$"
-    );
 
+  this.alertCaseDepart = function(playerName) {
     // prevent focus actions
     document.getElementById(0).blur();
+    alert(playerName + "est passé par la case départ il reçoit 20000$");
   };
 
   this.alertTaxCell = function(playerName, cellId, cellName, amount) {
@@ -463,6 +458,7 @@ function MonopolyView(gameRuleCallback) {
 
     var response = confirm(playerToAsk.name + ", acceptez vous le deal ?");
     if (response) {
+      console.log("échange accepté");
       var selectedTitleCurrent =
         (document.querySelector("input[name=titleCurrent]:checked") &&
           document.querySelector("input[name=titleCurrent]:checked").value) ||
@@ -486,6 +482,10 @@ function MonopolyView(gameRuleCallback) {
 
       document.getElementById("playerTitle" + selectedTitleCurrent).remove();
       document.getElementById("playerTitle" + selectedTitlevs).remove();
+
+      //cells player owner
+      boardArray[titleCurrent.cellId].playerOwner = playerToAsk;
+      boardArray[titlevs.cellId].playerOwner = currentplayer;
 
       var newTitleListCurrent = this.players[
         currentplayer.id - 1
@@ -513,6 +513,7 @@ function MonopolyView(gameRuleCallback) {
 
       // no  deal close popup
     } else {
+      console.log("échange refusé");
       document.getElementById("current").innerHTML = "";
       document.getElementById("vs").innerHTML = "";
       document.getElementById("action").innerHTML = "";

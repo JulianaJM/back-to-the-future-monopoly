@@ -32,7 +32,7 @@ function monopoly() {
   }
 }
 
-function move(player, resDice) {
+function move(player, resDice, specialCardDepart) {
   var nextPos = player.pawn.currentCellId + resDice;
   player.pawn.resDice = resDice; //handle cies publiques
   var isDepartPassed = false;
@@ -41,16 +41,14 @@ function move(player, resDice) {
   } else {
     player.pawn.currentCellId = nextPos - game.MAX_CELL;
 
-    //case départ toucher 20000
-    console.log(player.name, " passage par la case départ recevez 20000");
-    game.bank.addMoney(player, 20000);
     isDepartPassed = true;
     game.updatePlayerBoard(player);
   }
   console.log("**********************");
-  console.log("c'est au tour de ", player.name, " de jouer");
   console.log(player.name, "lance les dés et obtient ", resDice);
-
+  if (specialCardDepart) {
+    isDepartPassed = true;
+  }
   updateDisplayWithMove(player, isDepartPassed);
 }
 
@@ -59,19 +57,23 @@ function cellActionDispatcher(e) {
     return player.current;
   });
 
-  console.log(
-    "joueur courant =  ",
-    currentPlayer.name,
-    " capital restant = ",
-    currentPlayer.capital
-  );
-
   var pos = currentPlayer.pawn.currentCellId;
   var currentCell = boardArray[pos];
   var isFreeToBuy = currentCell.isSellable();
   var titleToBuy = game.bank.titleList.find(function(title) {
     return title.cellId === currentCell.cellId;
   });
+
+  console.log(
+    "focus joueur =  ",
+    currentPlayer.name,
+    " capital restant = ",
+    currentPlayer.capital,
+    "cell name => ",
+    currentCell.name,
+    "cell owner",
+    currentCell.playerOwner ? currentCell.playerOwner.name : "libre"
+  );
 
   if (isFreeToBuy) {
     game
@@ -102,6 +104,9 @@ function cellActionDispatcher(e) {
             // update board adversaire
             game.updatePlayerBoard(playerToPay);
           }, 2000);
+        } else {
+          //le joueur se trouve sur une de ses propriétés
+          updatePlayers(currentPlayer, checkGameOver);
         }
         //update board current
         game.updatePlayerBoard(currentPlayer);
@@ -180,7 +185,6 @@ function handleSpecialCard(currentPlayer, randomCard, type) {
     var actions = randomCard.actions;
     var isMoveAction = false;
     if (actions.includes("RECEIVE")) {
-      //TODO verif passage case depart
       game.bank.addMoney(currentPlayer, randomCard.amount);
       console.log(
         currentPlayer.name,
@@ -208,10 +212,18 @@ function handleSpecialCard(currentPlayer, randomCard, type) {
         randomCard.moveTo
       );
       isMoveAction = true;
+      //si on ne recule pas de case on réinit le currentcell à 0
       if (randomCard.moveTo >= 0) {
+        var nextPos =
+          currentPlayer.pawn.currentCellId + currentPlayer.pawn.resDice;
+        var isDepartPassed = false;
+        if (nextPos >= game.MAX_CELL - 1) {
+          //passage case départ
+          isDepartPassed = true;
+        }
         currentPlayer.pawn.currentCellId = 0;
       }
-      move(currentPlayer, randomCard.moveTo);
+      move(currentPlayer, randomCard.moveTo, isDepartPassed);
     }
     // update player board
     game.updatePlayerBoard(currentPlayer);
@@ -257,10 +269,21 @@ function getRentAmount(currentCell, currentTitle) {
 
 function updateDisplayWithMove(player, isDepartPassed) {
   game.disableSwitch(player);
+
   //wait before move pawn
   setTimeout(function() {
-    game.movePawn(player.pawn, player.name, isDepartPassed);
+    game.movePawn(player.pawn, player.name);
   }, 2000);
+
+  if (isDepartPassed) {
+    // setTimeout(function() {
+    //case départ toucher 20000
+    console.log(player.name, " passage par la case départ recevez 20000");
+    game.bank.addMoney(player, 20000);
+    game.updatePlayerBoard(player);
+    // game.alertCaseDepart(player.name);
+    // }, 2100);
+  }
 }
 
 function updatePlayers(player, checkGameOver) {
@@ -279,12 +302,15 @@ function updatePlayers(player, checkGameOver) {
       p = player;
     } else {
       p.current = true;
+      console.log("**********************");
+      console.log("c'est au tour de ", p.name, " de jouer");
       game.displayPlayerTurn(p);
     }
     return p;
   });
 
   game.players = newPlayers;
+  console.log("players => ", game.players);
 }
 
 function canBuy(currentPlayer, currentCell, titleToBuy) {
