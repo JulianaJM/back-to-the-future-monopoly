@@ -6,11 +6,18 @@ var chanceCards = [
     actions: ["MOVE"],
     moveTo: 24
   },
-  { id: 3, name: "allez en retenue", actions: ["MOVE"], moveTo: 10 },
+  {
+    id: 3,
+    name: "allez en retenue",
+    actions: ["MOVE", "PAY"],
+    amount: 500,
+    moveTo: 10
+  },
   {
     id: 4,
     name: "avancez case depart",
-    actions: ["MOVE"],
+    actions: ["MOVE", "PAY"],
+    amount: 20000,
     moveTo: 0
   },
   {

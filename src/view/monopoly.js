@@ -208,6 +208,10 @@ function MonopolyView(gameRuleCallback) {
 
           cardChanceDisplay.appendChild(newChance);
 
+          var playerCaptitalDisplay = document.getElementById("capital");
+          playerCaptitalDisplay.innerHTML =
+            "Votre capital : " + player.capital + "$";
+
           this.openPopup();
 
           this.buyBtn.style.display = "none";
@@ -236,7 +240,7 @@ function MonopolyView(gameRuleCallback) {
     }
   };
 
-  this.checkPlayerResponse = function(title, player, cell) {
+  this.displayTitleBuy = function(title, player, cell) {
     return new Promise((resolve, reject) => {
       //wait move pawn
       setTimeout(
@@ -350,14 +354,15 @@ function MonopolyView(gameRuleCallback) {
     document.getElementById(cellId).blur();
   };
 
-  // this.alertPrison = function(playerName) {
-  //   return new Promise((resolve, reject) => {
-  //     alert(playerName + " vous allez en retenu ! ");
+  this.alertPrison = function(playerName) {
+    alert(
+      playerName +
+        " vous allez en retenu ! Vous êtes débité de 500$ pour pouvoir jouer au prochain tour"
+    );
 
-  //     // prevent focus actions
-  //     document.getElementById(10).blur();
-  //   });
-  // };
+    // prevent focus actions
+    document.getElementById(10).blur();
+  };
 
   this.switch = function() {
     var currentPlayer = this.players.find(function(player) {

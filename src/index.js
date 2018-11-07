@@ -75,7 +75,7 @@ function cellActionDispatcher(e) {
 
   if (isFreeToBuy) {
     game
-      .checkPlayerResponse(titleToBuy, currentPlayer, currentCell)
+      .displayTitleBuy(titleToBuy, currentPlayer, currentCell)
       .then(function(responsePlayer) {
         if (responsePlayer) {
           /* handle buy title */
@@ -133,8 +133,13 @@ function cellActionDispatcher(e) {
       setTimeout(function() {
         currentPlayer.pawn.currentCellId = 10;
         game.movePawn(currentPlayer.pawn);
-        // game.alertPrison(currentPlayer.name);
       }, 2000);
+
+      setTimeout(function() {
+        game.bank.removeMoney(currentPlayer, 500);
+        game.alertPrison(currentPlayer.name);
+        game.updatePlayerBoard(currentPlayer);
+      }, 2100);
     } else {
       //TODO other cells
       updatePlayers(currentPlayer);

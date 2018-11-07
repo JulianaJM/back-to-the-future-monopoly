@@ -43,7 +43,13 @@ var caisseCommunauteCards = [
   { id: 12, name: "retour gare hill valley", actions: ["MOVE"], moveTo: 1 },
   { id: 13, name: "cure jeunesse", actions: ["PAY"], amount: 5000 },
   // { id: 14, name: "libere prison", actions: ["KEEP"] },
-  { id: 14, name: "aller en prison", actions: ["MOVE"], moveTo: 10 }
+  {
+    id: 14,
+    name: "aller en prison",
+    actions: ["MOVE", "PAY"],
+    amount: 500,
+    moveTo: 10
+  }
   // { id: 15, name: "biff", actions: ["CHANCE"], amount: 1000 }
 ];
 
