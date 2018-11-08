@@ -123,6 +123,8 @@ function MonopolyView(gameRuleCallback) {
       .addEventListener("click", this.switch.bind(this), false);
 
     document.getElementById("switch2").disabled = true;
+
+    document.getElementById("header").style.display = "none";
   };
 
   this.movePawn = function(pawn) {

@@ -28,6 +28,39 @@
   box-shadow: 15px 15px 25px rgba(0, 0, 0, 0.4);
 }
 
+h1 {
+  text-align: center;
+  margin-top: 200px;
+  text-shadow: 4px 3px #000;
+  font-size: 4.2rem;
+  color: #0069ed;
+  padding-top: 60px;
+}
+
+fieldset {
+  border-radius: 6.2px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 12px 12px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+legend {
+  display: block;
+  padding-left: 12px;
+  padding-right: 12px;
+  border: none;
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.header {
+  background: url("./images/background.jpg") 0 0 repeat-x;
+  height: 470px;
+}
+
+.form-wrapper {
+  margin-bottom: 2rem;
+}
+
 /* Demo Specific Style */
 .board {
   padding: 1em 0;
@@ -108,13 +141,18 @@ label {
 
 .form-container {
   width: 560px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .form-content {
   width: 250px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .form-name {
@@ -125,6 +163,9 @@ label {
   display: flex;
   justify-content: space-between;
   margin: 15px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 40px;
+  padding: 5px;
 }
 .pawn-radio {
   display: flex;
@@ -136,6 +177,12 @@ label {
 }
 input {
   display: block;
+}
+input[type="text"] {
+  background: transparent;
+  border: 0;
+  outline: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .square:focus {

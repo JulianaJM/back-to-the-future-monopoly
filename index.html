@@ -1,324 +1,427 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Back to the future - Monopoly</title>
+    <link rel="icon" href="./public/images/monopoly.ico" />
+    <link rel="stylesheet" href="./public/style.css" />
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <title>Back to the future - Monopoly</title>
-  <link rel="icon" href="./public/images/monopoly.ico" />
-  <link rel="stylesheet" href="./public/style.css">
-</head>
+  <body>
+    <div>
+      <div id="header" class="header">
+        <h1>Back to the future - Monopoly</h1>
+      </div>
+      <form id="monopoly-start">
+        <div class="form-container">
+          <fieldset>
+            <legend>Start game</legend>
+            <!-- Titre du fieldset -->
+            <div class="form-content">
+              <div class="form-wrapper">
+                <div class="form-name">
+                  <label for="nom">Joueur 1 : </label>
+                  <input type="text" name="pseudo1" id="pseudo1" />
+                </div>
 
-<body>
-  <form id="monopoly-start">
-    <div class="form-container">
-      <fieldset>
-        <legend>Start game</legend> <!-- Titre du fieldset -->
-        <div class="form-content">
-          <div>
-            <div class="form-name">
-              <label for="nom">Joueur 1 : </label>
-              <input type="text" name="pseudo1" id="pseudo1" />
+                <div class="form-pawn">
+                  <div class="pawn-radio">
+                    <input type="radio" name="pawn" value="pionMarty" />
+                    <img id="pionMarty" src="./public/images/pionMarty.png" />
+                  </div>
+
+                  <div class="pawn-radio">
+                    <input type="radio" name="pawn" value="pionDoc" />
+                    <img id="pionDoc" src="./public/images/pionDoc.png" />
+                  </div>
+
+                  <div class="pawn-radio">
+                    <input type="radio" name="pawn" value="pionDoloreane" />
+                    <img
+                      id="pionDoloreane"
+                      src="./public/images/pionDoloreane.png"
+                    />
+                  </div>
+
+                  <div class="pawn-radio">
+                    <input type="radio" name="pawn" value="pionHoverboard" />
+                    <img
+                      id="pionHoverboard"
+                      src="./public/images/pionHoverboard.png"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-wrapper">
+                <div class="form-name">
+                  <label for="nom">Joueur 2 : </label>
+                  <input type="text" name="pseudo2" id="pseudo2" />
+                </div>
+
+                <div class="form-pawn">
+                  <div class="pawn-radio">
+                    <input type="radio" name="pawn1" value="pionMarty" />
+                    <img id="pionMarty1" src="./public/images/pionMarty.png" />
+                  </div>
+
+                  <div class="pawn-radio">
+                    <input type="radio" name="pawn1" value="pionDoc" />
+                    <img id="pionDoc1" src="./public/images/pionDoc.png" />
+                  </div>
+
+                  <div class="pawn-radio">
+                    <input type="radio" name="pawn1" value="pionDoloreane" />
+                    <img
+                      id="pionDoloreane1"
+                      src="./public/images/pionDoloreane.png"
+                    />
+                  </div>
+
+                  <div class="pawn-radio">
+                    <input type="radio" name="pawn1" value="pionHoverboard" />
+                    <img
+                      id="pionHoverboard1"
+                      src="./public/images/pionHoverboard.png"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="debug">
+                <input type="checkbox" name="debug" id="debugCheckbox" />
+              </div>
+
+              <button id="startGame" type="button">play</button>
             </div>
+          </fieldset>
+        </div>
+      </form>
+    </div>
 
-            <div class="form-pawn">
-              <div class="pawn-radio">
-                <input type="radio" name="pawn" value="pionMarty">
-                <img id="pionMarty" src="./public/images/pionMarty.png" />
-              </div>
+    <div id="tools"></div>
+    <div id="cards">
+      <img
+        id="title1"
+        class="cards"
+        src="./public/images/gareHillValleyTitle.png"
+      />
+      <img
+        id="title3"
+        class="cards"
+        src="./public/images/wellsFargoTitle.png"
+      />
+      <img
+        id="title5"
+        class="cards"
+        src="./public/images/justice1885Title.png"
+      />
+      <img
+        id="title6"
+        class="cards"
+        src=" ./public/images/bureauMarshalTitle.png"
+      />
+      <img
+        id="title8"
+        class="cards"
+        src="./public/images/marechalFerrantTitle.png"
+      />
+      <img
+        id="title9"
+        class="cards"
+        src="./public/images/palaceSaloonTitle.png"
+      />
+      <img
+        id="title11"
+        class="cards"
+        src="./public/images/roysRecordsTitle.png"
+      />
+      <img
+        id="title12"
+        class="cards"
+        src="./public/images/texaco1955Title.png"
+      />
+      <img
+        id="title13"
+        class="cards"
+        src="./public/images/plutoniumIndustriesTitle.png"
+      />
+      <img
+        id="title14"
+        class="cards"
+        src="./public/images/cinemaEssexTitle.png"
+      />
+      <img
+        id="title15"
+        class="cards"
+        src="./public/images/justice1955Title.png"
+      />
+      <img
+        id="title16"
+        class="cards"
+        src="./public/images/twinPinesRanchTitle.png"
+      />
+      <img id="title18" class="cards" src="./public/images/louCafeTitle.png" />
+      <img
+        id="title19"
+        class="cards"
+        src="./public/images/moirBrownTitle.png"
+      />
+      <img
+        id="title21"
+        class="cards"
+        src="./public/images/statlerToyotaTitle.png"
+      />
+      <img
+        id="title23"
+        class="cards"
+        src="./public/images/louFitnessCenter.png"
+      />
+      <img
+        id="title24"
+        class="cards"
+        src="./public/images/texaco1985Title.png"
+      />
+      <img
+        id="title25"
+        class="cards"
+        src="./public/images/justice1985Title.png"
+      />
+      <img
+        id="title26"
+        class="cards"
+        src="./public/images/hillValleySchoolTitle.png"
+      />
+      <img
+        id="title27"
+        class="cards"
+        src="./public/images/twinPinesMallTitle.png"
+      />
+      <img
+        id="title28"
+        class="cards"
+        src="./public/images/fusionIndustriesTitle.png"
+      />
+      <img
+        id="title29"
+        class="cards"
+        src="./public/images/lyonEstateTitle.png"
+      />
+      <img id="title31" class="cards" src="./public/images/pizzaHutTitle.png" />
+      <img id="title32" class="cards" src="./public/images/holomaxTitle.png" />
+      <img id="title34" class="cards" src="./public/images/hilldaleTitle.png" />
+      <img
+        id="title35"
+        class="cards"
+        src="./public/images/justice2015Title.png"
+      />
+      <img
+        id="title37"
+        class="cards"
+        src="./public/images/blastFromThePastTitle.png"
+      />
+      <img id="title39" class="cards" src="./public/images/cafe80Title.png" />
+    </div>
+    <div id="chances">
+      <img
+        id="chance1"
+        class="chance"
+        src="./public/images/chanceAchatRoys.png"
+      />
+      <img
+        id="chance2"
+        class="chance"
+        src="./public/images/chanceEssenceTexaco.png"
+      />
+      <img
+        id="chance3"
+        class="chance"
+        src="./public/images/chanceAllerRetenue.png"
+      />
+      <img
+        id="chance4"
+        class="chance"
+        src="./public/images/chanceCaseDepart.png"
+      />
+      <img
+        id="chance5"
+        class="chance"
+        src="./public/images/chanceJustice1955Depart.png"
+      />
+      <img
+        id="chance6"
+        class="chance"
+        src="./public/images/chanceAmendeConduite.png"
+      />
+      <img
+        id="chance7"
+        class="chance"
+        src="./public/images/chanceDividende.png"
+      />
+      <img
+        id="chance8"
+        class="chance"
+        src="./public/images/chancePariCourse.png"
+      />
+      <img id="chance9" class="chance" src="./public/images/chanceCafe80.png" />
+      <img
+        id="chance10"
+        class="chance"
+        src="./public/images/chanceReculCases.png"
+      />
+      <img
+        id="chance11"
+        class="chance"
+        src="./public/images/chanceAmendeCirculation.png"
+      />
+      <img
+        id="chance12"
+        class="chance"
+        src="./public/images/chanceFraisScolarité.png"
+      />
+      <img id="chance13" class="chance" src="./public/images/chancePepsi.png" />
 
-              <div class="pawn-radio"><input type="radio" name="pawn" value="pionDoc"> <img id="pionDoc" src="./public/images/pionDoc.png" /></div>
-
-              <div class="pawn-radio"><input type="radio" name="pawn" value="pionDoloreane">
-                <img id="pionDoloreane" src="./public/images/pionDoloreane.png" />
-              </div>
-
-              <div class="pawn-radio"><input type="radio" name="pawn" value="pionHoverboard">
-                <img id="pionHoverboard" src="./public/images/pionHoverboard.png" />
-              </div>
-            </div>
+      <img id="cdc1" class="chance" src="./public/images/cdcCasino.png" />
+      <img id="cdc2" class="chance" src="./public/images/cdcCautionOncle.png" />
+      <img id="cdc3" class="chance" src="./public/images/cdcGroupeRock.png" />
+      <img id="cdc5" class="chance" src="./public/images/cdcErreurBanque.png" />
+      <img
+        id="cdc6"
+        class="chance"
+        src="./public/images/cdcFeerieDansante.png"
+      />
+      <img
+        id="cdc7"
+        class="chance"
+        src="./public/images/cdcPremierDisque.png"
+      />
+      <img
+        id="cdc8"
+        class="chance"
+        src="./public/images/cdcArrestationBufford.png"
+      />
+      <img id="cdc9" class="chance" src="./public/images/cdcCaseDepart.png" />
+      <img
+        id="cdc10"
+        class="chance"
+        src="./public/images/cdcAeroglisseur.png"
+      />
+      <img
+        id="cdc11"
+        class="chance"
+        src="./public/images/cdcActionsTexaco.png"
+      />
+      <img
+        id="cdc12"
+        class="chance"
+        src="./public/images/cdcRetourGareHillValley.png"
+      />
+      <img
+        id="cdc13"
+        class="chance"
+        src="./public/images/cdcCureRajeunissement.png"
+      />
+      <img id="cdc14" class="chance" src="./public/images/cdcAllerPrison.png" />
+    </div>
+    <div id="player-board" class="player-board">
+      <div id="player1">
+        <p id="player1Capital"></p>
+        <button type="button" id="switch1">Echanger</button>
+      </div>
+      <div id="player2">
+        <p id="player2Capital"></p>
+        <button type="button" id="switch2">Echanger</button>
+      </div>
+    </div>
+    <div class="clear"></div>
+    <div id="popup1" class="overlay">
+      <div class="popup">
+        <h2 id="popupTitle"></h2>
+        <!-- <a class="close" href="#">&times;</a> -->
+        <div class="content">
+          <div id="acquisition"></div>
+          <div id="capital"></div>
+          <div id="decision" class="decision">
+            <button id="buyTitle" type="button">Accepter</button>
+            <button id="cancel" type="button">Refuser</button>
+            <button id="ok" type="button">OK</button>
           </div>
-
-          <div>
-            <div class="form-name">
-              <label for="nom">Joueur 2 : </label>
-              <input type="text" name="pseudo2" id="pseudo2" />
-            </div>
-
-            <div class="form-pawn">
-              <div class="pawn-radio">
-                <input type="radio" name="pawn1" value="pionMarty">
-                <img id="pionMarty1" src="./public/images/pionMarty.png" />
-              </div>
-
-              <div class="pawn-radio"><input type="radio" name="pawn1" value="pionDoc"> <img id="pionDoc1" src="./public/images/pionDoc.png" /></div>
-
-              <div class="pawn-radio"><input type="radio" name="pawn1" value="pionDoloreane">
-                <img id="pionDoloreane1" src="./public/images/pionDoloreane.png" />
-              </div>
-
-              <div class="pawn-radio"><input type="radio" name="pawn1" value="pionHoverboard">
-                <img id="pionHoverboard1" src="./public/images/pionHoverboard.png" />
-              </div>
-            </div>
-          </div>
-          <div class="debug">
-            <input type="checkbox" name="debug" id="debugCheckbox" />
-          </div>
-
-          <button id="startGame" type="button">play</button>
-        </div>
-      </fieldset>
-    </div>
-  </form>
-
-  <div id="tools">
-  </div>
-  <div id="cards">
-    <img id="title1" class="cards" src="./public/images/gareHillValleyTitle.png" />
-    <img id="title3" class="cards" src="./public/images/wellsFargoTitle.png" />
-    <img id="title5" class="cards" src="./public/images/justice1885Title.png" />
-    <img id="title6" class="cards" src=" ./public/images/bureauMarshalTitle.png" />
-    <img id="title8" class="cards" src="./public/images/marechalFerrantTitle.png" />
-    <img id="title9" class="cards" src="./public/images/palaceSaloonTitle.png" />
-    <img id="title11" class="cards" src="./public/images/roysRecordsTitle.png" />
-    <img id="title12" class="cards" src="./public/images/texaco1955Title.png" />
-    <img id="title13" class="cards" src="./public/images/plutoniumIndustriesTitle.png" />
-    <img id="title14" class="cards" src="./public/images/cinemaEssexTitle.png" />
-    <img id="title15" class="cards" src="./public/images/justice1955Title.png" />
-    <img id="title16" class="cards" src="./public/images/twinPinesRanchTitle.png" />
-    <img id="title18" class="cards" src="./public/images/louCafeTitle.png" />
-    <img id="title19" class="cards" src="./public/images/moirBrownTitle.png" />
-    <img id="title21" class="cards" src="./public/images/statlerToyotaTitle.png" />
-    <img id="title23" class="cards" src="./public/images/louFitnessCenter.png" />
-    <img id="title24" class="cards" src="./public/images/texaco1985Title.png" />
-    <img id="title25" class="cards" src="./public/images/justice1985Title.png" />
-    <img id="title26" class="cards" src="./public/images/hillValleySchoolTitle.png" />
-    <img id="title27" class="cards" src="./public/images/twinPinesMallTitle.png" />
-    <img id="title28" class="cards" src="./public/images/fusionIndustriesTitle.png" />
-    <img id="title29" class="cards" src="./public/images/lyonEstateTitle.png" />
-    <img id="title31" class="cards" src="./public/images/pizzaHutTitle.png" />
-    <img id="title32" class="cards" src="./public/images/holomaxTitle.png" />
-    <img id="title34" class="cards" src="./public/images/hilldaleTitle.png" />
-    <img id="title35" class="cards" src="./public/images/justice2015Title.png" />
-    <img id="title37" class="cards" src="./public/images/blastFromThePastTitle.png" />
-    <img id="title39" class="cards" src="./public/images/cafe80Title.png" />
-
-  </div>
-  <div id="chances">
-    <img id="chance1" class="chance" src="./public/images/chanceAchatRoys.png" />
-    <img id="chance2" class="chance" src="./public/images/chanceEssenceTexaco.png" />
-    <img id="chance3" class="chance" src="./public/images/chanceAllerRetenue.png" />
-    <img id="chance4" class="chance" src="./public/images/chanceCaseDepart.png" />
-    <img id="chance5" class="chance" src="./public/images/chanceJustice1955Depart.png" />
-    <img id="chance6" class="chance" src="./public/images/chanceAmendeConduite.png" />
-    <img id="chance7" class="chance" src="./public/images/chanceDividende.png" />
-    <img id="chance8" class="chance" src="./public/images/chancePariCourse.png" />
-    <img id="chance9" class="chance" src="./public/images/chanceCafe80.png" />
-    <img id="chance10" class="chance" src="./public/images/chanceReculCases.png" />
-    <img id="chance11" class="chance" src="./public/images/chanceAmendeCirculation.png" />
-    <img id="chance12" class="chance" src="./public/images/chanceFraisScolarité.png" />
-    <img id="chance13" class="chance" src="./public/images/chancePepsi.png" />
-
-    <img id="cdc1" class="chance" src="./public/images/cdcCasino.png" />
-    <img id="cdc2" class="chance" src="./public/images/cdcCautionOncle.png" />
-    <img id="cdc3" class="chance" src="./public/images/cdcGroupeRock.png" />
-    <img id="cdc5" class="chance" src="./public/images/cdcErreurBanque.png" />
-    <img id="cdc6" class="chance" src="./public/images/cdcFeerieDansante.png" />
-    <img id="cdc7" class="chance" src="./public/images/cdcPremierDisque.png" />
-    <img id="cdc8" class="chance" src="./public/images/cdcArrestationBufford.png" />
-    <img id="cdc9" class="chance" src="./public/images/cdcCaseDepart.png" />
-    <img id="cdc10" class="chance" src="./public/images/cdcAeroglisseur.png" />
-    <img id="cdc11" class="chance" src="./public/images/cdcActionsTexaco.png" />
-    <img id="cdc12" class="chance" src="./public/images/cdcRetourGareHillValley.png" />
-    <img id="cdc13" class="chance" src="./public/images/cdcCureRajeunissement.png" />
-    <img id="cdc14" class="chance" src="./public/images/cdcAllerPrison.png" />
-  </div>
-  <div id="player-board" class="player-board">
-    <div id="player1">
-      <p id="player1Capital"></p>
-      <button type="button" id="switch1">Echanger</button>
-    </div>
-    <div id="player2">
-      <p id="player2Capital"></p>
-      <button type="button" id="switch2">Echanger</button>
-    </div>
-  </div>
-  <div class="clear"></div>
-  <div id="popup1" class="overlay">
-    <div class="popup">
-      <h2 id="popupTitle"></h2>
-      <!-- <a class="close" href="#">&times;</a> -->
-      <div class="content">
-        <div id="acquisition"></div>
-        <div id="capital"></div>
-        <div id="decision" class="decision">
-          <button id="buyTitle" type="button">Accepter</button>
-          <button id="cancel" type="button">Refuser</button>
-          <button id="ok" type="button">OK</button>
         </div>
       </div>
     </div>
-  </div>
 
-  <div id="popupswitch" class="overlay">
-    <div class="popup">
-      <h2 id="popupSwitchTitle"></h2>
-      <!-- <a class="close" href="#">&times;</a> -->
-      <div class="content">
-        <div id="current"></div>
-        <h3>contre</h3>
-        <div id="vs"></div>
-        <div id="action" class="decision">
+    <div id="popupswitch" class="overlay">
+      <div class="popup">
+        <h2 id="popupSwitchTitle"></h2>
+        <!-- <a class="close" href="#">&times;</a> -->
+        <div class="content">
+          <div id="current"></div>
+          <h3>contre</h3>
+          <div id="vs"></div>
+          <div id="action" class="decision"></div>
         </div>
       </div>
     </div>
-  </div>
 
-
-  <div id="player-turn">
-    <div id="playerCurrent" class="playerCurrent"></div>
-    <button id="diceButton" class="dice-btn"></button>
-  </div>
-  <div class="clear"></div>
-
-  <div id="monopoly-board" class="monopoly-wrapper">
-    <div class="board-top">
-      <div id="20" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="21" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="22" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="23" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="24" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="25" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="26" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="27" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="28" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="29" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="30" class="square">
-        <div class="circle"></div>
-      </div>
+    <div id="player-turn">
+      <div id="playerCurrent" class="playerCurrent"></div>
+      <button id="diceButton" class="dice-btn"></button>
     </div>
-    <div class="board-left">
-      <div id="19" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="18" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="17" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="16" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="15" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="14" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="13" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="12" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="11" class="square">
-        <div class="circle"></div>
-      </div>
+    <div class="clear"></div>
 
-      <!-- board right -->
-      <div id="31" class="square">
-        <div class="circle"></div>
+    <div id="monopoly-board" class="monopoly-wrapper">
+      <div class="board-top">
+        <div id="20" class="square"><div class="circle"></div></div>
+        <div id="21" class="square"><div class="circle"></div></div>
+        <div id="22" class="square"><div class="circle"></div></div>
+        <div id="23" class="square"><div class="circle"></div></div>
+        <div id="24" class="square"><div class="circle"></div></div>
+        <div id="25" class="square"><div class="circle"></div></div>
+        <div id="26" class="square"><div class="circle"></div></div>
+        <div id="27" class="square"><div class="circle"></div></div>
+        <div id="28" class="square"><div class="circle"></div></div>
+        <div id="29" class="square"><div class="circle"></div></div>
+        <div id="30" class="square"><div class="circle"></div></div>
       </div>
-      <div id="32" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="33" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="34" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="35" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="36" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="37" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="38" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="39" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="middle" class="square">
-        <div class="middle">
-          <div id="dice-box"></div>
+      <div class="board-left">
+        <div id="19" class="square"><div class="circle"></div></div>
+        <div id="18" class="square"><div class="circle"></div></div>
+        <div id="17" class="square"><div class="circle"></div></div>
+        <div id="16" class="square"><div class="circle"></div></div>
+        <div id="15" class="square"><div class="circle"></div></div>
+        <div id="14" class="square"><div class="circle"></div></div>
+        <div id="13" class="square"><div class="circle"></div></div>
+        <div id="12" class="square"><div class="circle"></div></div>
+        <div id="11" class="square"><div class="circle"></div></div>
+
+        <!-- board right -->
+        <div id="31" class="square"><div class="circle"></div></div>
+        <div id="32" class="square"><div class="circle"></div></div>
+        <div id="33" class="square"><div class="circle"></div></div>
+        <div id="34" class="square"><div class="circle"></div></div>
+        <div id="35" class="square"><div class="circle"></div></div>
+        <div id="36" class="square"><div class="circle"></div></div>
+        <div id="37" class="square"><div class="circle"></div></div>
+        <div id="38" class="square"><div class="circle"></div></div>
+        <div id="39" class="square"><div class="circle"></div></div>
+        <div id="middle" class="square">
+          <div class="middle"><div id="dice-box"></div></div>
         </div>
-
+      </div>
+      <div class="board-bottom">
+        <div id="10" class="square"><div class="circle"></div></div>
+        <div id="9" class="square"><div class="circle"></div></div>
+        <div id="8" class="square"><div class="circle"></div></div>
+        <div id="7" class="square"><div class="circle"></div></div>
+        <div id="6" class="square"><div class="circle"></div></div>
+        <div id="5" class="square"><div class="circle"></div></div>
+        <div id="4" class="square"><div class="circle"></div></div>
+        <div id="3" class="square"><div class="circle"></div></div>
+        <div id="2" class="square"><div class="circle"></div></div>
+        <div id="1" class="square"><div class="circle"></div></div>
+        <div id="0" class="square"><div class="circle"></div></div>
       </div>
     </div>
-    <div class="board-bottom">
-      <div id="10" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="9" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="8" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="7" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="6" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="5" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="4" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="3" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="2" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="1" class="square">
-        <div class="circle"></div>
-      </div>
-      <div id="0" class="square">
-        <div class="circle"></div>
-      </div>
-    </div>
-  </div>
 
-  <script src="./public/bundle.js"></script>
-</body>
-
+    <script src="./public/bundle.js"></script>
+  </body>
 </html>
