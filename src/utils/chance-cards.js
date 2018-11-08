@@ -16,7 +16,7 @@ var chanceCards = [
   {
     id: 4,
     name: "avancez case depart",
-    actions: ["MOVE", "PAY"],
+    actions: ["MOVE", "RECEIVE"],
     amount: 20000,
     moveTo: 0
   },
