@@ -532,12 +532,12 @@ p {
   #player1 {
     top: 60%;
     left: 2%;
-    width: auto;
+    width: 40%;
   }
   #player2 {
     right: 2%;
     top: 60%;
-    width: auto;
+    width: 40%;
   }
   .form-container {
     top: 80%;
