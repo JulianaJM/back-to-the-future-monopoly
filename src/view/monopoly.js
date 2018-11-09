@@ -81,6 +81,10 @@ function MonopolyView(gameRuleCallback) {
     var newP = document.createElement("p");
     var newContent = document.createTextNode(player1.name);
     newP.classList.add("name-playeur");
+    var newPawn1 = document.getElementById(selectedPawnPlayer1).cloneNode();
+    newPawn1.id = "boardPlayer1sel";
+    newPawn1.style.width = "16%";
+    newP.appendChild(newPawn1);
     newP.appendChild(newContent);
     p1Display.appendChild(newP);
 
@@ -88,6 +92,10 @@ function MonopolyView(gameRuleCallback) {
     var newP1 = document.createElement("p");
     var newContent1 = document.createTextNode(player2.name);
     newP1.classList.add("name-playeur");
+    var newPawn2 = document.getElementById(selectedPawnPlayer2).cloneNode();
+    newPawn2.id = "boardPlayer2sel";
+    newPawn2.style.width = "16%";
+    newP1.appendChild(newPawn2);
     newP1.appendChild(newContent1);
     p2Display.appendChild(newP1);
 
