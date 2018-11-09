@@ -24,7 +24,7 @@ module.exports = function Bank() {
 
   this.removeHypothec = function(player, title) {
     var amount = title.hypothecValue * 1.1;
-    if (player.capital >= amount) {
+    if (player.capital >= parseInt(amount)) {
       player.titleList.forEach(t => {
         if (t.cellId === title.cellId) {
           title.ishypotheced = false;

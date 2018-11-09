@@ -16,11 +16,18 @@ function MonopolyView(gameRuleCallback) {
   this.cancelBtn = document.getElementById("cancel");
   this.okBtn = document.getElementById("ok");
   this.isDebug = false;
+  this.isDebugPrompt = false;
 
   this.startGame = function() {
     this.isDebug =
       document.querySelector("input[name=debug]:checked") &&
       document.querySelector("input[name=debug]:checked").value === "on"
+        ? true
+        : false;
+
+    this.isDebugPrompt =
+      document.querySelector("input[name=debugP]:checked") &&
+      document.querySelector("input[name=debugP]:checked").value === "on"
         ? true
         : false;
 
@@ -63,6 +70,11 @@ function MonopolyView(gameRuleCallback) {
       player2.pawn = pawn2;
     }
 
+    if (this.isDebug) {
+      player1.capital = 25000;
+      player2.capital = 25000;
+    }
+
     this.players = [player1, player2];
 
     document
@@ -102,8 +114,8 @@ function MonopolyView(gameRuleCallback) {
     var player1Capital = document.getElementById("player1Capital");
     var player2Capital = document.getElementById("player2Capital");
 
-    player1Capital.innerHTML = "Capital restant : " + player1.capital;
-    player2Capital.innerHTML = "Capital restant : " + player2.capital;
+    player1Capital.innerHTML = "Capital restant : " + player1.capital + "$";
+    player2Capital.innerHTML = "Capital restant : " + player2.capital + "$";
     this.displayPlayerTurn(player1);
 
     document.getElementById("player-board").style.display = "block";
@@ -359,13 +371,13 @@ function MonopolyView(gameRuleCallback) {
     }
   };
 
-  this.updatePlayerBoard = function(player, title, isHypothec) {
+  this.updatePlayerBoard = function(player, title, isHypothec, isDepartPassed) {
     var playerBoard = document.getElementById("player" + player.id);
     var playerCapital = document.getElementById(
       "player" + player.id + "Capital"
     );
 
-    playerCapital.innerHTML = "Capital restant : " + player.capital;
+    playerCapital.innerHTML = "Capital restant : " + player.capital + "$";
 
     if (title) {
       var newDiv = document.createElement("a");
@@ -378,12 +390,14 @@ function MonopolyView(gameRuleCallback) {
       newDiv.classList.add(title.color);
       playerBoard.appendChild(newDiv);
     }
-
+    if (isDepartPassed) {
+      this.alertCaseDepart(player.name);
+    }
     if (isHypothec) {
       player.titleList.forEach(title => {
         if (title.ishypotheced) {
           document.getElementById("playerTitle" + title.cellId).remove();
-          var newDiv = document.createElement("div");
+          var newDiv = document.createElement("a");
           var newContent = document.createTextNode(title.name);
           newDiv.id = "playerTitle" + title.cellId;
           newDiv.appendChild(newContent);
@@ -406,11 +420,22 @@ function MonopolyView(gameRuleCallback) {
             });
             if (!titleHypotec.ishypotheced) {
               document.getElementById(id).remove();
+
+              document.getElementById(
+                "playerTitle" + title.cellId
+              ).onclick = function() {
+                this.displayTitleBuy(title, player, null, true);
+              }.bind(this);
+
               alert(titleHypotec.name + " : hypothèque levée");
+
               this.updatePlayerBoard(player);
             } else {
               alert(
-                titleHypotec.name + " : pas assez de fond pour lever hypothèque"
+                titleHypotec.name +
+                  " : pas assez de fond pour lever l'hypothèque d'une valeur de " +
+                  parseInt(titleHypotec.hypothecValue * 1.1) +
+                  "$"
               );
             }
           }.bind(this);
@@ -418,6 +443,8 @@ function MonopolyView(gameRuleCallback) {
           playerBoard.appendChild(newDiv);
         }
       });
+      //alert("vos biens ont été hypothéqués");
+      this.alertHypothec(player.name);
     }
   };
 
@@ -447,9 +474,27 @@ function MonopolyView(gameRuleCallback) {
   };
 
   this.alertCaseDepart = function(playerName) {
-    // prevent focus actions
-    document.getElementById(0).blur();
-    alert(playerName + "est passé par la case départ il reçoit 20000$");
+    document.getElementById("popupTitle").innerHTML = "case départ";
+    var playerCaptitalDisplay = document.getElementById("capital");
+    playerCaptitalDisplay.innerHTML = "";
+
+    var cardDisplay = document.getElementById("acquisition");
+    if (cardDisplay.firstChild) {
+      cardDisplay.removeChild(cardDisplay.firstChild);
+    }
+    cardDisplay.innerHTML = "<p>" + playerName + ", vous recevez 20000$</p>";
+    this.openPopup();
+
+    this.buyBtn.style.display = "none";
+    this.cancelBtn.style.display = "none";
+    this.okBtn.addEventListener(
+      "click",
+      function() {
+        this.closePopup();
+      }.bind(this),
+      true
+    );
+    this.okBtn.style.display = "block";
   };
 
   this.alertTaxCell = function(playerName, cellId, cellName, amount) {
@@ -477,10 +522,29 @@ function MonopolyView(gameRuleCallback) {
   };
 
   this.alertHypothec = function(playerName) {
-    alert(
-      playerName +
-        " certains de vos titres ont été hypothéqués afin de payer vos dettes"
+    document.getElementById("popupTitle").innerHTML =
+      "oups, " + playerName + " est sur la paille ...";
+    var playerCaptitalDisplay = document.getElementById("capital");
+    playerCaptitalDisplay.innerHTML = "";
+
+    var cardDisplay = document.getElementById("acquisition");
+    if (cardDisplay.firstChild) {
+      cardDisplay.removeChild(cardDisplay.firstChild);
+    }
+    cardDisplay.innerHTML =
+      "<p>Certains de vos biens ont été hypothéqués afin de rembourser vos dettes. Levez l'hypothèque une fois que vous aurez suffisament de fonds (10% d'intérêts seront prélevés)</p>";
+    this.openPopup();
+
+    this.buyBtn.style.display = "none";
+    this.cancelBtn.style.display = "none";
+    this.okBtn.addEventListener(
+      "click",
+      function() {
+        this.closePopup();
+      }.bind(this),
+      true
     );
+    this.okBtn.style.display = "block";
   };
 
   this.switch = function() {

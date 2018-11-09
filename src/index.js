@@ -24,7 +24,7 @@ function monopoly() {
     return player.current;
   });
 
-  if (game.isDebug) {
+  if (game.isDebug && game.isDebugPrompt) {
     resDice = prompt("Please enter your case:", "7");
     move(currentPlayer, parseInt(resDice));
   } else {
@@ -232,7 +232,11 @@ function handleSpecialCard(currentPlayer, randomCard, type, cellId) {
         var nextPos =
           currentPlayer.pawn.currentCellId + currentPlayer.pawn.resDice;
         var isDepartPassed = false;
-        if (randomCard.moveTo !== 10 && nextPos >= game.MAX_CELL - 1) {
+        if (
+          randomCard.moveTo !== 10 &&
+          nextPos > game.MAX_CELL - 1 &&
+          randomCard.moveTo > game.MAX_CELL
+        ) {
           //passage case départ
           isDepartPassed = true;
         }
@@ -288,7 +292,7 @@ function updateDisplayWithMove(player, isDepartPassed) {
     //case départ toucher 20000
     console.log(player.name, " passage par la case départ recevez 20000");
     game.bank.addMoney(player, 20000);
-    game.updatePlayerBoard(player);
+    game.updatePlayerBoard(player, null, false, true);
     // game.alertCaseDepart(player.name);
     // }, 2100);
   }
