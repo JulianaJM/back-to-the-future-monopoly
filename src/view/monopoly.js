@@ -99,6 +99,9 @@ function MonopolyView(gameRuleCallback) {
     document.getElementById("player-turn").style.display = "block";
     document.getElementById("monopoly-board").style.display = "block";
 
+    document.getElementById("header-popup").style.visibility = "hidden";
+    document.getElementById("header-popup").style.opacity = "0";
+
     translateToAbsolute(
       pawn1Display,
       initialPos.firstElementChild.offsetLeft,

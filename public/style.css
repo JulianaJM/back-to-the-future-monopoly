@@ -47,6 +47,7 @@ legend {
   display: block;
   padding-left: 12px;
   padding-right: 12px;
+  padding-top: 12px;
   border: none;
   font-size: 1.5rem;
   color: rgba(0, 0, 0, 0.7);
@@ -143,7 +144,7 @@ label {
   width: 560px;
   /* margin: 0 auto; */
   position: absolute;
-  top: 50%;
+  top: 75%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -277,6 +278,28 @@ button[disabled] {
   width: 30%;
   position: relative;
   transition: all 5s ease-in-out;
+  z-index: 2;
+}
+
+.overlay1 {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.3);
+  transition: opacity 500ms;
+  z-index: 2;
+}
+
+.popup1 {
+  /* background: #fff; */
+  border-radius: 5px;
+  width: 100%;
+  position: relative;
+  transition: all 5s ease-in-out;
+  visibility: visible;
+  opacity: 1;
   z-index: 2;
 }
 
