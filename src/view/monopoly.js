@@ -331,7 +331,9 @@ function MonopolyView(gameRuleCallback) {
       document.getElementById("popupTitle").innerHTML = title.name;
       var playerCaptitalDisplay = document.getElementById("capital");
       playerCaptitalDisplay.innerHTML =
-        "Votre capital : " + player.capital + "$";
+        "Votre capital : " +
+        player.capital +
+        "$ <br /> <p>Si vous possédez tous les titres du groupe le loyer compte double</p>";
 
       var titleDisplay = document.getElementById("title" + title.cellId);
       var newTitleDisplay = titleDisplay.cloneNode();

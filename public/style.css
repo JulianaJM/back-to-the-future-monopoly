@@ -249,9 +249,9 @@ input[type="text"] {
   margin-top: 20px;
 }
 #dice-box {
-  /* -webkit-transform: scale(1.5);
+  -webkit-transform: scale(1.5);
   -ms-transform: scale(1.5);
-  transform: scale(1.5); */
+  transform: scale(1.5);
   margin: 85px;
 }
 
@@ -531,6 +531,11 @@ p {
 }
 
 @media screen /*and (min-width: 500px) */and (max-width: 900px) {
+  #dice-box {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
   .square {
     display: -webkit-box;
     display: -ms-flexbox;
