@@ -269,53 +269,84 @@ function MonopolyView(gameRuleCallback) {
     }
   };
 
-  this.displayTitleBuy = function(title, player, cell) {
-    return new Promise((resolve, reject) => {
-      //wait move pawn
-      setTimeout(
+  this.displayTitleBuy = function(title, player, cell, isReadOnly) {
+    if (!isReadOnly) {
+      return new Promise((resolve, reject) => {
+        //wait move pawn
+        setTimeout(
+          function() {
+            var popupTitle = document.getElementById("popupTitle");
+            popupTitle.innerHTML =
+              player.name +
+              ", souhaitez vous acquerir " +
+              "pour " +
+              cell.price +
+              " $ :";
+
+            var playerCaptitalDisplay = document.getElementById("capital");
+            playerCaptitalDisplay.innerHTML =
+              "Votre capital : " + player.capital + "$";
+
+            var titleDisplay = document.getElementById("title" + title.cellId);
+            var newTitleDisplay = titleDisplay.cloneNode();
+            newTitleDisplay.id = newTitleDisplay.id + "buy?";
+            var cardDisplay = document.getElementById("acquisition");
+            if (cardDisplay.firstChild) {
+              cardDisplay.removeChild(cardDisplay.firstChild);
+            }
+            cardDisplay.appendChild(newTitleDisplay);
+            newTitleDisplay.classList.remove("cards");
+            this.openPopup();
+            this.buyBtn.style.display = "block";
+            this.cancelBtn.style.display = "block";
+            this.okBtn.style.display = "none";
+            this.buyBtn.addEventListener(
+              "click",
+              function() {
+                resolve(this.sendResponse(true));
+              }.bind(this)
+            );
+
+            this.cancelBtn.addEventListener(
+              "click",
+              function() {
+                resolve(this.sendResponse(false));
+              }.bind(this)
+            );
+          }.bind(this),
+          2000
+        );
+      });
+
+      /* just display title */
+    } else {
+      document.getElementById("popupTitle").innerHTML = title.name;
+      var playerCaptitalDisplay = document.getElementById("capital");
+      playerCaptitalDisplay.innerHTML =
+        "Votre capital : " + player.capital + "$";
+
+      var titleDisplay = document.getElementById("title" + title.cellId);
+      var newTitleDisplay = titleDisplay.cloneNode();
+      newTitleDisplay.id = newTitleDisplay.id + "buy?";
+      var cardDisplay = document.getElementById("acquisition");
+      if (cardDisplay.firstChild) {
+        cardDisplay.removeChild(cardDisplay.firstChild);
+      }
+      cardDisplay.appendChild(newTitleDisplay);
+      newTitleDisplay.classList.remove("cards");
+      this.openPopup();
+
+      this.buyBtn.style.display = "none";
+      this.cancelBtn.style.display = "none";
+      this.okBtn.addEventListener(
+        "click",
         function() {
-          var popupTitle = document.getElementById("popupTitle");
-          popupTitle.innerHTML =
-            player.name +
-            ", souhaitez vous acquerir " +
-            "pour " +
-            cell.price +
-            " $ :";
-
-          var playerCaptitalDisplay = document.getElementById("capital");
-          playerCaptitalDisplay.innerHTML =
-            "Votre capital : " + player.capital + "$";
-
-          var titleDisplay = document.getElementById("title" + title.cellId);
-          var newTitleDisplay = titleDisplay.cloneNode();
-          newTitleDisplay.id = newTitleDisplay.id + "buy?";
-          var cardDisplay = document.getElementById("acquisition");
-          if (cardDisplay.firstChild) {
-            cardDisplay.removeChild(cardDisplay.firstChild);
-          }
-          cardDisplay.appendChild(newTitleDisplay);
-          newTitleDisplay.classList.remove("cards");
-          this.openPopup();
-          this.buyBtn.style.display = "block";
-          this.cancelBtn.style.display = "block";
-          this.okBtn.style.display = "none";
-          this.buyBtn.addEventListener(
-            "click",
-            function() {
-              resolve(this.sendResponse(true, player, title));
-            }.bind(this)
-          );
-
-          this.cancelBtn.addEventListener(
-            "click",
-            function() {
-              resolve(this.sendResponse(false, player, title));
-            }.bind(this)
-          );
+          this.closePopup();
         }.bind(this),
-        2000
+        true
       );
-    });
+      this.okBtn.style.display = "block";
+    }
   };
 
   this.updatePlayerBoard = function(player, title, isHypothec) {
@@ -327,9 +358,12 @@ function MonopolyView(gameRuleCallback) {
     playerCapital.innerHTML = "Capital restant : " + player.capital;
 
     if (title) {
-      var newDiv = document.createElement("div");
+      var newDiv = document.createElement("a");
       var newContent = document.createTextNode(title.name);
       newDiv.id = "playerTitle" + title.cellId;
+      newDiv.onclick = function() {
+        this.displayTitleBuy(title, player, null, true);
+      }.bind(this);
       newDiv.appendChild(newContent);
       newDiv.classList.add(title.color);
       playerBoard.appendChild(newDiv);

@@ -221,7 +221,11 @@ label {
   -ms-flex-align: center;
   align-items: center;
 }
-
+a {
+  cursor: pointer;
+  display: block;
+  margin: 2px;
+}
 .clear {
   clear: both;
 }
@@ -245,9 +249,9 @@ input[type="text"] {
   margin-top: 20px;
 }
 #dice-box {
-  -webkit-transform: scale(1.5);
+  /* -webkit-transform: scale(1.5);
   -ms-transform: scale(1.5);
-  transform: scale(1.5);
+  transform: scale(1.5); */
   margin: 85px;
 }
 
