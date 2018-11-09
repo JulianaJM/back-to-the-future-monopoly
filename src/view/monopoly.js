@@ -629,6 +629,17 @@ function MonopolyView(gameRuleCallback) {
           document.querySelector("input[name=titlevs]:checked").value) ||
         null;
 
+      if (!selectedTitleCurrent && !selectedTitlevs) {
+        console.log("échange refusé, vous n'avez rien sélectionné");
+        document.getElementById("current").innerHTML = "";
+        document.getElementById("vs").innerHTML = "";
+        document.getElementById("action").innerHTML = "";
+
+        popup.style.visibility = "hidden";
+        popup.style.opacity = "0";
+        return;
+      }
+
       var titleCurrent = this.players[currentplayer.id - 1].titleList.find(
         function(title) {
           return title.cellId === parseInt(selectedTitleCurrent);
