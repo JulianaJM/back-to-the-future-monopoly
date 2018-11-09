@@ -91,7 +91,11 @@ function cellActionDispatcher(e) {
   } else {
     /* handle rent title */
     if (currentCell.playerOwner && !titleToBuy.ishypotheced) {
-      var amountToPay = getRentAmount(currentCell, titleToBuy);
+      var amountToPay = getRentAmount(
+        currentCell,
+        titleToBuy,
+        currentPlayer.pawn.resDice
+      );
       var playerToPay = doPay(currentPlayer, currentCell, amountToPay);
 
       if (checkGameOver(currentPlayer)) {
@@ -245,31 +249,24 @@ function handleSpecialCard(currentPlayer, randomCard, type, cellId) {
   });
 }
 
-function getRentAmount(currentCell, currentTitle) {
+function getRentAmount(currentCell, currentTitle, resDice) {
   var amountToPay = currentTitle.rent;
+  var filteredTitleByColors = currentCell.playerOwner.titleList.filter(function(
+    title
+  ) {
+    return title.color === currentTitle.color;
+  });
 
   /* check fusion indus ou plutonium indus */
-  if (currentCell.cellId === 13 || currentCell.cellId === 28) {
-    amountToPay = currentTitle.rent * currentPlayer.pawn.resDice;
-    console.log(
-      "vous payer ",
-      currentPlayer.pawn.resDice,
-      " x 400 soit : ",
-      amountToPay
-    );
-
-    /* check loyer compte double */
-  } else {
-    var filteredTitleByColors = currentCell.playerOwner.titleList.filter(
-      function(title) {
-        return title.color === currentTitle.color;
-      }
-    );
-
-    if (filteredTitleByColors.length === colors[currentTitle.color]) {
+  if (filteredTitleByColors.length === colors[currentTitle.color]) {
+    if (currentCell.cellId === 13 || currentCell.cellId === 28) {
+      amountToPay = currentTitle.rent * resDice;
+      console.log("vous payez ", resDice, " x 400 soit : ", amountToPay);
+    } else {
+      /* check loyer compte double */
       console.log(
         currentCell.playerOwner.name,
-        " vous êtes payer le double du loyer car vous posseder toutes les proprétés du groupe"
+        " vous êtes payé le double du loyer car vous posseder toutes les proprétés du groupe"
       );
       amountToPay = currentTitle.rent * 2;
     }

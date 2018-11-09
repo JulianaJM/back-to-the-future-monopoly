@@ -7,6 +7,7 @@ var colors = {
   yellow: 3,
   green: 3,
   darkblue: 2,
+  whitecies: 2,
   white: 4
 };
 

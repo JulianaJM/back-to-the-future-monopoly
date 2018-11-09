@@ -14,7 +14,13 @@ var marechalFerrantTitle = new Title(8, "marechal-ferrant", "blue", 800, 5000);
 var palaceSaloonTitle = new Title(9, "palace saloon", "blue", 800, 6000);
 var roysTitle = new Title(11, "roy's records", "pink", 1000, 7000);
 var texacoTitle = new Title(12, "texaco", "pink", 1200, 8000);
-var plutoniumTitle = new Title(13, "plutonium industries", "white", 400, 7500);
+var plutoniumTitle = new Title(
+  13,
+  "plutonium industries",
+  "whitecies",
+  400,
+  7500
+);
 var cineEssexTitle = new Title(14, "cinema essex", "pink", 1000, 7000);
 var palaisJustice1955 = new Title(
   15,
@@ -62,7 +68,7 @@ var twinPinesMallTitle = new Title(
   2200,
   13000
 );
-var fusionTitle = new Title(28, "fusion industries", "white", 400, 7500);
+var fusionTitle = new Title(28, "fusion industries", "whitecies", 400, 7500);
 var lyonEstatesTitle = new Title(29, "lyon estates", "yellow", 2400, 14000);
 var pizzaHutTitle = new Title(31, "pizza hut", "green", 2600, 15000);
 var holomaxTitle = new Title(32, "holomax", "green", 2600, 15000);

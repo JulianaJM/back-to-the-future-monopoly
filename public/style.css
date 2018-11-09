@@ -165,7 +165,8 @@ label {
 .yellow {
   background-color: #fdcf2d;
 }
-.white {
+.white,
+.whitecies {
   background-color: #fff;
 }
 
