@@ -79,12 +79,14 @@ function MonopolyView(gameRuleCallback) {
     var p1Display = document.getElementById("player1");
     var newP = document.createElement("p");
     var newContent = document.createTextNode(player1.name);
+    newP.classList.add("name-playeur");
     newP.appendChild(newContent);
     p1Display.appendChild(newP);
 
     var p2Display = document.getElementById("player2");
     var newP1 = document.createElement("p");
     var newContent1 = document.createTextNode(player2.name);
+    newP1.classList.add("name-playeur");
     newP1.appendChild(newContent1);
     p2Display.appendChild(newP1);
 
@@ -116,6 +118,10 @@ function MonopolyView(gameRuleCallback) {
       "1s"
     );
 
+    document.getElementById("header").style.display = "none";
+
+    document.getElementById("diceButton").focus();
+
     //listener switch
     document
       .getElementById("switch1")
@@ -126,8 +132,6 @@ function MonopolyView(gameRuleCallback) {
       .addEventListener("click", this.switch.bind(this), false);
 
     document.getElementById("switch2").disabled = true;
-
-    document.getElementById("header").style.display = "none";
   };
 
   this.movePawn = function(pawn) {
@@ -150,6 +154,9 @@ function MonopolyView(gameRuleCallback) {
 
   this.disableDice = function(disable) {
     document.getElementById("diceButton").disabled = disable;
+    if (!disable) {
+      document.getElementById("diceButton").focus();
+    }
 
     //disable switch for other player
     this.players.forEach(player => {
@@ -204,7 +211,7 @@ function MonopolyView(gameRuleCallback) {
     playerTurnDiv.removeAttribute("class");
     playerTurnDiv.classList.add("turn-player" + player.id);
     document.getElementById("playerCurrent").innerHTML =
-      player.name + " a vous de lancer les dés";
+      player.name + ", lancer les dés";
   };
 
   this.displaySpecialCard = function(chance, player, type) {

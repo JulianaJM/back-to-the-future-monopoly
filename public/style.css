@@ -216,6 +216,7 @@ input[type="text"] {
   font: bold 13px Arial;
   border-radius: 50%;
   color: #555;
+  margin-top: 4px;
 }
 
 button {
@@ -361,6 +362,7 @@ button[disabled] {
   margin-bottom: 5px;
   padding: 10px 20px;
   border-radius: 8px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.9);
 }
 #player1 div {
   margin: 10px;
@@ -370,6 +372,22 @@ button[disabled] {
   margin: 10px;
 }
 
+.name-playeur {
+  box-shadow: 6px 5px 2px rgba(0, 0, 0, 0.3);
+}
+
+p {
+  font-size: 1.1rem;
+}
+#player1Capital {
+  box-shadow: 4px 3px 2px rgba(0, 0, 0, 0.1);
+}
+#player2Capital {
+  box-shadow: 4px 3px 2px rgba(0, 0, 0, 0.1);
+}
+#capital {
+  margin: 15px;
+}
 #player2 {
   border: 1px solid black;
   position: absolute;
@@ -378,6 +396,25 @@ button[disabled] {
   margin-bottom: 5px;
   padding: 10px 20px;
   border-radius: 8px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.9);
+}
+.playerCurrent {
+  font-size: 1.6rem;
+  transform: scale(2px);
+  box-shadow: 6px 5px 2px rgba(0, 0, 0, 0.3);
+}
+
+#current label {
+  display: inline-flex;
+  font-size: 1.2rem;
+}
+
+#vs {
+  margin: 20px;
+}
+#vs label {
+  display: inline-flex;
+  font-size: 1.2rem;
 }
 
 @media screen and (max-width: 700px) {
