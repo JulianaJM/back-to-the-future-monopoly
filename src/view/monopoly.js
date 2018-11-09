@@ -618,7 +618,6 @@ function MonopolyView(gameRuleCallback) {
 
     var response = confirm(playerToAsk.name + ", acceptez vous le deal ?");
     if (response) {
-      console.log("échange accepté");
       var selectedTitleCurrent =
         (document.querySelector("input[name=titleCurrent]:checked") &&
           document.querySelector("input[name=titleCurrent]:checked").value) ||
@@ -629,7 +628,8 @@ function MonopolyView(gameRuleCallback) {
           document.querySelector("input[name=titlevs]:checked").value) ||
         null;
 
-      if (!selectedTitleCurrent && !selectedTitlevs) {
+      if (!selectedTitleCurrent || !selectedTitlevs) {
+        // nothing selected
         console.log("échange refusé, vous n'avez rien sélectionné");
         document.getElementById("current").innerHTML = "";
         document.getElementById("vs").innerHTML = "";
@@ -637,50 +637,52 @@ function MonopolyView(gameRuleCallback) {
 
         popup.style.visibility = "hidden";
         popup.style.opacity = "0";
-        return;
+
+        // do switch
+      } else {
+        console.log("échange accepté");
+        var titleCurrent = this.players[currentplayer.id - 1].titleList.find(
+          function(title) {
+            return title.cellId === parseInt(selectedTitleCurrent);
+          }
+        );
+        var titlevs = this.players[playerToAsk.id - 1].titleList.find(function(
+          title
+        ) {
+          return title.cellId === parseInt(selectedTitlevs);
+        });
+
+        document.getElementById("playerTitle" + selectedTitleCurrent).remove();
+        document.getElementById("playerTitle" + selectedTitlevs).remove();
+
+        //cells player owner
+        boardArray[titleCurrent.cellId].playerOwner = playerToAsk;
+        boardArray[titlevs.cellId].playerOwner = currentplayer;
+
+        var newTitleListCurrent = this.players[
+          currentplayer.id - 1
+        ].titleList.filter(element => {
+          return element.cellId !== parseInt(selectedTitleCurrent);
+        });
+        newTitleListCurrent.push(titlevs);
+        this.players[currentplayer.id - 1].titleList = newTitleListCurrent;
+
+        var newTitleListVs = this.players[playerToAsk.id - 1].titleList.filter(
+          element => {
+            return element.cellId !== parseInt(selectedTitlevs);
+          }
+        );
+        newTitleListVs.push(titleCurrent);
+        this.players[playerToAsk.id - 1].titleList = newTitleListVs;
+
+        document.getElementById("action").innerHTML = "";
+
+        this.updatePlayerBoard(playerToAsk, titleCurrent);
+        this.updatePlayerBoard(currentplayer, titlevs);
+
+        popup.style.visibility = "hidden";
+        popup.style.opacity = "0";
       }
-
-      var titleCurrent = this.players[currentplayer.id - 1].titleList.find(
-        function(title) {
-          return title.cellId === parseInt(selectedTitleCurrent);
-        }
-      );
-      var titlevs = this.players[playerToAsk.id - 1].titleList.find(function(
-        title
-      ) {
-        return title.cellId === parseInt(selectedTitlevs);
-      });
-
-      document.getElementById("playerTitle" + selectedTitleCurrent).remove();
-      document.getElementById("playerTitle" + selectedTitlevs).remove();
-
-      //cells player owner
-      boardArray[titleCurrent.cellId].playerOwner = playerToAsk;
-      boardArray[titlevs.cellId].playerOwner = currentplayer;
-
-      var newTitleListCurrent = this.players[
-        currentplayer.id - 1
-      ].titleList.filter(element => {
-        return element.cellId !== parseInt(selectedTitleCurrent);
-      });
-      newTitleListCurrent.push(titlevs);
-      this.players[currentplayer.id - 1].titleList = newTitleListCurrent;
-
-      var newTitleListVs = this.players[playerToAsk.id - 1].titleList.filter(
-        element => {
-          return element.cellId !== parseInt(selectedTitlevs);
-        }
-      );
-      newTitleListVs.push(titleCurrent);
-      this.players[playerToAsk.id - 1].titleList = newTitleListVs;
-
-      document.getElementById("action").innerHTML = "";
-
-      this.updatePlayerBoard(playerToAsk, titleCurrent);
-      this.updatePlayerBoard(currentplayer, titlevs);
-
-      popup.style.visibility = "hidden";
-      popup.style.opacity = "0";
 
       // no  deal close popup
     } else {
