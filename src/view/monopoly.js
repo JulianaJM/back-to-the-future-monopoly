@@ -57,6 +57,7 @@ function MonopolyView(gameRuleCallback) {
       }
       var randomPawn = pawnArray[Math.floor(Math.random() * pawnArray.length)];
       pawn2 = new Pawn(randomPawn);
+      player2.pawn = pawn2;
     } else {
       pawn2 = new Pawn(selectedPawnPlayer2);
       player2.pawn = pawn2;
