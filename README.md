@@ -8,5 +8,5 @@ Si après hypothèque vous n'avez toujours pas assez d'argent vous êtes déclar
 
 Nb: l'achat de maisons n'a pas encore été implémenté
 
-#Demo
+# Demo
 https://julianajm.github.io/back-to-the-future-monopoly/
