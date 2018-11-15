@@ -6,4 +6,4 @@ Vous allez en retenue au lieu d'aller en prison.
 Si vous n'avez pas assez d'argent pour régler vos dettes, vos biens sont hypothéqués automatiquement
 Si après hypothèque vous n'avez toujours pas assez d'argent vous êtes déclarés en faillite et perdez la partie.
 
-Nb: l'achat de maisons n'a pas été implémenté
+Nb: l'achat de maisons n'a pas encore été implémenté
