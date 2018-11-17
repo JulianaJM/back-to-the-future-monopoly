@@ -41,8 +41,8 @@ function MonopolyView(gameRuleCallback) {
       (document.querySelector("input[name=pawn1]:checked") &&
         document.querySelector("input[name=pawn1]:checked").value) ||
       "pionDoc";
-    var playerName1 = document.getElementById("pseudo1").value || "player1";
-    var playerName2 = document.getElementById("pseudo2").value || "player2";
+    var playerName1 = document.getElementById("pseudo1").value || "Marty";
+    var playerName2 = document.getElementById("pseudo2").value || "Doc";
 
     this.diceDisplay = document.getElementById("dice-box");
 
@@ -380,15 +380,17 @@ function MonopolyView(gameRuleCallback) {
     playerCapital.innerHTML = "Capital restant : " + player.capital + "$";
 
     if (title) {
-      var newDiv = document.createElement("a");
+      var newA = document.createElement("a");
       var newContent = document.createTextNode(title.name);
-      newDiv.id = "playerTitle" + title.cellId;
-      newDiv.onclick = function() {
+      newA.id = "playerTitle" + title.cellId;
+      newA.onclick = function() {
         this.displayTitleBuy(title, player, null, true);
       }.bind(this);
-      newDiv.appendChild(newContent);
-      newDiv.classList.add(title.color);
-      playerBoard.appendChild(newDiv);
+      newA.appendChild(newContent);
+      newA.classList.add(title.color);
+      var divColorTitle = document.getElementById(title.color + player.id);
+      divColorTitle.appendChild(newA);
+      playerBoard.appendChild(divColorTitle);
     }
     if (isDepartPassed) {
       this.alertCaseDepart(player.name);
@@ -397,53 +399,25 @@ function MonopolyView(gameRuleCallback) {
       player.titleList.forEach(title => {
         if (title.ishypotheced) {
           document.getElementById("playerTitle" + title.cellId).remove();
-          var newDiv = document.createElement("a");
+          var newA = document.createElement("a");
           var newContent = document.createTextNode(title.name);
-          newDiv.id = "playerTitle" + title.cellId;
-          newDiv.appendChild(newContent);
-          newDiv.classList.add(title.color);
+          newA.id = "playerTitle" + title.cellId;
+          newA.appendChild(newContent);
+          newA.classList.add(title.color);
+          //btn lever hypothèque
           var button = document.createElement("button");
           button.id = "btnTitle" + title.cellId;
           button.style.padding = "0";
           button.innerHTML = "lever l'hypothèque";
           button.onclick = function(e) {
-            var regex = /[+-]?\d+(?:\.\d+)?/g;
-            var id = e.target.id;
-            var match = regex.exec(id);
-            var selectedTitle = player.titleList.find(function(t) {
-              return t.cellId === parseInt(match[0]);
-            });
-
-            player = this.bank.removeHypothec(player, selectedTitle);
-            var titleHypotec = player.titleList.find(function(t) {
-              return t.cellId === parseInt(match[0]);
-            });
-            if (!titleHypotec.ishypotheced) {
-              document.getElementById(id).remove();
-
-              document.getElementById(
-                "playerTitle" + title.cellId
-              ).onclick = function() {
-                this.displayTitleBuy(title, player, null, true);
-              }.bind(this);
-
-              alert(titleHypotec.name + " : hypothèque levée");
-
-              this.updatePlayerBoard(player);
-            } else {
-              alert(
-                titleHypotec.name +
-                  " : pas assez de fond pour lever l'hypothèque d'une valeur de " +
-                  parseInt(titleHypotec.hypothecValue * 1.1) +
-                  "$"
-              );
-            }
+            this.handleHypothecClick(e, player, title);
           }.bind(this);
-          newDiv.appendChild(button);
-          playerBoard.appendChild(newDiv);
+          newA.appendChild(button);
+          var divColorTitle = document.getElementById(title.color + player.id);
+          divColorTitle.appendChild(newA);
+          playerBoard.appendChild(divColorTitle);
         }
       });
-      //alert("vos biens ont été hypothéqués");
       this.alertHypothec(player.name);
     }
   };
@@ -592,7 +566,7 @@ function MonopolyView(gameRuleCallback) {
 
     var popup = document.getElementById("popupswitch");
     var popupTitle = document.getElementById("popupSwitchTitle");
-    popupTitle.innerHTML = "Echanger";
+    popupTitle.innerHTML = currentPlayer.name + ", échanger : ";
 
     var button = document.createElement("button");
     button.innerHTML = "Demander l'échange";
@@ -693,6 +667,36 @@ function MonopolyView(gameRuleCallback) {
 
       popup.style.visibility = "hidden";
       popup.style.opacity = "0";
+    }
+  };
+
+  this.handleHypothecClick = function(e, player, title) {
+    var regex = /[+-]?\d+(?:\.\d+)?/g; // find number
+    var id = e.target.id;
+    var match = regex.exec(id);
+    var selectedTitle = player.titleList.find(function(t) {
+      return t.cellId === parseInt(match[0]);
+    });
+    player = this.bank.removeHypothec(player, selectedTitle);
+    var titleHypotec = player.titleList.find(function(t) {
+      return t.cellId === parseInt(match[0]);
+    });
+    if (!titleHypotec.ishypotheced) {
+      document.getElementById(id).remove();
+      document.getElementById(
+        "playerTitle" + title.cellId
+      ).onclick = function() {
+        this.displayTitleBuy(title, player, null, true);
+      }.bind(this);
+      alert(titleHypotec.name + " : hypothèque levée");
+      this.updatePlayerBoard(player);
+    } else {
+      alert(
+        titleHypotec.name +
+          " : pas assez de fond pour lever l'hypothèque d'une valeur de " +
+          parseInt(titleHypotec.hypothecValue * 1.1) +
+          "$"
+      );
     }
   };
 }
