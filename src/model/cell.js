@@ -1,7 +1,10 @@
-module.exports = function Cell(name, cellId) {
+function Cell(name, cellId) {
   this.name = name;
   this.cellId = cellId;
-  this.isSellable = function() {
-    return false;
-  };
+}
+
+Cell.prototype.isSellable = function() {
+  return false;
 };
+
+module.exports = Cell;

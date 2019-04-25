@@ -5,13 +5,13 @@ function TitleCell(name, cellId, price) {
   Cell.call(this, name, cellId);
   this.price = price;
   this.playerOwner = null;
-  this.isSellable = function() {
-    return this.playerOwner ? false : true;
-  };
-
-  this.setPlayerOwner = function(player) {
-    return (this.playerOwner = player);
-  };
 }
+
+TitleCell.prototype.isSellable = function() {
+  return this.playerOwner ? false : true;
+};
+TitleCell.prototype.setPlayerOwner = function(player) {
+  return (this.playerOwner = player);
+};
 
 module.exports = TitleCell;
