@@ -1130,3 +1130,9 @@ p {
   background-size: cover;
   background-position: center;
 }
+
+.bankCapital {
+   font-size: 1.6rem;
+   display: none;
+   text-align: center;
+}
