@@ -75,13 +75,15 @@ function MonopolyView(gameRuleCallback) {
     player,
     title,
     isHypothec,
-    isDepartPassed
+    isDepartPassed,
+    bank
   ) {
     monopolyActions.updatePlayerBoard(
       player,
       title,
       isHypothec,
-      isDepartPassed
+      isDepartPassed,
+      bank
     );
   };
 

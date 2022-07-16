@@ -358,7 +358,7 @@ const updateTitleStat = function (title, player, playerBoard) {
   playerBoard.appendChild(divColorTitle);
 };
 
-const updateHypothecStat = function (player, playerBoard) {
+const updateHypothecStat = function (player, playerBoard, bank) {
   player.titleList.forEach((title) => {
     if (title.ishypotheced) {
       document.getElementById("playerTitle" + title.cellId).remove();
@@ -373,7 +373,7 @@ const updateHypothecStat = function (player, playerBoard) {
       button.style.padding = "0";
       button.innerHTML = "lever l'hypothèque";
       button.onclick = function (e) {
-        handleHypothecClick(e, player, title);
+        handleHypothecClick(e, bank, player, title);
       };
       newA.appendChild(button);
       let divColorTitle = document.getElementById(title.color + player.id);
@@ -388,7 +388,8 @@ export const updatePlayerBoard = function (
   player,
   title,
   isHypothec,
-  isDepartPassed
+  isDepartPassed,
+  bank
 ) {
   let playerBoard = document.getElementById("player" + player.id);
   let playerCapital = document.getElementById("player" + player.id + "Capital");
@@ -401,7 +402,7 @@ export const updatePlayerBoard = function (
     alertCaseDepart(player.name);
   }
   if (isHypothec) {
-    updateHypothecStat(player, playerBoard);
+    updateHypothecStat(player, playerBoard, bank);
   }
 };
 

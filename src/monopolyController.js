@@ -243,7 +243,13 @@ const hasEnoughtMoney = function (gameConfig, currentPlayer, amount) {
       }
     });
   }
-  gameConfig.updatePlayerBoard(currentPlayer, null, isHypothec);
+  gameConfig.updatePlayerBoard(
+    currentPlayer,
+    null,
+    isHypothec,
+    false,
+    gameConfig.bank
+  );
 
   return currentPlayer;
 };
